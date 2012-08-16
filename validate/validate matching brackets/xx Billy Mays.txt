@@ -1,0 +1,70 @@
+On Jul 18, 10:12 am, Billy Mays <81282ed9a88799d21e77957df2d84bd6514d9...@myhashismyemail.com> wrote:
+> On 07/17/2011 03:47 AM,XahLee wrote:
+> 
+> > 2011-07-16
+> 
+> I gave it a shot.  It doesn't do any of the Unicode delims, because
+> let's face it, Unicode is for goobers.
+> 
+> import sys, os
+> 
+> pairs = {'}':'{', ')':'(', ']':'[', '"':'"', "'":"'", '>':'<'}
+> valid = set( v for pair in pairs.items() for v in pair )
+> 
+> for dirpath, dirnames, filenames in os.walk(sys.argv[1]):
+>      for name in filenames:
+>          stack = [' ']
+>          with open(os.path.join(dirpath, name), 'rb') as f:
+>              chars = (c for line in f for c in line if c in valid)
+>              for c in chars:
+>                  if c in pairs and stack[-1] == pairs[c]:
+>                      stack.pop()
+>                  else:
+>                      stack.append(c)
+>          print ("Good" if len(stack) == 1 else "Bad") + ': %s' % name
+> 
+> --
+> Bill
+
+as Ian Kelly mentioned, your script fail because it doesn't report the position or line/column number of  first mismatched bracket. This is rather significant part to this small problem. Avoiding unicode also lessen the value of this exercise, because handling unicode in python isn't trivial, at least with respect to this small exercise. 
+
+I added other unicode brackets to your list of brackets, but it seems your code still fail to catch a file that has mismatched curly quotes. (e.g. http://xahlee.org/p/time_machine/tm-ch04.html )
+
+LOL Billy.
+
+ Xah
+---------------------------
+On Jul 19, 10:33 am, Billy Mays <81282ed9a88799d21e77957df2d84bd6514d9...@myhashismyemail.com> wrote:
+> On 07/19/2011 01:14 PM,XahLee wrote:
+> 
+> > I added other unicode brackets to your list of brackets, but it seems
+> > your code still fail to catch a file that has mismatched curly quotes.
+> > (e.g.http://xahlee.org/p/time_machine/tm-ch04.html )
+> 
+> > LOL Billy.
+> 
+> >  Xah
+> 
+> I suspect its due to the file mode being opened with 'rb' mode.  Also,
+> the diction of characters at the top, the closing token is the key,
+> while the opening one is the value.  Not sure if thats obvious.
+> 
+> Also returning the position of the first mismatched pair is somewhat
+> ambiguous.  File systems store files as streams of octets (mine do
+> anyways) rather than as characters.  When you ask for the position of
+> the the first mismatched pair, do you mean the position as per
+> file.tell() or do you mean the nth character in the utf-8 stream?
+> 
+> Also, you may have answered this earlier but I'll ask again anyways: You
+> ask for the first mismatched pair, Are you referring to the inner most
+> mismatched, or the outermost?  For example, suppose you have this file:
+> 
+> foo[(])bar
+> 
+> Would the "(" be the first mismatched character or would the "]"?
+
+yes i haven't been precise. Thanks for brining it up.
+
+thinking about it now, i think it's a bit hard to define precisely. My elisp code actually reports the “)”, so it's wrong too. LOL
+
+ Xah

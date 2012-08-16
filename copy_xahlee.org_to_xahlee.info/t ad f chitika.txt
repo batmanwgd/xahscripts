@@ -1,0 +1,1 @@
+<div class="chtk"><script type="text/javascript">ch_client="polyglut";ch_width=550;ch_height=90;ch_type="mpu";ch_sid="Chitika Default";ch_backfill=1;ch_color_site_link="#00C";ch_color_title="#00C";ch_color_border="#FFF";ch_color_text="#000";ch_color_bg="#FFF";</script><script src="http://scripts.chitika.net/eminimalls/amm.js" type="text/javascript"></script></div>

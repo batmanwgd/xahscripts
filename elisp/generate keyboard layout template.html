@@ -1,0 +1,263 @@
+<!doctype html><html><head><meta charset="utf-8" />
+<style type="text/css">
+/* css file for keyboard shortcut layout
+C:/Users/xah/web/xahlee_org/emacs/emacs_kb_shortcuts.html
+c:/Users/xah/web/xahlee_org/emacs/ergonomic_emacs_keybinding_rawhtml.html
+ */
+
+/* keyboard layout table */
+table.kb-layout td { vertical-align:top; min-width:90px; min-height:90px; width:90px; height:90px;border:solid thin #000000}
+
+/* home row */
+table.kb-layout td.hr {background-color:#88ff88}
+
+/* key label */
+div.k {display:table;
+font-family:monospace; font-weight:bold; font-size:28px;
+text-align:center;
+width:30px;height:30px;
+margin:0px;padding:0px;
+border-radius:12px;
+border:solid thin #e6e6fa;background-color:#dcdcdc;
+}
+
+/* modifier key label */
+span.C-bg {} /*Cntl key label */
+span.M-bg {}  /*Alt key label */
+
+/* text color for command */
+div.c {color:#b03060} /* Ctrl */
+div.m {color:#0000ff}  /* Meta */
+div.ms {color:#ff0000} /* Meta+Shift */
+div.n {color:#006600}  /* no modifier */
+
+span.s {background-color:#ffff00} /* prefix key */
+
+pre.legend {width:100%;margin:1px;background-color:#e6e6fa}
+</style>
+<title>Emacs's Keybinding Layout</title>
+</head>
+<body>
+
+<h1>Emacs's Keybinding Layout</h1>
+
+<table class="kb-layout">
+<tr>
+<td>「1」</td>
+<td>「2」</td>
+<td>「3」</td>
+<td>「4」</td>
+<td>「5」</td>
+<td>「6」</td>
+<td>「7」</td>
+<td>「8」</td>
+<td>「9」</td>
+<td>「0」</td>
+<td>「-」</td>
+<td>「=」</td>
+<td>「Backspace」</td>
+</tr>
+<tr>
+<td>「q」</td>
+<td>「w」</td>
+<td>「e」</td>
+<td>「r」</td>
+<td>「t」</td>
+<td>「y」</td>
+<td>「u」</td>
+<td>「i」</td>
+<td>「o」</td>
+<td>「p」</td>
+<td>「[」</td>
+<td>「]」</td>
+<td>「\」</td>
+</tr>
+<tr>
+<td class="hr">「a」</td>
+<td class="hr">「s」</td>
+<td class="hr">「d」</td>
+<td class="hr">「f」</td>
+<td>「g」</td>
+<td>「h」</td>
+<td class="hr">「j」</td>
+<td class="hr">「k」</td>
+<td class="hr">「l」</td>
+<td class="hr">「;」</td>
+<td>「'」</td>
+<td>「Enter」</td>
+</tr>
+<tr><td>「z」</td>
+<td>「x」</td>
+<td>「c」</td>
+<td>「v」</td>
+<td>「b」</td>
+<td>「n」</td>
+<td>「m」</td>
+<td>「,」</td>
+<td>「.」</td>
+<td>「/」</td>
+</tr>
+
+<tr>
+<td><div class="k"><span class="C-bg">Ctrl</span></div></td>
+<td></td>
+<td><div class="k"><span class="M-bg">Alt</span></div></td>
+<td colspan="5">「Space」</td>
+</tr>
+</table>
+
+<div><span style="color:maroon">Ctrl</span> <span style="color:blue">Alt</span> <span style="background-color:yellow">prefix key</span></div>
+
+<h2>Key Symbols</h2>
+
+
+<table class="nrm">
+<tr><td>↑</td><td>previous-line</td><td>↓</td><td>next-line</td></tr>
+<tr><td>←</td><td>backward-char</td><td>→</td><td>forward-char</td></tr>
+<tr><td>←w</td><td>backward-word</td><td>→w</td><td>forward-word</td></tr>
+<tr><td>←s</td><td>backward-sentence</td><td>→s</td><td>forward-sentence</td></tr>
+<tr><td>←¶</td><td>backward-paragraph</td><td>→¶</td><td>forward-paragraph</td></tr>
+<tr><td>|←</td><td>move-beginning-of-line</td><td>→|</td><td>move-end-of-line</td></tr>
+<tr><td>↤▮</td><td>back-to-indentation</td><td></td><td></td></tr>
+<tr><td>⇞</td><td>scroll-down (<kbd>Page Up</kbd>)</td><td>⇟</td><td>scroll-up (<kbd>Page Down</kbd>)</td></tr>
+<tr><td>⤒</td><td>beginning-of-buffer</td><td>⤓</td><td>end-of-buffer</td></tr>
+<tr><td>search←</td><td>isearch-backward</td><td>search→</td><td>isearch-forward</td></tr>
+</table>
+
+<table class="nrm">
+<tr><td>⌫</td><td>delete-backward-char</td><td>⌦</td><td>delete-char</td></tr>
+<tr><td>⌫w</td><td>backward-kill-word</td><td>⌦w</td><td>kill-word</td></tr>
+<tr><td>|⌫</td><td>kill-line-backward</td><td>⌦|</td><td>kill-line</td></tr>
+<tr><td>⌦tochar</td><td>zap-to-char</td><td>⌦s</td><td>kill-sentence</td></tr>
+<tr><td>⌦␣⌫</td><td>delete-horizontal-space</td><td></td><td></td></tr>
+</table>
+
+<table class="nrm">
+<tr><td>↵</td><td>newline</td></tr>
+<tr><td>↵↑</td><td>open-line</td></tr>
+<tr><td>↵↦cmt</td><td>indent-new-comment-line</td></tr>
+<tr><td>⇥</td><td>tab-to-tab-stop (insert tab or spaces)</td></tr>
+<tr><td>↦</td><td>indent-for-tab-command</td></tr>
+<tr><td>#n</td><td>digit-argument</td></tr>
+<tr><td>#-n</td><td>negative-argument</td></tr>
+<tr><td>#arg</td><td>universal-argument</td></tr>
+<tr><td>center▮↕</td><td>move-to-window-line</td></tr>
+<tr><td>center↕</td><td>recenter</td></tr>
+<tr><td>⇋</td><td>transpose-chars</td></tr>
+<tr><td>⇋w</td><td>transpose-words</td></tr>
+<tr><td>⎌</td><td>undo</td></tr>
+<tr><td>copy</td><td>kill-ring-save</td></tr>
+<tr><td>✂</td><td>kill-region</td></tr>
+<tr><td>∅</td><td>nil</td></tr>
+<tr><td>cancel</td><td>keyboard-quit</td></tr>
+<tr><td>iconify</td><td>iconify-or-deiconify-frame</td></tr>
+<tr><td>mark¶</td><td>mark-paragraph</td></tr>
+<tr><td>paste</td><td>yank</td></tr>
+<tr><td>paste↖</td><td>yank-pop</td></tr>
+<tr><td>M-x</td><td>execute-extended-command</td></tr>
+</table>
+
+<h2>Top Row Symbols</h2>
+
+<table class="kb-layout">
+<tr>
+<td>「~」</td>
+<td>「`」</td>
+</tr>
+<tr>
+<td>「!」</td>
+<td>「@」</td>
+<td>「#」</td>
+<td>「$」</td>
+<td>「%」</td>
+<td style="border:none;min-width:2px;width:2px"></td>
+<td>「^」</td>
+<td>「&amp;」</td>
+<td>「*」</td>
+<td>「(」</td>
+<td>「)」</td>
+<td>「_」</td>
+<td>「+」</td>
+</tr>
+</table>
+
+<div><span style="color:maroon">Ctrl</span> <span style="color:blue">Alt</span></div>
+
+<h2>Function Keys</h2>
+
+<table class="kb-layout">
+<tr>
+<td>「F1」<div class="n"></div></td>
+<td>「F2」<div class="n"></div></td>
+<td>「F3」<div class="n">kmacro-start-macro-or-insert-counter</div></td>
+<td>「F4」<div class="n">kmacro-end-or-call-macro</div></td>
+<td style="border:none;min-width:2px;width:2px"></td>
+<td>「F5」<div class="n">∅</div></td>
+<td>「F6」<div class="n">∅</div></td>
+<td>「F7」<div class="n">∅</div></td>
+<td>「F8」<div class="n">∅</div></td>
+<td style="border:none;min-width:2px;width:2px"></td>
+<td>「F9」<div class="n">∅</div></td>
+<td>「F10」<div class="n">tmm-menubar</div></td>
+<td>「F11」<div class="n">∅</div></td>
+<td>「F12」<div class="n">∅</div></td>
+</tr>
+</table>
+
+<div><span style="color:green">no modifier</span> <span style="background-color:yellow">prefix key</span></div>
+
+<p>No <kbd>Ctrl</kbd> nor <kbd>Meta</kbd> are defined with function keys by default.</p>
+
+<h2>Home/End Key Cluster</h2>
+
+<table class="kb-layout">
+<tr>
+<td>「Ins」<div class="n">overwrite-mode</div></td>
+<td>「Home」<div class="n">|←</div></td>
+<td>「PgUp」<div class="n">⇞</div></td>
+</tr>
+
+<tr>
+<td>「Del」<div class="n">⌦</div></td>
+<td>「End」<div class="n">→|</div></td>
+<td>「PgDn」<div class="n">⇟</div></td>
+</tr>
+</table>
+
+<div><span style="color:green">no modifier</span></div>
+
+<table class="kb-layout">
+<tr>
+<td>「Ins」</td>
+<td>「Home」</td>
+<td>「PgUp」</td>
+</tr>
+
+<tr>
+<td>「Del」</td>
+<td>「End」</td>
+<td>「PgDn」</td>
+</tr>
+</table>
+
+<div><span style="color:maroon">Ctrl</span> <span style="color:blue">Alt</span></div>
+
+<h2>Arrow Key Cluster</h2>
+
+<table class="kb-layout">
+<tr>
+<td></td>
+<td>「↑」</td>
+<td></td>
+</tr>
+
+<tr>
+<td>「←」</td>
+<td>「↓」</td>
+<td>「→」</td>
+</tr>
+</table>
+
+<div><span style="color:maroon">Ctrl</span> <span style="color:blue">Alt</span></div>
+
+</body></html>

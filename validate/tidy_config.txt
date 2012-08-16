@@ -1,0 +1,13 @@
+// config file for the "tidy" html checker program
+
+tidy-mark: no
+wrap: 0
+wrap-attributes: no
+wrop-script-literals: no
+wrap-asp: no
+wrap-jste: no
+wrap-php: no
+
+
+line 17 column 1 - Warning: <table> lacks "summary" attribute
+line 19 column 5 - Warning: <img> lacks "alt" attribute
