@@ -1,5 +1,7 @@
 -*- coding: utf-8 -*-
 
+The misc scripts of a effete hotshot of functional programing.
+
 Xah's misc scripts, accumulated over the years. Some dates back to 1998. (nothing to see here, move alone.)
 
 Most are one-time-use-throw-away scripts, for managing my website.
@@ -8,7 +10,7 @@ Vast majority are text processing.
 
 There are {perl, python, emacs lisp} scripts. Language used changed over the years.
 
-Also the coding style changes. Many coding style are experimental. For example, in perl, during a period i always used “use strict”, but then abandoned it for a year just to see what happens. (nothing happens, actually. I don't really see it helps unless you are a perl beginner. Perl monger's wide-spread insistence on that is just clamor. If you really care, you better off not using perl. On one hand, the perl idiots say it's perl flexibility, yet they recommend always use “use strict”. Paradoxical.)
+Also the coding style changes. Many coding style are experimental. For example, in perl, during a period i always used “use strict;”, but then abandoned it for a year just to see what happens. (nothing happens, actually. I don't really see it helps unless you are a perl beginner. Perl monger's wide-spread insistence on that is just clamor. If you really care, you better off not using perl. On one hand, the perl idiots say it's perl flexibility, yet they recommend always use “use strict;”. Paradoxical.)
 
 Here's another example of style change. In perl, for a period i always use the 「q()」 form instead of 「''」 because the former has syntactical advantage, because it hold info of matching positions.
 
@@ -20,14 +22,17 @@ http://xahlee.info/comp/programing_variable_naming.html
 Also, most of the scripts are heavily functional style, regardless of language.
 
 Also, they almost all sneer standard conventions. For example, lines runs more than 80 chars. See:
-〈Unix, RFC, Line Truncation〉
-http://xahlee.info/UnixResource_dir/writ/truncate_line.html
+〈Programing: the Harm of Hard-wrapping Lines〉
+http://xahlee.info/UnixResource_dir/writ/hard-wrap.html
 
-(if you are one of those hacker type, dwell in slashdot, reddit, hackernews, or whatnot currently fashionable, and are stern about telling others the correct geek way, pythonic, keen on Programing Patterns, OOP, eXtreme Programing, Agile, unit testing, and spelling of “programming”,  …, go fuck yourself.)
+(if you are one of those hacker type who dwell in slashdot, reddit, hackernews, or whatnot currently fashionable, and are stern about telling others the “correct practice”, perl idiom, pythonic, keen on Programing Patterns, OOP, eXtreme Programing, Agile, unit testing, and spelling of “programming” (please lookup a few dictionaries before you open your mouth),  …, go fuck yourself.)
 
 See:
 〈HTML5 Doctype, Validation, X-UA-Compatible, and Why Do I Hate Hackers〉
 http://xahlee.info/js/html5_validation_doctype.html
+
+〈Programing: Why Idiomatic Programing Are Bad〉
+http://xahlee.info/comp/language_design_and_idioms.html
 
 〈Why Software Suck: Design Patterns Quackery〉
 http://xahlee.info/UnixResource_dir/writ/why_software_suck.html
