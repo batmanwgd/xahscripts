@@ -1,8 +1,8 @@
 -*- coding: utf-8 -*-
 
-The misc scripts of a effete hotshot of functional programing.
+The misc scripts of a effete hotshot.
 
-Xah's misc scripts, accumulated over the years. Some dates back to 1998. (nothing to see here, move alone.)
+Xah's misc scripts, accumulated over the years. Some dates back to 1998. (you should move alone, really. This is a vanity READEME.)
 
 Most are one-time-use-throw-away scripts, for managing my website.
 
@@ -19,13 +19,13 @@ Another example: in elisp, many variables are greek chars. (See:
 http://xahlee.info/comp/programing_variable_naming.html
 )
 
-Also, most of the scripts are heavily functional style, regardless of language.
+Also, most of the scripts are heavily functional style, regardless of language. There's no OOP here.
 
 Also, they almost all sneer standard conventions. For example, lines runs more than 80 chars. See:
 〈Programing: the Harm of Hard-wrapping Lines〉
 http://xahlee.info/UnixResource_dir/writ/hard-wrap.html
 
-(if you are one of those hacker type who dwell in slashdot, reddit, hackernews, or whatnot currently fashionable, and are stern about telling others the “correct practice”, perl idiom, pythonic, keen on Programing Patterns, OOP, eXtreme Programing, Agile, unit testing, and spelling of “programming” (please lookup a few dictionaries before you open your mouth),  …, go fuck yourself.)
+(if you are one of those hacker type who dwell in slashdot, reddit, hackernews, or whatnot currently fashionable, and often sternly chide others online about the “correct practice”, fond of idiomatic perl, pythonic, keen on Programing Patterns, OOP, eXtreme Programing, Agile, unit testing, and think that the correct way of spelling is “programming” with 2 “m” (please lookup a few dictionaries before you open your mouth),  …, go fuck yourself.)
 
 See:
 〈HTML5 Doctype, Validation, X-UA-Compatible, and Why Do I Hate Hackers〉
