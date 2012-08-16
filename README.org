@@ -1,0 +1,22 @@
+-*- coding: utf-8 -*-
+
+Xah's Misc Scripts build over the years since 1998.
+
+Most are one-time-use-throw-away scripts, for managing my website.
+
+Vast majority are text processing.
+
+There are {perl, python, emacs lisp} scripts. Language used changed over the years.
+
+Also the coding style changes. Many coding style are experimental. For example, in perl, during a period i always used “use strict”, but then abandoned it for a year just to see what happens. (nothing happens, actually. I don't really see it helps unless you are a perl beginner. Perl monger's wide-spread insistence on that is just clamor. If you really care, you better off not using perl. On one hand, the perl idiots say it's perl flexibility, yet they recommend always use “use strict”. Paradoxical.)
+
+Here's another example of style change. In perl, for a period i always use the 「q()」 form instead of 「''」 because the former has syntactical advantage, because it hold info of matching positions.
+
+Another example: in elisp, many variables are greek chars. (See: 
+〈Programing Style: Variable Naming: English Words Considered Harmful〉
+http://xahlee.info/comp/programing_variable_naming.html
+)
+
+See also:
+〈Xah on Programing Languages〉
+http://xahlee.info/comp/comp_lang.html
