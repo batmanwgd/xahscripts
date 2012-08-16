@@ -1,6 +1,6 @@
 -*- coding: utf-8 -*-
 
-Xah's Misc Scripts build over the years since 1998.
+Xah's misc scripts, accumulated over the years. Some dates back to 1998. (nothing to see here, move alone.)
 
 Most are one-time-use-throw-away scripts, for managing my website.
 
@@ -16,6 +16,32 @@ Another example: in elisp, many variables are greek chars. (See:
 〈Programing Style: Variable Naming: English Words Considered Harmful〉
 http://xahlee.info/comp/programing_variable_naming.html
 )
+
+Also, most of the scripts are heavily functional style, regardless of language.
+
+Also, they almost all sneer standard conventions. For example, lines runs more than 80 chars. See:
+〈Unix, RFC, Line Truncation〉
+http://xahlee.info/UnixResource_dir/writ/truncate_line.html
+
+(if you are one of those hacker type, dwell in slashdot, reddit, hackernews, or whatnot currently fashionable, and are stern about telling others the correct geek way, pythonic, keen on Programing Patterns, OOP, eXtreme Programing, Agile, unit testing, and spelling of “programming”,  …, go fuck yourself.)
+
+See:
+〈HTML5 Doctype, Validation, X-UA-Compatible, and Why Do I Hate Hackers〉
+http://xahlee.info/js/html5_validation_doctype.html
+
+〈Why Software Suck: Design Patterns Quackery〉
+http://xahlee.info/UnixResource_dir/writ/why_software_suck.html
+
+〈Are You Intelligent Enough to Understand HTML5?〉
+http://xahlee.info/UnixResource_dir/writ/html5_vs_intelligence.html
+
+〈Paul Graham's Infatuation with the Concept of Hacker〉 http://xahlee.info/comp/Paul_Graham_language_design.html
+
+〈What's the Difference Between Hacker and Tech Geeker?〉
+http://xahlee.info/comp/tech_geeker_vs_hacker.html
+
+〈What is a Tech Geeker?〉
+http://xahlee.info/UnixResource_dir/writ/tech_geeker.html
 
 See also:
 〈Xah on Programing Languages〉
