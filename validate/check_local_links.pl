@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # perl
-# 2004-09-21, …, 012-06-21
+# 2004-09-21, …, 2012-06-21
 
 # given a dir, check all local links and inline images in the html files there. Print a report.
 # XahLee.org

@@ -1,5 +1,7 @@
 -*- coding: utf-8 -*-
 
+2012-08-22
+
 * The Misc Scripts of a Effete Hotshot
 
 Xah's misc scripts, accumulated over the years. Some dates back to 1998. (you should move alone, really. This is a vanity READEME.)

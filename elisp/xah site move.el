@@ -70,8 +70,16 @@ Each entry is of the form (‹from› . ‹to›).
 
 ;; remove or regenerate ../wikipedia_links.html
 
-   ;; ("c:/Users/h3/web/xahlee_org/lbasic.css" . "c:/Users/h3/web/wordyenglish_com/lbasic.css")
-   ;; ("c:/Users/h3/web/xahlee_org/lit.css" . "c:/Users/h3/web/wordyenglish_com/lit.css")
+;; ("c:/Users/h3/web/xahlee_org/sex/is_YouTube_porn_fodder.html" . "c:/Users/h3/web/xahlee_org/Periodic_dosage_dir/is_YouTube_porn_fodder.html")
+
+;; http://xahlee.org/diklo/the_beauty_song.txt
+
+;; http://xahlee.org/Periodic_dosage_dir/skina/apocalypse_now.html
+
+
+;; ("c:/Users/h3/web/xahlee_org/Periodic_dosage_dir/lacru/index_batgirl_thumbnail.html" . "c:/Users/h3/web/xaharts_org/batgirl/index_batgirl_thumbnail.html")
+
+;; ("c:/Users/h3/web/xahlee_org/Periodic_dosage_dir/lacru/_p/bg/" . "c:/Users/h3/web/xaharts_org/batgirl/i/")
 
 ;; ("c:/Users/h3/web/xahlee_org/Periodic_dosage_dir/lanci/i/na_tinbe/" . "c:/Users/h3/web/xahlee_org/Periodic_dosage_dir/lanci/i/sw/")
 

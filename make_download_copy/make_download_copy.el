@@ -144,14 +144,15 @@ google_ad_height = 90;
 src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
 </script>" ""]
 
+["<div class=\"¤gitcafe\"><a href=\"http://gitcafe.com/\" rel=\"nofollow\">Try GitCafe</a></div>" ""]
+
 [
-"<div class=\"βshare\">
-<div id=\"fb-root\"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/en_US/all.js#xfbml=1\"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+"<div id=\"fb-root\"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/en_US/all.js#xfbml=1\"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
 <a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-via=\"ergoemacs\">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>
 <div class=\"g-plusone\" data-annotation=\"inline\" data-width=\"120\"></div><script>(function() { var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true; po.src = 'https://apis.google.com/js/plusone.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); })();</script>
 <div class=\"fb-like\" data-send=\"false\" data-layout=\"button_count\" data-width=\"60\" data-show-faces=\"true\"></div>
-<a href=\"http://www.reddit.com/submit\" onclick=\"window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false\"><img src=\"http://www.reddit.com/static/spreddit1.gif\" /></a>
-</div>"
+<a href=\"http://www.reddit.com/submit\" onclick=\"window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false\">😸</a>"
+
 ""
 ]
 
