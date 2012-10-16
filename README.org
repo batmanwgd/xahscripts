@@ -27,9 +27,7 @@ Also, they almost all sneer standard conventions. For example, lines runs more t
 〈Programing: the Harm of Hard-wrapping Lines〉
 http://xahlee.info/UnixResource_dir/writ/hard-wrap.html
 
-* Hatred of Prototypical “Hackers”
-
-(if you are one of those hacker type who dwell in slashdot, reddit, hackernews, or whatnot currently fashionable, and often sternly chide others online about the “correct practice”, fond of idiomatic perl, pythonic, unix philosophy, keen on Programing Patterns, OOP, eXtreme Programing, Agile, unit testing, and think that the correct way of spelling is “programming” with 2 “m” (please lookup a few dictionaries first),  …, go fuck yourself.)
+* anti-hackers manifesto
 
 See:
 〈HTML5 Doctype, Validation, X-UA-Compatible, and Why Do I Hate Hackers〉

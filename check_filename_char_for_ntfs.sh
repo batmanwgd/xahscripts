@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # 2009-06-26
 # check on not allowed file name chars on NTFS
 # run this in OS X or linux before copying to Windows
