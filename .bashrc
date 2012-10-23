@@ -113,7 +113,7 @@ function m { man $1; }
 function g { grep $1; }
 
 
-PS1='\[\e[0;32m\]\u@\H\[\e[m\] ◆ \[\e[1;34m\] \D{%Y-%m-%d} ◆ \A \[\e[m\] ◆ \w\n'
+PS1='◆ \[\e[0;32m\]\u@\H\[\e[m\]◆\[\e[1;34m\] \D{%Y-%m-%d} \A \[\e[m\]◆ \w\n◆ '
 
 
 # alias g="grep";
