@@ -1,3 +1,4 @@
+;; -*- coding: utf-8 -*-
 ; 2008-06-21
 
 ;; many emacs lisp manual files whose whole line is meta redirect.
