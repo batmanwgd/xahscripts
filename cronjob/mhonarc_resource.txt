@@ -1,0 +1,117 @@
+<!-- MHonArc resource file  -->
+<SORT>
+<TITLE>
+MHonArc test
+</TITLE>
+ 
+<TTITLE>
+MHonArc test (by thread)
+</TTITLE>
+ 
+<!--=== Index Page Customizations =========================================-->
+ 
+<!-- Have LISTBEGIN contain last updated information
+  -->
+<LISTBEGIN>
+<address>
+Last updated: $LOCALDATE$<br>
+$NUMOFMSG$ messages in chronological order<br>
+</address>
+<ul>
+<li><a href="$TIDXFNAME$">Thread Index</a></li>
+</ul>
+<p>
+Listing format is the following:
+<p>
+<ul><li> 
+<strong>Subject</strong>
+(# of follow-ups)
+<em>From</em><br>
+</ul>
+<p>
+<hr>
+<ul>
+</LISTBEGIN>
+ 
+ 
+<!-- A compact listing template
+  -->
+<LITEMPLATE>
+<li> 
+<strong>$SUBJECT:40$</strong>
+($NUMFOLUP$) <em>$FROMNAME$</em><br>
+</LITEMPLATE>
+ 
+<LISTEND>
+</ul>
+<p>
+<hr>
+<strong>
+<a href="http://foo.org/">Home</a>
+</strong>
+<p>
+</LISTEND>
+ 
+<!--=== Thread Index Page Customizations ==================================-->
+<THEAD>
+<address>
+Thread index<br>
+Last updated: $LOCALDATE$<br>
+$NUMOFMSG$ messages<br>
+</address>
+<ul>
+<li><a href="$IDXFNAME$">Main Index</a></li>
+</ul>
+<hr>
+</THEAD>
+ 
+<!--=== Message Customizations ============================================-->
+<EXCS override>
+apparently
+errors-to 
+followup
+forward 
+lines 
+message-id
+mime- 
+nntp- 
+originator 
+path 
+precedence 
+received 
+replied 
+return-path 
+status 
+via 
+x- 
+</EXCS>
+
+<LABELSTYLES>
+-default-
+subject:strong
+from:strong
+to:strong
+</LABELSTYLES>
+ 
+<FIELDSTYLES>
+-default-
+subject:strong
+from:strong
+to:strong
+keywords:em
+newsgroups:strong
+</FIELDSTYLES>
+ 
+<MSGHEAD>
+<address>
+MHonArc test archive
+</address>
+</MSGHEAD>
+ 
+<MSGFOOT>
+<strong>
+<a href="http://foo.org/">Home</a> |
+<a href="$IDXFNAME$">Main Index</a> |
+<a href="$TIDXFNAME$">Thread Index</a>
+</strong>
+</MSGFOOT>
