@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# bash
+
 # fix all permissions
 
 find . -type f -print0 | xargs -0 -l -i chmod 644 '{}'
