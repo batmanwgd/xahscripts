@@ -144,7 +144,7 @@ google_ad_height = 90;
 src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
 </script>" ""]
 
-["<div class=\"¤gitcafe\"><a href=\"http://gitcafe.com/\" rel=\"nofollow\">Try GitCafe</a></div>" ""]
+["<div class=\"¤gitcafe\"><a href=\"http://gitcafe.com/\" rel=\"nofollow\">GitCafe 中文</a></div>" ""]
 
 [
 "<div id=\"fb-root\"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/en_US/all.js#xfbml=1\"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>

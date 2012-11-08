@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
+
 # perl
 # delete files that's identical.
-# see
-# http://xahlee.org/perl-python/delete_dup_files.html
+# see http://xahlee.info/perl-python/delete_dup_files.html
 
 # Copyright 2005, 2011 by Xah Lee, XahLee.org. All rights reserved.
 

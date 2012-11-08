@@ -11,21 +11,40 @@ my_files  = [
 
 ]
 
-input_dir = "c:/Users/h3/web/wordyenglish_com/"
+input_dir = "c:/Users/h3/web/ergoemacs_org/emacs_manual/"
 
 min_level = 1 # files and dirs inside input_dir are level 1.
-max_level = 1 # inclusive
+max_level = 2 # inclusive
 
 print_no_change = False
 
 find_replace_list = [
 
 (
-
-u"""<link rel="stylesheet" type="text/css" href="http://xahlee.org/lbasic.css" />""",
-u"""<link rel="stylesheet" type="text/css" href="lbasic.css" />""",
-
+u"""</a>
+</div>""",
+u"""</a></div>""",
 ),
+
+(
+u"""◀ <a rel="previous" accesskey="p""",
+u"""◀<a rel="previous" accesskey="p""",
+),
+
+(
+u"""▲ <a rel="up" accesskey""",
+u"""▲<a rel="up" accesskey""",
+),
+
+(
+u"""▶ <a rel="next" accesskey="n""",
+u"""▶<a rel="next" accesskey="n""",
+),
+
+
+
+
+
 ]
 
 for x in find_replace_list:

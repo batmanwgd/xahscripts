@@ -4,7 +4,7 @@
 
 * The Misc Scripts of a Effete Hotshot
 
-Xah's misc scripts, accumulated over the years. Some dates back to 1998. (you should move alone, really. This is a vanity READEME.)
+Xah's misc scripts. They are accumulated over the years. Some dates back to 1998.
 
 Most are one-time-use-throw-away scripts, for managing my website. Most are trivial. Few are few hundred lines. Vast majority are text processing.
 
