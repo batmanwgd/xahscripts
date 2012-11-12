@@ -127,18 +127,15 @@ s/$pattern/$findReplaceH{$key1}/g);
                 # make a directory in the backup path, make a backup copy.
                 my $pathAdd = $currentDir; $pathAdd =~ s[$folderPath][];
                 mkpath("$backupRoot/$pathAdd", 0, 0777);
-                copy($currentFile, 
-"$backupRoot/$pathAdd/$currentFileName") or
-                    die "error: file copying file failed on 
-$currentFile\n$!";
+                copy($currentFile, "$backupRoot/$pathAdd/$currentFileName") or
+                    die "error: file copying file failed on $currentFile\n$!";
 
 # write to the original
                 # get the file mode.
                 my ($mode, $uid, $gid) = (stat($currentFile))[2,4,5];
 
                 # write out a new file.
-                if (not(open OUTFILE, ">$currentFile")) {die("Error 
-opening file: $!");};
+                if (not(open OUTFILE, ">$currentFile")) {die("Error opening file: $!");};
                 print OUTFILE $wholeFileString;
                 if (not(close(OUTFILE))) {die("Error closing file: $!");};
 
