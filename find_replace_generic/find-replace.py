@@ -11,36 +11,22 @@ my_files  = [
 
 ]
 
-input_dir = "c:/Users/h3/web/ergoemacs_org/emacs_manual/"
+input_dir = "c:/Users/h3/web/xahlee_info"
 
 min_level = 1 # files and dirs inside input_dir are level 1.
-max_level = 2 # inclusive
+max_level = 6 # inclusive
 
 print_no_change = False
-
+
 find_replace_list = [
 
 (
-u"""</a>
-</div>""",
-u"""</a></div>""",
-),
+u"""keyboarding.html">⌨</a>〗
+<form action""",
 
-(
-u"""◀ <a rel="previous" accesskey="p""",
-u"""◀<a rel="previous" accesskey="p""",
+u"""keyboarding.html">⌨</a>◆<a href="http://xahlee.info/comp/unicode_index.html">Unicode ♥</a>〗
+<form action""",
 ),
-
-(
-u"""▲ <a rel="up" accesskey""",
-u"""▲<a rel="up" accesskey""",
-),
-
-(
-u"""▶ <a rel="next" accesskey="n""",
-u"""▶<a rel="next" accesskey="n""",
-),
-
 
 
 

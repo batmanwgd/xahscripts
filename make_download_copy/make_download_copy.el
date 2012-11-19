@@ -220,7 +220,6 @@ amazon_ad_tag .+?</script>
             (delete-region p1 p2)
             (insert (compute-url-from-relative-link originalFilePath hrefValue webRoot "ergoemacs.org"))
             )))
-
       (goto-char 1)
       (while (search-forward-regexp "<img src[[:blank:]]*=[[:blank:]]*" nil t)
         (forward-char 1)

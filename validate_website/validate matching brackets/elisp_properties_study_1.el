@@ -1,7 +1,6 @@
+;; -*- coding: utf-8 -*-
 ;; 2011-10-01
-
 ooooooooooo
-
 
 (defun my-operate-button (ξevent)
   ""
@@ -22,7 +21,7 @@ ooooooooooo
 
 
 
-(add-text-properties 17 28
+(add-text-properties 40 80
  '(mouse-face highlight help-echo "mouse-2: visit this file in other window"))
 
 λ
@@ -52,8 +51,8 @@ ooooooooooo
 
 (text-properties-at 1)
 
-(put-text-property 28 50 'face 'font-lock-comment-delimiter-face )
-(put-text-property 28 50 'fontified t )
+(put-text-property 1 80 'face 'font-lock-comment-delimiter-face )
+(put-text-property 40 80 'fontified t )
 
 (add-text-properties 28 50
                      '(mouse-face highlight
