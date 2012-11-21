@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # perl
 
 # 2007-11-09. Status abandoned.
