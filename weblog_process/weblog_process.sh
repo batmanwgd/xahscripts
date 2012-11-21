@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # 2008-04-16 , 2010-08-09
 # Xah Lee ∑ http://xahlee.org/
 
