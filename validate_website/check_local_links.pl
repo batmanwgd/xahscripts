@@ -10,9 +10,11 @@ use Data::Dumper;
 use File::Find;
 use File::Basename;
 
-my $inDirPath = q{c:/Users/h3/web/xahlee_org/diklo/xx23/ergoemacs_org/};
 my $inDirPath = q{c:/Users/h3/web/ergoemacs_org/};
+my $inDirPath = q{c:/Users/h3/web/wordyenglish_com/chinese};
 my $inDirPath = q{c:/Users/h3/web/};
+
+my $webRootPath = q{c:/Users/h3/web};
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
@@ -58,21 +60,21 @@ sub process_file {
       my $orig_link_value = $_;
       my $pathToCheck = $_;
 
-      $pathToCheck =~ s{^http://ergoemacs\.org/}{c:/Users/h3/web/ergoemacs_org/};
-      $pathToCheck =~ s{^http://wordyenglish\.com/}{c:/Users/h3/web/wordyenglish_com/};
-      $pathToCheck =~ s{^http://xaharts\.org/}{c:/Users/h3/web/xaharts_org/};
-      $pathToCheck =~ s{^http://xahlee\.info/}{c:/Users/h3/web/xahlee_info/};
-      $pathToCheck =~ s{^http://xahlee\.org/}{c:/Users/h3/web/xahlee_org/};
-      $pathToCheck =~ s{^http://xahmusic\.org/}{c:/Users/h3/web/xahmusic_org/};
-      $pathToCheck =~ s{^http://xahporn\.org/}{c:/Users/h3/web/xahporn_org/};
-      $pathToCheck =~ s{^http://xahsl\.org/}{c:/Users/h3/web/xahsl_org/};
+      $pathToCheck =~ s{^http://ergoemacs\.org/}{$webRootPath/ergoemacs_org/};
+      $pathToCheck =~ s{^http://wordyenglish\.com/}{$webRootPath/wordyenglish_com/};
+      $pathToCheck =~ s{^http://xaharts\.org/}{$webRootPath/xaharts_org/};
+      $pathToCheck =~ s{^http://xahlee\.info/}{$webRootPath/xahlee_info/};
+      $pathToCheck =~ s{^http://xahlee\.org/}{$webRootPath/xahlee_org/};
+      $pathToCheck =~ s{^http://xahmusic\.org/}{$webRootPath/xahmusic_org/};
+      $pathToCheck =~ s{^http://xahporn\.org/}{$webRootPath/xahporn_org/};
+      $pathToCheck =~ s{^http://xahsl\.org/}{$webRootPath/xahsl_org/};
 
       if ( $pathToCheck !~ m[^http:|^https:|^mailto:|^irc:|^ftp:|^javascript:]i) {
         $pathToCheck =~ s/#.+//; # delete url fragment identifier e.g. 「http://example.com/index.html#a」
         $pathToCheck =~ s/%20/ /g; # decode percent encode url
         $pathToCheck =~ s/%27/'/g;
 
-        if ( $pathToCheck !~ m{c:/Users/h3/web/} ) {
+        if ( $pathToCheck !~ m{$webRootPath} ) {
           $pathToCheck = qq[$File::Find::dir/$pathToCheck]; # relative path. prepend dir
         }
         if (not -e $pathToCheck) {

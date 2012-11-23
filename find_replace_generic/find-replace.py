@@ -11,7 +11,7 @@ my_files  = [
 
 ]
 
-input_dir = "c:/Users/h3/web/xahlee_info"
+input_dir = "c:/Users/h3/web"
 
 min_level = 1 # files and dirs inside input_dir are level 1.
 max_level = 6 # inclusive
@@ -21,11 +21,13 @@ print_no_change = False
 find_replace_list = [
 
 (
-u"""keyboarding.html">⌨</a>〗
-<form action""",
+u"""<kbd>⇞ Page↑</kbd>""",
+u"""<kbd>⇞ Page △</kbd>""",
+),
 
-u"""keyboarding.html">⌨</a>◆<a href="http://xahlee.info/comp/unicode_index.html">Unicode ♥</a>〗
-<form action""",
+(
+u"""<kbd>Page ⇟</kbd>""",
+u"""<kbd>⇟ Page ▽</kbd>""",
 ),
 
 
