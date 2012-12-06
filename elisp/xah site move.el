@@ -35,9 +35,9 @@
 (defvar ξ-inputPath nil "Input dir. Must end with a slash")
 (setq ξ-inputPath "c:/Users/h3/web/xahporn_org/" )
 (setq ξ-inputPath "c:/Users/h3/web/wordyenglish_com/" )
-(setq ξ-inputPath "c:/Users/h3/web/ergoemacs_org/" )
 (setq ξ-inputPath "c:/Users/h3/web/xahlee_org/" )
 (setq ξ-inputPath "c:/Users/h3/web/" )
+(setq ξ-inputPath "c:/Users/h3/web/ergoemacs_org/" )
 (setq ξ-inputPath "c:/Users/h3/web/xahlee_info/" )
 
 (defvar ξ-writeToFile-p nil "")
@@ -109,6 +109,9 @@ Each entry is of the form (‹from› . ‹to›).
 
 (defvar ξ-movedFromPaths nil "The first elements of ξ-moveFromToList.")
 (setq ξ-movedFromPaths (vconcat (mapcar (lambda (ξx) (car ξx) ) ξ-moveFromToList )) )
+
+(defvar ξ-backup-filename-suffix nil "")
+(setq ξ-backup-filename-suffix (concat "~s" (format-time-string "%Y%m%d_%H%M%S") "~"))
 
 
 
@@ -237,7 +240,7 @@ t
         (when ξchangeNecessary-p
           (princ (format "• %s\n" (replace-regexp-in-string "^c:/Users/h3/" "~/" βhostFilePath) ) )
           (when βwriteToFile-p
-            (copy-file βhostFilePath (concat βhostFilePath "~o~") t) ; backup
+            (copy-file βhostFilePath (concat βhostFilePath ξ-backup-filename-suffix) t) ; backup
             (write-region (point-min) (point-max) βhostFilePath)
             )  )) ) ))
 

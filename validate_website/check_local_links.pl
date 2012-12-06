@@ -10,8 +10,8 @@ use Data::Dumper;
 use File::Find;
 use File::Basename;
 
-my $inDirPath = q{c:/Users/h3/web/ergoemacs_org/};
 my $inDirPath = q{c:/Users/h3/web/wordyenglish_com/chinese};
+my $inDirPath = q{c:/Users/h3/web/ergoemacs_org/};
 my $inDirPath = q{c:/Users/h3/web/};
 
 my $webRootPath = q{c:/Users/h3/web};

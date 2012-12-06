@@ -81,10 +81,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -106,20 +103,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-alias l='ls -alF --color'
 
-function acs { apt-cache search $1; }
-function m { man $1; }
-function g { grep $1; }
 
 
 PS1='◆ \[\e[0;32m\]\u@\H\[\e[m\]◆\[\e[1;34m\] \D{%Y-%m-%d} \A \[\e[m\]◆ \w\n◆ '
 
-
-# alias g="grep";
-# alias m="man";
-# alias acs="apt-cache search ";
-# alias py3='c:/Python32/python.exe'
+alias l='ls -AlF --color --time-style=long-iso'
 
 # alias py3='c:/Python32/python.exe'
-# alias emacs="~/Downloads/emacs-24.2/src/emacs";

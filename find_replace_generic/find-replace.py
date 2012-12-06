@@ -11,29 +11,36 @@ my_files  = [
 
 ]
 
-input_dir = "c:/Users/h3/web"
+input_dir = "c:/Users/h3/web/"
 
 min_level = 1 # files and dirs inside input_dir are level 1.
 max_level = 6 # inclusive
 
 print_no_change = False
-
+
+
 find_replace_list = [
 
-(
-u"""<kbd>⇞ Page↑</kbd>""",
-u"""<kbd>⇞ Page △</kbd>""",
-),
 
 (
-u"""<kbd>Page ⇟</kbd>""",
-u"""<kbd>⇟ Page ▽</kbd>""",
+u"""<pre class="lycif">""",
+u"""<pre class="lyrics-info">""",
 ),
 
+# (
+# u"""<pre class="lyc">""",
+# u"""<pre class="lyrics-α">""",
+# ),
 
 
+# (
+# u"""<div class="rltd">""",
+# u"""<div class="related-α">""",
+# ),
 
 ]
+
+
 
 for x in find_replace_list:
    if len(x) != 2:
