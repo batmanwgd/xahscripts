@@ -21,7 +21,6 @@
 (require 'find-lisp)
 
 
-;; § ----------------------------------------
 ;;;; functions
 
 ;; (compute-url-from-relative-link "c:/Users/h3/web/xahlee_org/emacs/emacs.html" "../Periodic_dosage_dir/skami_prosa.html" "c:/Users/h3/web/xahlee_org/" "xahlee.org")
@@ -152,7 +151,15 @@ src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
 <div class=\"g-plusone\" data-annotation=\"inline\" data-width=\"120\"></div><script>(function() { var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true; po.src = 'https://apis.google.com/js/plusone.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); })();</script>
 <div class=\"fb-like\" data-send=\"false\" data-layout=\"button_count\" data-width=\"60\" data-show-faces=\"true\"></div>
 <a href=\"http://www.reddit.com/submit\" onclick=\"window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false\">😸</a>"
+""
+]
 
+[
+"<div id=\"fb-root\"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/en_US/all.js#xfbml=1\"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-via=\"xah_lee\">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>
+<div class=\"g-plusone\" data-annotation=\"inline\" data-width=\"120\"></div><script>(function() { var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true; po.src = 'https://apis.google.com/js/plusone.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); })();</script>
+<div class=\"fb-like\" data-send=\"false\" data-layout=\"button_count\" data-width=\"60\" data-show-faces=\"true\"></div>
+<a href=\"http://www.reddit.com/submit\" onclick=\"window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false\">😸</a>"
 ""
 ]
 
@@ -160,6 +167,10 @@ src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
 "<div id=\"disqus_thread\"></div><script>(function(){var dsq=document.createElement('script');dsq.type='text/javascript';dsq.async=true;dsq.src='http://xahlee.disqus.com/embed.js';(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);})();</script><a href=\"http://disqus.com\" class=\"dsq-brlink\">blog comments powered by <span class=\"logo-disqus\">Disqus</span></a>"
 ""
 ]
+
+[
+"<div class=\"ppp8745\"><form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"_s-xclick\" /><input type=\"hidden\" name=\"hosted_button_id\" value=\"Y4V2F8TA949M2\" /><input type=\"image\" src=\"https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif\" name=\"submit\" alt=\"PayPal\" /><img src=\"https://www.paypal.com/en_US/i/scr/pixel.gif\" alt=\"\" width=\"1\" height=\"1\" /></form></div>"
+""]
 
 ]
 )
@@ -177,6 +188,12 @@ src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
 ;; </script>"
 ;; ""]
 
+;; [
+;; "<span class=\"xsignet\">∑</span> .+?</a>〗
+;; <form action=\"http://www.google.com\" id=\"cse-search-box\">"
+;; "<form action=\"http://www.google.com\" id=\"cse-search-box\">"
+;; ]
+
 ["<div class=\"βds\">[[:ascii:]]+?</div>" ""]
 
 ["<div class=\"¤xd\">[^<]+?</div>" ""]
@@ -189,8 +206,6 @@ src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
 [ "<script charset=\"utf-8\" src=\"http://ws.amazon.com[^<]+?</script>" ""]
 
 ["<div class=\"¤tla\"><a href=\"\\([^\"]+?\\)\">\\([^<]+?\\)</a></div>" ""]
-
-["<div class=\"ppp8745\"><form .+?</div></form></div>" ""]
 
 ["<script><!--
 amazon_ad_tag .+?</script>
@@ -218,8 +233,12 @@ amazon_ad_tag .+?</script>
           (setq default-directory (file-name-directory fPath) )
           (when (not (file-exists-p (elt (split-uri-hashmark hrefValue) 0)))
             (delete-region p1 p2)
-            (insert (compute-url-from-relative-link originalFilePath hrefValue webRoot "ergoemacs.org"))
-            )))
+            (insert 
+             ;; (xahsite-filepath-to-href-value (xahsite-href-value-to-filepath hrefValue originalFilePath) originalFilePath)
+             (compute-url-from-relative-link originalFilePath hrefValue webRoot (xahsite-get-domain-of-local-file-path originalFilePath))
+)
+)))
+
       (goto-char 1)
       (while (search-forward-regexp "<img src[[:blank:]]*=[[:blank:]]*" nil t)
         (forward-char 1)
@@ -232,7 +251,7 @@ amazon_ad_tag .+?</script>
           (setq default-directory (file-name-directory fPath) )
           (when (not (file-exists-p hrefValue))
             (delete-region p1 p2)
-            (insert (compute-url-from-relative-link originalFilePath hrefValue webRoot "ergoemacs.org"))
+            (insert (compute-url-from-relative-link originalFilePath hrefValue webRoot (xahsite-get-domain-of-local-file-path originalFilePath)))
             )))
       ) ))
 
@@ -295,7 +314,6 @@ if exist, it'll be overridden.
 
 
 
-;; § ----------------------------------------
 ;; programing
 
 ;; (make-downloadable-copy
@@ -306,12 +324,12 @@ if exist, it'll be overridden.
 ;;   ]
 ;;  "~/web/xahlee_org/diklo/xah_emacs_tutorial/")
 
-(make-downloadable-copy
- "~/web/"
- [
-  "~/web/ergoemacs_org/"
-  ]
- "~/web/xahlee_org/diklo/xx23/")
+;; (make-downloadable-copy
+;;  "~/web/"
+;;  [
+;;   "~/web/ergoemacs_org/"
+;;   ]
+;;  "~/web/xahlee_org/diklo/xx23/")
 
 ;; (make-downloadable-copy
 ;;  "c:/Users/h3/web/xahlee_org/"
@@ -381,4 +399,10 @@ if exist, it'll be overridden.
 ;;  "~/web/xahlee_org/"
 ;;  [ "~/web/xahlee_org/SpecialPlaneCurves_dir/" ]
 ;;  "~/web/xahlee_org/diklo/plane_curves_aw/")
+
+(make-downloadable-copy
+ "~/web/xahlee_info/"
+ [ "~/web/xahlee_info/SpecialPlaneCurves_dir/_curves_robert_yates/" ]
+"~/web/xahlee_org/diklo/xx_yates"
+)
 
