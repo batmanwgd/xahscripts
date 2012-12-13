@@ -14,7 +14,6 @@
 ;; ∑ http://xahlee.org/
 
 
-;; § ────────────────────
 ;;;; user level globle parameters
 
 ;; command line args (inputs): ξ-inputDir
@@ -28,7 +27,7 @@
 ;; Does not assume the environment variable HOME is set. No other assumption made.
 
 (defvar ξ-inputDir "" "The dir to process.")
-(setq ξ-inputDir "c:/Users/h3/web/xahlee_org/")
+(setq ξ-inputDir "c:/Users/h3/web/xahlee_info/")
 (setq ξ-inputDir "c:/Users/h3/web/")
 
 
@@ -60,7 +59,6 @@ This number is not necessarily the length of ξ-inputDir. It can be smaller for 
 (defconst ξ-siteFooterFilePath (fullpath-relative-to-current-file "site_report_wikipedia_links_footer.txt") "The footer text for xahlee.org.")
 
 
-;; § ────────────────────
 ;;;; loading package. global vars.
 
 (require 'find-lisp)
@@ -75,12 +73,11 @@ This number is not necessarily the length of ξ-inputDir. It can be smaller for 
 (setq wpdata-list '())
 
 
-;; § ────────────────────
 ;;;; subroutines
 
 (defun add-wplink-to-hash (filePath hashTableVar)
   "Get links in filePath and add it to hash table at the variable hashTableVar."
-  (let (url)
+  (let ( ξwp-url)
     (with-temp-buffer
       (insert-file-contents filePath nil nil nil t)
       (goto-char 1)
@@ -88,16 +85,17 @@ This number is not necessarily the length of ξ-inputDir. It can be smaller for 
           (re-search-forward
            "href=\"\\(http://..\\.wikipedia\\.org/[^\"]+\\)\">\\([^<]+\\)</a>"
            nil t)
+        (setq ξwp-url (match-string 1))
         (when (and
-               (match-string 0) ; if url found
-               (not (string-match "=" (match-string 1) )) ; do not includes links that are not Wikipedia articles. e.g. user profile pages, edit history pages, search result pages
+               ξwp-url ; if url found
+               (not (string-match "=" ξwp-url )) ; do not includes links that are not Wikipedia articles. e.g. user profile pages, edit history pages, search result pages
+               (not (string-match "%..%.." ξwp-url )) ; do not include links that's lots of unicode
                )
-          (setq url (match-string 1)) ; set url to matched string
 
           ;; if exist in hash, prepend to existing entry, else just add
-          (if (gethash url hashTableVar)
-              (puthash url (cons filePath (gethash url hashTableVar)) hashTableVar) ; not using add-to-list because each Wikipedia url likely only appear once per file
-            (puthash url (list filePath) hashTableVar)) )) ) ) )
+          (if (gethash ξwp-url hashTableVar)
+              (puthash ξwp-url (cons filePath (gethash ξwp-url hashTableVar)) hashTableVar) ; not using add-to-list because each Wikipedia URL likely only appear once per file
+            (puthash ξwp-url (list filePath) hashTableVar)) )) ) ) )
 
 (defun ξ-print-each (ele)
   "Print each item. ELE is of the form (url (list filepath1 filepath2 …)).
@@ -123,7 +121,6 @@ Print it like this:
   )
 
 
-;; § ────────────────────
 
 (defun wikipedia-url-to-linktext (url)
   "Return the title of a Wikipedia link.
@@ -150,7 +147,6 @@ becomes
 )
 
 
-;; § ────────────────────
 ;;;; main
 
 ;; fill wpdata-hash
