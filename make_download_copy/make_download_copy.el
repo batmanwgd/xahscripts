@@ -103,13 +103,9 @@ dir/files starting with xx
 (defun remove-ads-scripts-in-file (fPath originalFilePath webRoot)
   "Modify the HTML file at fPath, to make it ready for download bundle.
 
-This function change local links to “http://” links,
-Delete the google javascript snippet, and other small changes,
-so that the file is nicer to be viewed off-line at some computer
-without the entire xahlee.org's web dir structure.
+This function change local links to “http://” links, Delete the google javascript snippet, and other small changes, so that the file is nicer to be viewed off-line at some computer without the entire xahlee.org's web dir structure.
 
-The google javascript is the Google Analytics webbug that tracks
- web stat to xahlee.org.
+The google javascript is the Google Analytics webbug that tracks web stat to xahlee.org.
 
 fPath is the full path to the html file that will be processed.
 originalFilePath is full path to the “same” file in the original web structure.
@@ -316,13 +312,15 @@ if exist, it'll be overridden.
 
 ;; programing
 
-;; (make-downloadable-copy
-;;  "~/web/ergoemacs_org/"
-;;  [
-;;   "~/web/ergoemacs_org/emacs/"
-;;   "~/web/ergoemacs_org/emacs_manual/"
-;;   ]
-;;  "~/web/xahlee_org/diklo/xah_emacs_tutorial/")
+(make-downloadable-copy
+ "~/web/ergoemacs_org/"
+ [
+  "~/web/ergoemacs_org/emacs/"
+  "~/web/ergoemacs_org/emacs_manual/"
+  "~/web/ergoemacs_org/misc/"
+  "~/web/ergoemacs_org/i/"
+  ]
+ "~/web/xahlee_org/diklo/xah_emacs_tutorial_2012-12-17/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/"
@@ -400,9 +398,9 @@ if exist, it'll be overridden.
 ;;  [ "~/web/xahlee_org/SpecialPlaneCurves_dir/" ]
 ;;  "~/web/xahlee_org/diklo/plane_curves_aw/")
 
-(make-downloadable-copy
- "~/web/xahlee_info/"
- [ "~/web/xahlee_info/SpecialPlaneCurves_dir/_curves_robert_yates/" ]
-"~/web/xahlee_org/diklo/xx_yates"
-)
+;; (make-downloadable-copy
+;;  "~/web/xahlee_info/"
+;;  [ "~/web/xahlee_info/SpecialPlaneCurves_dir/_curves_robert_yates/" ]
+;; "~/web/xahlee_org/diklo/xx_yates"
+;; )
 

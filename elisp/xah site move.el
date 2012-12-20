@@ -36,9 +36,9 @@
 (setq ξ-inputPath "c:/Users/h3/web/xahporn_org/" )
 (setq ξ-inputPath "c:/Users/h3/web/wordyenglish_com/" )
 (setq ξ-inputPath "c:/Users/h3/web/xahlee_org/" )
-(setq ξ-inputPath "c:/Users/h3/web/" )
 (setq ξ-inputPath "c:/Users/h3/web/ergoemacs_org/" )
 (setq ξ-inputPath "c:/Users/h3/web/xahlee_info/" )
+(setq ξ-inputPath "c:/Users/h3/web/" )
 
 (defvar ξ-writeToFile-p nil "")
 (setq ξ-writeToFile-p t)

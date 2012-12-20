@@ -12,9 +12,12 @@ use File::Basename;
 
 my $inDirPath = q{c:/Users/h3/web/wordyenglish_com/chinese};
 my $inDirPath = q{c:/Users/h3/web/ergoemacs_org/};
+my $inDirPath = q{c:/Users/h3/web/xahlee_org/diklo/xah_emacs_tutorial_2012-12-17/};
 my $inDirPath = q{c:/Users/h3/web/};
 
+
 my $webRootPath = q{c:/Users/h3/web};
+
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
