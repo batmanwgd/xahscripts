@@ -81,8 +81,8 @@ Note: no consideration is taken about links, alias, or file perms."
           (concat sourcedir "/" ξx) destdir) ) ) )
    (directory-files sourcedir) ) )
 
-(defun xx-delete-temp-files (mydir)
-  "delete some temp files and dirs…
+(defun delete-xx-files (mydir)
+  "Delete some files and dirs…
 dir/files starting with xx
  ends with ~
  #…#
@@ -112,108 +112,13 @@ originalFilePath is full path to the “same” file in the original web structu
 originalFilePath is used to construct new relative links."
   (let ( bds p1 p2 hrefValue default-directory
              (case-fold-search nil)
-)
+             )
 
     (with-temp-file fPath
       (insert-file-contents fPath)
-(goto-char 1)
+      (goto-char 1)
 
-;; ;; delete Google Analytic tracker code
-;; (search-forward "<script>var _gaq = _gaq " nil "NOERROR")
-;; (setq p1 (line-beginning-position) )
-;; (search-forward "</script>")
-;; (setq p2 (point) )
-;; (delete-region p1 p2 )
- 
-(replace-pairs-region  (point-min) (point-max)
-[
-["<script><!--
-google_ad_client = \"pub-5125343095650532\";
-/* 728x90, created 8/12/09 */
-google_ad_slot = \"8521101965\";
-google_ad_width = 728;
-google_ad_height = 90;
-//-->
-</script>
-<script type=\"text/javascript\"
-src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
-</script>" ""]
-
-["<div class=\"¤gitcafe\"><a href=\"http://gitcafe.com/\" rel=\"nofollow\">GitCafe 中文</a></div>" ""]
-
-[
-"<div id=\"fb-root\"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/en_US/all.js#xfbml=1\"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
-<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-via=\"ergoemacs\">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>
-<div class=\"g-plusone\" data-annotation=\"inline\" data-width=\"120\"></div><script>(function() { var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true; po.src = 'https://apis.google.com/js/plusone.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); })();</script>
-<div class=\"fb-like\" data-send=\"false\" data-layout=\"button_count\" data-width=\"60\" data-show-faces=\"true\"></div>
-<a href=\"http://www.reddit.com/submit\" onclick=\"window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false\">😸</a>"
-""
-]
-
-[
-"<div id=\"fb-root\"></div><script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = \"//connect.facebook.net/en_US/all.js#xfbml=1\"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
-<a href=\"https://twitter.com/share\" class=\"twitter-share-button\" data-via=\"xah_lee\">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=\"//platform.twitter.com/widgets.js\";fjs.parentNode.insertBefore(js,fjs);}}(document,\"script\",\"twitter-wjs\");</script>
-<div class=\"g-plusone\" data-annotation=\"inline\" data-width=\"120\"></div><script>(function() { var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true; po.src = 'https://apis.google.com/js/plusone.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); })();</script>
-<div class=\"fb-like\" data-send=\"false\" data-layout=\"button_count\" data-width=\"60\" data-show-faces=\"true\"></div>
-<a href=\"http://www.reddit.com/submit\" onclick=\"window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false\">😸</a>"
-""
-]
-
-[
-"<div id=\"disqus_thread\"></div><script>(function(){var dsq=document.createElement('script');dsq.type='text/javascript';dsq.async=true;dsq.src='http://xahlee.disqus.com/embed.js';(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);})();</script><a href=\"http://disqus.com\" class=\"dsq-brlink\">blog comments powered by <span class=\"logo-disqus\">Disqus</span></a>"
-""
-]
-
-[
-"<div class=\"ppp8745\"><form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"_s-xclick\" /><input type=\"hidden\" name=\"hosted_button_id\" value=\"Y4V2F8TA949M2\" /><input type=\"image\" src=\"https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif\" name=\"submit\" alt=\"PayPal\" /><img src=\"https://www.paypal.com/en_US/i/scr/pixel.gif\" alt=\"\" width=\"1\" height=\"1\" /></form></div>"
-""]
-
-]
-)
-
-(replace-regexp-pairs-region (point-min) (point-max)
- [
-
-;; Google analytics tracker
-[ "<script>var _gaq = .+?</script>" "" ]
-
-;; [ "<script><!--\ngoogle_ad_client[[:ascii:]]+?</script>" "" ]
-
-;; ["<script type=\"text/javascript\"
-;; src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">
-;; </script>"
-;; ""]
-
-;; [
-;; "<span class=\"xsignet\">∑</span> .+?</a>〗
-;; <form action=\"http://www.google.com\" id=\"cse-search-box\">"
-;; "<form action=\"http://www.google.com\" id=\"cse-search-box\">"
-;; ]
-
-["<div class=\"βds\">[[:ascii:]]+?</div>" ""]
-
-["<div class=\"¤xd\">[^<]+?</div>" ""]
-
-["<div class=\"¤\">[^<]+?</div>" ""]
-
-;; 1 and 1
-["<div class=\"¤1n1\">[^<]+?</div>" ""]
-
-[ "<script charset=\"utf-8\" src=\"http://ws.amazon.com[^<]+?</script>" ""]
-
-["<div class=\"¤tla\"><a href=\"\\([^\"]+?\\)\">\\([^<]+?\\)</a></div>" ""]
-
-["<script><!--
-amazon_ad_tag .+?</script>
-<script src=\"http://www.assoc-amazon.com/s/ads.js\"></script>" 
-  ""]
-
-;; ["<div id=\"disqus_thread\"></div><script>.+?</script><a href.+Disqus</span></a>" ""]
-;; ["<footer>.+?</footer>" ""]
-
-["\n\n+" "\n\n"]
-  ]
-                                   t t)
+      (xahsite-remove-ads (point-min) (point-max))
 
       ;; go thru each link, if the link is local, then check if the file exist. if not, replace the link with proper http://xahlee.org/ url
       (goto-char 1)
@@ -293,7 +198,7 @@ if exist, it'll be overridden.
     (copy-file "c:/Users/h3/web/xahlee_org/lit.css" ξdestDir)
     (copy-directory "c:/Users/h3/web/xahlee_org/ics/" (concat ξdestDir "ics/"))
 
-    (xx-delete-temp-files ξdestDir)
+    (delete-xx-files ξdestDir)
 
     ;; change local links to “http://” links. Delete the google javascript snippet, and other small fixes.
     (princ "Removing javascript etc in files…\n")
@@ -312,15 +217,15 @@ if exist, it'll be overridden.
 
 ;; programing
 
-(make-downloadable-copy
- "~/web/ergoemacs_org/"
- [
-  "~/web/ergoemacs_org/emacs/"
-  "~/web/ergoemacs_org/emacs_manual/"
-  "~/web/ergoemacs_org/misc/"
-  "~/web/ergoemacs_org/i/"
-  ]
- "~/web/xahlee_org/diklo/xah_emacs_tutorial_2012-12-17/")
+;; (make-downloadable-copy
+;;  "~/web/ergoemacs_org/"
+;;  [
+;;   "~/web/ergoemacs_org/emacs/"
+;;   "~/web/ergoemacs_org/emacs_manual/"
+;;   "~/web/ergoemacs_org/misc/"
+;;   "~/web/ergoemacs_org/i/"
+;;   ]
+;;  "~/web/xahlee_org/diklo/xxxn_xah_emacs_tutorial/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/"
@@ -362,9 +267,9 @@ if exist, it'll be overridden.
 
 
 ;; (make-downloadable-copy
-;;  "~/web/xahlee_org/"
-;;  [ "~/web/xahlee_org/PageTwo_dir/Vocabulary_dir/" ]
-;;  "~/web/xahlee_org/diklo/vocabulary/")
+;;  "~/web/wordyenglish_com/"
+;;  [ "~/web/wordyenglish_com/words/" ]
+;;  "~/web/xahlee_org/diklo/xxwords/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/xahlee_org/"
@@ -378,10 +283,11 @@ if exist, it'll be overridden.
 ;;  [ "~/web/xahlee_org/p/titus/" ]
 ;;  "~/web/xahlee_org/diklo/titus/")
 
-;; (make-downloadable-copy
-;;  "~/web/xahlee_org/"
-;;  [ "~/web/xahlee_org/p/monkey_king/" ]
-;;  "~/web/xahlee_org/diklo/monkey_king/")
+(make-downloadable-copy
+ "~/web/wordyenglish_com/"
+ [
+ "~/web/wordyenglish_com/monkey_king/" ]
+ "~/web/xahlee_org/diklo/monkey_king/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/xahlee_org/"

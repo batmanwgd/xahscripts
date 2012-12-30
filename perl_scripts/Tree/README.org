@@ -1,8 +1,0 @@
--*- coding: utf-8 -*-
-
-2012-11-04
-
-these files dates around 2000 to 2003.
-
-They are tree processing functions, implementing the ones in Mathematica.
-

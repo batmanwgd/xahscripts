@@ -12,8 +12,10 @@ use File::Basename;
 
 my $inDirPath = q{c:/Users/h3/web/wordyenglish_com/chinese};
 my $inDirPath = q{c:/Users/h3/web/ergoemacs_org/};
-my $inDirPath = q{c:/Users/h3/web/xahlee_org/diklo/xah_emacs_tutorial_2012-12-17/};
+
+my $inDirPath = q{c:/Users/h3/web/xahlee_org/diklo/monkey_king_2012-12-24_29013/};
 my $inDirPath = q{c:/Users/h3/web/};
+
 
 
 my $webRootPath = q{c:/Users/h3/web};
