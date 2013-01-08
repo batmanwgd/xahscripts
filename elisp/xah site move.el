@@ -40,7 +40,7 @@
 (setq ξ-inputPath "c:/Users/h3/web/xahlee_info/" )
 (setq ξ-inputPath "c:/Users/h3/web/" )
 
-(defvar ξ-writeToFile-p nil "")
+(defvar ξ-writeToFile-p nil "whether to write to file.")
 (setq ξ-writeToFile-p t)
 
 (defvar ξ-debug-p nil "Boolean. Print debug info.")
@@ -71,6 +71,10 @@ Each entry is of the form (‹from› . ‹to›).
 ;; remove or regenerate ../wikipedia_links.html
 
 ;; ("c:/Users/h3/web/xahlee_org/sex/is_YouTube_porn_fodder.html" . "c:/Users/h3/web/xahlee_org/Periodic_dosage_dir/is_YouTube_porn_fodder.html")
+
+;; ("c:/Users/h3/web/xaharts_org/funny/Microsoft_linux_ad.html" . 
+;; "c:/Users/h3/web/xahlee_info/funny/Microsoft_linux_ad.html"
+;; )
 
 ;; http://xahlee.org/diklo/the_beauty_song.txt
 
