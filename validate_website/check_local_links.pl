@@ -10,10 +10,17 @@ use Data::Dumper;
 use File::Find;
 use File::Basename;
 
-# c:/Users/h3/web/
+# normal Microsoft Windows style path
+# "c:/Users/h3/web/"
+# Cygwin style path
+# "/cygdrive/c/Users/h3/web"
+# NTFS on linux path
+# "/media/OS/Users/h3/web/"
+# normal linux path
+# "/home/xah/web/"
+
 my $inDirPath = q{/media/OS/Users/h3/web/};
 my $inDirPath = q{/home/xah/web/};
-
 
 my $webRootPath = q{/media/OS/Users/h3/web};
 my $webRootPath = q{/home/xah/web};
