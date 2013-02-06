@@ -19,10 +19,8 @@ use File::Basename;
 # normal linux path
 # "/home/xah/web/"
 
-my $inDirPath = q{/media/OS/Users/h3/web/};
 my $inDirPath = q{/home/xah/web/};
 
-my $webRootPath = q{/media/OS/Users/h3/web};
 my $webRootPath = q{/home/xah/web};
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
