@@ -110,4 +110,3 @@ PS1='◆ \[\e[0;32m\]\u@\H\[\e[m\]◆\[\e[1;34m\] \D{%Y-%m-%d} \A \[\e[m\]◆ \w
 
 alias l='ls -AlF --color --time-style=long-iso'
 
-# alias py3='c:/Python32/python.exe'

@@ -1,0 +1,20 @@
+Mon Feb  4 04:09:23 2013, Broken links in 「/home/xah/web/」.
+
+• /home/xah/web/ergoemacs_org/emacs_manual/elisp/File-Local-Variables.html ../emacs/File-variables.html#File-variables
+• /home/xah/web/ergoemacs_org/emacs_manual/elisp/index.html Index.html
+• /home/xah/web/ergoemacs_org/emacs_manual/elisp/Standard-Hooks.html Index.html
+• /home/xah/web/ergoemacs_org/emacs_manual/elisp/Coding-Conventions.html ../emacs/File-variables.html#File-variables
+• /home/xah/web/xahlee_info/SpecialPlaneCurves_dir/MmaPackages_dir/mmaPackages.html ParaPlot_dir.zip
+• /home/xah/web/xahlee_info/SpecialPlaneCurves_dir/MmaPackages_dir/mmaPackages.html PlaneCurveFormulas_dir.zip
+• /home/xah/web/xahlee_info/SpecialPlaneCurves_dir/MmaPackages_dir/mmaPackages.html PlaneCurveGenerator_dir.zip
+• /home/xah/web/xahlee_info/SpecialPlaneCurves_dir/MmaPackages_dir/mmaPackages.html TrochoidPlot_dir.zip
+• /home/xah/web/xahlee_info/SpecialPlaneCurves_dir/MmaPackages_dir/mmaPackages.html TrochoidShow_dir.zip
+• /home/xah/web/xahlee_info/SpecialPlaneCurves_dir/MmaPackages_dir/mmaPackages.html RuledSurfacePlot_dir.zip
+• /home/xah/web/xahlee_info/MathGraphicsGallery_dir/PlaneTilingPackageDemo_dir/planeTilingPackageDemo.html PlaneTiling_dir.zip
+• /home/xah/web/xahlee_org/diklo/ergoemacs_org/emacs_manual/elisp/Coding-Conventions.html ../emacs/File-variables.html#File-variables
+• /home/xah/web/xahlee_org/diklo/ergoemacs_org/emacs_manual/elisp/File-Local-Variables.html ../emacs/File-variables.html#File-variables
+• /home/xah/web/xahlee_org/diklo/ergoemacs_org/emacs_manual/elisp/index.html Index.html
+• /home/xah/web/xahlee_org/diklo/ergoemacs_org/emacs_manual/elisp/Standard-Hooks.html Index.html
+• /home/xah/web/xahmusic_org/music/citno_prami_nixli.html _p/white_orchid.jpg
+
+Done checking. (any errors are printed above.)
