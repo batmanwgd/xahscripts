@@ -19,7 +19,9 @@ use File::Basename;
 # normal linux path
 # "/home/xah/web/"
 
+my $inDirPath = q{/home/xah/web/xahlee_org/diklo/xx-plane_curves_aw/};
 my $inDirPath = q{/home/xah/web/};
+
 
 my $webRootPath = q{/home/xah/web};
 
@@ -76,7 +78,7 @@ sub process_file {
       $pathToCheck =~ s{^http://xahporn\.org/}{$webRootPath/xahporn_org/};
       $pathToCheck =~ s{^http://xahsl\.org/}{$webRootPath/xahsl_org/};
 
-      if ( $pathToCheck !~ m[^http:|^https:|^mailto:|^irc:|^ftp:|^javascript:]i) {
+      if ( $pathToCheck !~ m[^http:|^https:|^mailto:|^irc:|^ftp:|^javascript:]) {
         $pathToCheck =~ s/#.+//; # delete url fragment identifier e.g. 「http://example.com/index.html#a」
         $pathToCheck =~ s/%20/ /g; # decode percent encode url
         $pathToCheck =~ s/%27/'/g;

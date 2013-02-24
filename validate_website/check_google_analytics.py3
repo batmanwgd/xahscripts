@@ -5,6 +5,8 @@
 # validate all xahsite's Google analytics tag
 # XahLee.org
 
+# for each file in dir, check if the file contains one and only one google analytics string, with correct id
+
 import re
 import os
 import sys
@@ -23,9 +25,10 @@ gaIdTable = {
 'xahsl_org': 'UA-10884311-10'
 }
 
-googleAnalyticsCodeTemplate = """<script>var _gaq = _gaq || []; _gaq.push(['_setAccount', '•']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();</script>"""
+googleAnalyticsCodeTemplate = r"""<script>var _gaq = _gaq || []; _gaq.push(['_setAccount', '•']); _gaq.push(['_trackPageview']); (function() { var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s); })();</script>"""
 
 def getId(fPath):
+    """Return the Google Analytics id string of a xahsite corresponding to fPath."""
     id = ""
     for kk, vv in gaIdTable.items():
         mObj = re.search(kk, fPath)
@@ -39,7 +42,7 @@ def getId(fPath):
         return id
 
 def check_google_analytics(fPath):
-    """open the file, read line into array, check if a line contains correct googleAnalyticsCode"""
+    """Print the fPath if it doesn't have the correct Google Analytics code."""
 
     # ignore files.
     if re.search("/xx", fPath) or re.search("xahlee_info/js/ex/", fPath):
@@ -71,8 +74,7 @@ if (not os.path.exists(inPath)):
     sys.stderr.write("Error: input path 「{}」 doesn't exist!".format(inPath))
     sys.exit(1)
 
-# for each file in dir, check if the file contain one and only one google analytics string
-
+# traverse the dir, call check_google_analytics() on the file
 for dpath, dirList, fileList in os.walk(inPath):
     for fname in fileList:
         if re.search("\.html$", fname):

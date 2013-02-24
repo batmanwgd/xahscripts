@@ -16,14 +16,18 @@
 ;; • bug: links to some files such as “c:/Users/xah/web/xahlee_org/kml/Aapua_wind_park.kmz”, are not created in the copy.
 ;; • bug: image links to dir outside of the copy dir are not copied.
 
-(require 'xeu_elisp_util) ; substract-path
-(require 'xfrp_find_replace_pairs)      ; replace-pairs-region etc
+(load-file "/home/xah/git/ergoemacs/packages/xeu_elisp_util.el")
+(load-file "/home/xah/git/ergoemacs/packages/xfrp_find_replace_pairs.el")
+(load-file "/home/xah/git/xah_emacs_init/xah_emacs_xahsite_path_lisp_util.el")
+
+;; (require 'xeu_elisp_util) ; substract-path
+;; (require 'xfrp_find_replace_pairs)      ; replace-pairs-region etc
 (require 'find-lisp)
 
 
 ;;;; functions
 
-;; (compute-url-from-relative-link "c:/Users/h3/web/xahlee_org/emacs/emacs.html" "../Periodic_dosage_dir/skami_prosa.html" "c:/Users/h3/web/xahlee_org/" "xahlee.org")
+;; (compute-url-from-relative-link "~/web/xahlee_org/emacs/emacs.html" "../Periodic_dosage_dir/skami_prosa.html" "~/web/xahlee_org/" "xahlee.org")
 
 (defun compute-url-from-relative-link (fPath linkPath webDocRoot hostName)
   "Returns a “http://” based URL of a given linkPath,
@@ -81,24 +85,23 @@ Note: no consideration is taken about links, alias, or file perms."
           (concat sourcedir "/" ξx) destdir) ) ) )
    (directory-files sourcedir) ) )
 
-(defun delete-xx-files (mydir)
-  "Delete some files and dirs…
-dir/files starting with xx
- ends with ~
- #…#
- .DS_Store
- etc."
-  (progn
-    ;; remove emacs backup files, temp files, mac os x files, etc.
-    (princ "Removing temp files…\n")
-    (delete-subdirs-by-regex mydir "\\`xx")
-
-    (delete-files-by-regex mydir "\\`\.htaccess\\'")
-    (delete-files-by-regex mydir "~\\'")
-    (delete-files-by-regex mydir "\\`#.+#\\'")
-    (delete-files-by-regex mydir "\\`xx")
-    (delete-files-by-regex mydir "\\`\\.DS_Store\\'")
-    ))
+;; (defun delete-xx-files (mydir)
+;;   "Delete some files and dirs…
+;; dir/files starting with xx
+;;  ends with ~
+;;  #…#
+;;  .DS_Store
+;;  etc."
+;;   (progn
+;;     ;; remove emacs backup files, temp files, mac os x files, etc.
+;;     (princ "Removing temp files…\n")
+;;     (delete-subdirs-by-regex mydir "\\`xx")
+;;     (delete-files-by-regex mydir "\\`\.htaccess\\'")
+;;     (delete-files-by-regex mydir "~\\'")
+;;     (delete-files-by-regex mydir "\\`#.+#\\'")
+;;     (delete-files-by-regex mydir "\\`xx")
+;;     (delete-files-by-regex mydir "\\`\\.DS_Store\\'")
+;;     ))
 
 (defun remove-ads-scripts-in-file (fPath originalFilePath webRoot)
   "Modify the HTML file at fPath, to make it ready for download bundle.
@@ -134,7 +137,7 @@ originalFilePath is used to construct new relative links."
           (setq default-directory (file-name-directory fPath) )
           (when (not (file-exists-p (elt (split-uri-hashmark hrefValue) 0)))
             (delete-region p1 p2)
-            (insert 
+            (insert
              ;; (xahsite-filepath-to-href-value (xahsite-href-value-to-filepath hrefValue originalFilePath) originalFilePath)
              (compute-url-from-relative-link originalFilePath hrefValue webRoot (xahsite-get-domain-of-local-file-path originalFilePath))
 )
@@ -160,24 +163,24 @@ originalFilePath is used to construct new relative links."
   "Make a copy of a set of subdirs of Xah Site, for download.
 
 All paths must be full paths.
-All dir paths should end in slash. 
+All dir paths should end in slash.
 
 • ξwebDocRoot is the website doc root dir. e.g. “/Users/xah/web/xahlee_org/”
 
-• ξsourceDirList is a list/sequence of dir paths to be copied for download. e.g. 
+• ξsourceDirList is a list/sequence of dir paths to be copied for download. e.g.
  [\"/Users/xah/web/xahlee_org/emacs/\" \"/Users/xah/web/xahlee_org/comp/\" ]
 Each path should be a subdir of ξwebDocRoot.
 
-• ξdestDir is the destination dir. e.g. 
+• ξdestDir is the destination dir. e.g.
  “/Users/xah/web/xahlee_org/diklo/emacs_tutorial_2012-05-05”
 if exist, it'll be overridden.
 "
   (let (
         ;; add ending slash, to be safe
-        (ξwebDocRoot (file-name-as-directory (expand-file-name ξwebDocRoot))) 
+        (ξwebDocRoot (file-name-as-directory (expand-file-name ξwebDocRoot)))
         (ξdestDir (file-name-as-directory (expand-file-name ξdestDir)))
         (ξsourceDirList (mapcar (lambda (ξx) (file-name-as-directory (expand-file-name ξx))) ξsourceDirList) ) )
-    
+
     ;; copy to destination
     (mapc
      (lambda (ξoneSrcDir)
@@ -194,25 +197,26 @@ if exist, it'll be overridden.
      ξsourceDirList)
 
     ;; copy the style sheets over, and icons dir
-    (copy-file "c:/Users/h3/web/xahlee_org/lbasic.css" ξdestDir)
-    (copy-file "c:/Users/h3/web/xahlee_org/lit.css" ξdestDir)
-    (copy-directory "c:/Users/h3/web/xahlee_org/ics/" (concat ξdestDir "ics/"))
+    (copy-file "~/web/xahlee_org/lbasic.css" ξdestDir)
+    (copy-file "~/web/xahlee_org/lit.css" ξdestDir)
+    (copy-directory "~/web/xahlee_org/ics/" (concat ξdestDir "ics/"))
+    (copy-directory "~/web/xahlee_info/ics/" (concat ξdestDir )) ; hack. TODO
 
-    (delete-xx-files ξdestDir)
+    ;; (delete-xx-files ξdestDir)
+    ;; (shell-command (format "python3 ./delete_temp_files.py3 %s"  ξdestDir) )
 
     ;; change local links to “http://” links. Delete the google javascript snippet, and other small fixes.
     (princ "Removing javascript etc in files…\n")
-    (mapc 
+    (mapc
      (lambda (ξoneSrcDir)
        (mapc
         (lambda (ξf) (remove-ads-scripts-in-file ξf (concat ξwebDocRoot (substring ξf (length ξdestDir))) ξwebDocRoot))
         (find-lisp-find-files (concat ξdestDir (substract-path ξoneSrcDir ξwebDocRoot) ) "\\.html$")))
      ξsourceDirList)
-    
+
     (princ "Making download copy completed.\n")
     )
   )
-
 
 
 ;; programing
@@ -225,7 +229,7 @@ if exist, it'll be overridden.
 ;;   "~/web/ergoemacs_org/misc/"
 ;;   "~/web/ergoemacs_org/i/"
 ;;   ]
-;;  "~/web/xahlee_org/diklo/xxxn_xah_emacs_tutorial/")
+;;  "~/web/xahlee_org/diklo/xy_xah_emacs_tutorial/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/"
@@ -235,9 +239,9 @@ if exist, it'll be overridden.
 ;;  "~/web/xahlee_org/diklo/xx23/")
 
 ;; (make-downloadable-copy
-;;  "c:/Users/h3/web/xahlee_org/"
-;;  [ "c:/Users/h3/web/xahlee_org/js/" ]
-;;  "c:/Users/h3/web/xahlee_org/diklo/xxxx3/")
+;;  "~/web/xahlee_org/"
+;;  [ "~/web/xahlee_org/js/" ]
+;;  "~/web/xahlee_org/diklo/xxxx3/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/xahlee_org/"
@@ -265,7 +269,6 @@ if exist, it'll be overridden.
 ;; ----------------------
 ;; literature
 
-
 ;; (make-downloadable-copy
 ;;  "~/web/wordyenglish_com/"
 ;;  [ "~/web/wordyenglish_com/words/" ]
@@ -283,11 +286,11 @@ if exist, it'll be overridden.
 ;;  [ "~/web/xahlee_org/p/titus/" ]
 ;;  "~/web/xahlee_org/diklo/titus/")
 
-(make-downloadable-copy
- "~/web/wordyenglish_com/"
- [
- "~/web/wordyenglish_com/monkey_king/" ]
- "~/web/xahlee_org/diklo/monkey_king/")
+;; (make-downloadable-copy
+;;  "~/web/wordyenglish_com/"
+;;  [
+;;  "~/web/wordyenglish_com/monkey_king/" ]
+;;  "~/web/xahlee_org/diklo/monkey_king/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/xahlee_org/"
@@ -297,12 +300,12 @@ if exist, it'll be overridden.
 ;; (make-downloadable-copy
 ;;  "~/web/xahlee_org/"
 ;;  [ "~/web/xahlee_org/p/um/" ]
-;;  "~/web/xahlee_org/diklo/unabomber_manifesto/")
+;;  "~/web/xahlee_org/diklo/xy-unabomber/")
 
 ;; (make-downloadable-copy
-;;  "~/web/xahlee_org/"
-;;  [ "~/web/xahlee_org/SpecialPlaneCurves_dir/" ]
-;;  "~/web/xahlee_org/diklo/plane_curves_aw/")
+;;  "~/web/xahlee_info/"
+;;  [ "~/web/xahlee_info/SpecialPlaneCurves_dir/" ]
+;;  "~/web/xahlee_org/diklo/xx-plane_curves_aw/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/xahlee_info/"
