@@ -39,6 +39,7 @@
 (setq ξ-inputPath "c:/Users/h3/web/ergoemacs_org/" )
 (setq ξ-inputPath "c:/Users/h3/web/xahlee_info/" )
 (setq ξ-inputPath "c:/Users/h3/web/" )
+(setq ξ-inputPath "~/web/" )
 
 (defvar ξ-writeToFile-p nil "whether to write to file.")
 (setq ξ-writeToFile-p t)
