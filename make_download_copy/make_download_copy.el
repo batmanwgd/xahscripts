@@ -85,23 +85,22 @@ Note: no consideration is taken about links, alias, or file perms."
           (concat sourcedir "/" ξx) destdir) ) ) )
    (directory-files sourcedir) ) )
 
-;; (defun delete-xx-files (mydir)
-;;   "Delete some files and dirs…
-;; dir/files starting with xx
-;;  ends with ~
-;;  #…#
-;;  .DS_Store
-;;  etc."
-;;   (progn
-;;     ;; remove emacs backup files, temp files, mac os x files, etc.
-;;     (princ "Removing temp files…\n")
-;;     (delete-subdirs-by-regex mydir "\\`xx")
-;;     (delete-files-by-regex mydir "\\`\.htaccess\\'")
-;;     (delete-files-by-regex mydir "~\\'")
-;;     (delete-files-by-regex mydir "\\`#.+#\\'")
-;;     (delete-files-by-regex mydir "\\`xx")
-;;     (delete-files-by-regex mydir "\\`\\.DS_Store\\'")
-;;     ))
+ (defun delete-xahtemp-files (mydir)
+   "Delete some files and dirs…
+ dir/files starting with xx
+  ends with ~
+  #…#
+  .DS_Store
+  etc."
+   (progn
+     ;; remove emacs backup files, temp files, mac os x files, etc.
+     (princ "Removing temp files…\n")
+     (delete-files-by-regex mydir "\\`\\.htaccess\\'")
+     (delete-files-by-regex mydir "\\`#.?+#\\'")
+     (delete-files-by-regex mydir "\\`xx")
+     (delete-files-by-regex mydir "\\`\\.DS_Store\\'")
+     (shell-command "find . -depth -type d -name 'xx*' -exec rm {} ';'")
+     ))
 
 (defun remove-ads-scripts-in-file (fPath originalFilePath webRoot)
   "Modify the HTML file at fPath, to make it ready for download bundle.
@@ -187,23 +186,38 @@ if exist, it'll be overridden.
        (let ((fromDir ξoneSrcDir)
              (toDir (concat ξdestDir (substract-path ξoneSrcDir ξwebDocRoot)) ))
          (make-directory toDir t)
-         (if (>= emacs-major-version 24)
+
+         (cond
+          ((< emacs-major-version 24) (copy-directory fromDir toDir))
+          ((= emacs-major-version 24)
+           (if (>= emacs-minor-version 3)
+               (progn (copy-directory fromDir toDir "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
+                      (message "coccccccy→ %s %s" fromDir toDir)
+                      )
              (if (file-exists-p toDir)
                  (copy-directory fromDir (concat toDir "/../"))
                (copy-directory fromDir toDir) )
-           (copy-directory fromDir toDir) )
-         (princ (concat "Copying " fromDir " " toDir " …\n"))
+             )
+           )
+          )
+;         (if (>= emacs-major-version 24)
+;             (if (file-exists-p toDir)
+;                 (copy-directory fromDir (concat toDir "/../"))
+;               (copy-directory fromDir toDir) )
+;           (copy-directory fromDir toDir) )
+         (princ (format "Copying from 「%s」 to 「%s」\n" fromDir  toDir))
          ))
      ξsourceDirList)
 
     ;; copy the style sheets over, and icons dir
-    (copy-file "~/web/xahlee_org/lbasic.css" ξdestDir)
-    (copy-file "~/web/xahlee_org/lit.css" ξdestDir)
-    (copy-directory "~/web/xahlee_org/ics/" (concat ξdestDir "ics/"))
-    (copy-directory "~/web/xahlee_info/ics/" (concat ξdestDir )) ; hack. TODO
+    (copy-file "~/web/xahlee_org/lbasic.css" ξdestDir "OK-IF-ALREADY-EXISTS")
+    (copy-file "~/web/xahlee_org/lit.css" ξdestDir "OK-IF-ALREADY-EXISTS")
+    (copy-directory "~/web/xahlee_org/ics/" (concat ξdestDir "ics/") "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
 
-    ;; (delete-xx-files ξdestDir)
-    ;; (shell-command (format "python3 ./delete_temp_files.py3 %s"  ξdestDir) )
+;     (delete-xahtemp-files ξdestDir)
+    (princ
+     (shell-command (format "python3 ./delete_temp_files.py3 %s"  ξdestDir) )
+ )
 
     ;; change local links to “http://” links. Delete the google javascript snippet, and other small fixes.
     (princ "Removing javascript etc in files…\n")
@@ -221,15 +235,16 @@ if exist, it'll be overridden.
 
 ;; programing
 
-;; (make-downloadable-copy
-;;  "~/web/ergoemacs_org/"
-;;  [
-;;   "~/web/ergoemacs_org/emacs/"
-;;   "~/web/ergoemacs_org/emacs_manual/"
-;;   "~/web/ergoemacs_org/misc/"
-;;   "~/web/ergoemacs_org/i/"
-;;   ]
-;;  "~/web/xahlee_org/diklo/xy_xah_emacs_tutorial/")
+ (make-downloadable-copy
+  "~/web/ergoemacs_org/"
+  [
+   "~/web/ergoemacs_org/"
+;   "~/web/ergoemacs_org/emacs/"
+;   "~/web/ergoemacs_org/emacs_manual/"
+;   "~/web/ergoemacs_org/misc/"
+;   "~/web/ergoemacs_org/i/"
+   ]
+  "~/web/xahlee_org/diklo/xy_xah_emacs_tutorial/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/"

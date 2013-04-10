@@ -29,8 +29,6 @@ if (not os.path.exists(inPath)):
     sys.stderr.write("Error: input path 「{}」 doesn't exist!".format(inPath))
     sys.exit(1)
 
-
-
 # traverse the dir, remove temp files
 for dpath, dirList, fileList in os.walk(inPath, topdown=False):
     for ff in fileList:
@@ -40,13 +38,13 @@ for dpath, dirList, fileList in os.walk(inPath, topdown=False):
                 re.search(r"^#.+#$", ff) or \
                 re.search(r"~$", ff) or \
                 re.search(r"^xx", ff):
-            print("◆", ff)
-            os.remove(ff)
+            print("◆ rm ", dpath + "/" + ff)
+            os.remove(dpath + "/" + ff)
 
 # traverse the dir, remove temp dirs
 for dpath, dirList, fileList in os.walk(inPath, topdown=False):
     # print(dpath)
-    if re.search(r"/xx", dpath):
-        print("•", dpath)
+    if re.search(r"/xx$", dpath):
+        print("• rm ", dpath)
         shutil.rmtree(dpath)
 

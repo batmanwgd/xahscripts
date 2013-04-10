@@ -19,7 +19,7 @@ use File::Basename;
 # normal linux path
 # "/home/xah/web/"
 
-my $inDirPath = q{/home/xah/web/xahlee_org/diklo/xx-plane_curves_aw/};
+my $inDirPath = q{/home/xah/web/xahlee_org/diklo/xy_xah_emacs_tutorial/};
 my $inDirPath = q{/home/xah/web/};
 
 

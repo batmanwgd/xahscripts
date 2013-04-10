@@ -27,8 +27,7 @@
 ;; Does not assume the environment variable HOME is set. No other assumption made.
 
 (defvar ξ-inputDir "" "The dir to process.")
-(setq ξ-inputDir "c:/Users/h3/web/xahlee_info/")
-(setq ξ-inputDir "c:/Users/h3/web/")
+(setq ξ-inputDir (expand-file-name  "~/web/") )
 
 
 (if (elt argv 0)
@@ -42,7 +41,7 @@
 (when (not (string= "/" (substring ξ-inputDir -1) )) (setq ξ-inputDir (concat ξ-inputDir "/") ) )
 
 (defconst ξ-outputFileFullpath
-(concat "c:/Users/h3/web/xahlee_org/" ξ-outputFilename)
+(concat (expand-file-name  "~/web/") "xahlee_org/" ξ-outputFilename)
   "The file to save the generated report to. (existing file backedup as ~)")
 
 (when (not (file-exists-p ξ-inputDir)) (error "input dir does not exist: %s" ξ-inputDir))
