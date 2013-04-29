@@ -266,12 +266,12 @@ def myProcessFile(fp):
         xntExtra = xntSet - overlapItems
         x3ntExtra = x3ntSet - overlapItems
 
-        print( " xntExtra {}\n x3ntExtra {}\n".format(xntExtra, x3ntExtra))
+        print( " xntExtra {}\n x3ntExtra {}".format(xntExtra, x3ntExtra))
 
         if len(xntList) == len(x3ntList):
             for i,v in enumerate(xntList):
                 if v != x3ntList[i]:
-                    print( "first diff: 「{}」 「{}」".format(v, x3ntList[i]))
+                    print( "first diff: 「{}」 「{}」\n".format(v, x3ntList[i]))
                     break
 
 for fp in fileList:
