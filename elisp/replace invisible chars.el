@@ -5,10 +5,10 @@
 ; replace-BOM-mark-etc
 
 ; show
-(xah-find-replace-text-regex "\u200f\\|\ufeff" "" "~/web/ergoemacs_org/emacs/" "\\.html$" nil nil t)
+(xah-find-replace-text-regex "\u200f\\|\ufeff" "" "~/web/" "\\.html$" nil nil t)
 
 ; replace
-(xah-find-replace-text-regex "\u200f\\|\ufeff" "" "~/web/ergoemacs_org/emacs/" "\\.html$" t nil t)
+(xah-find-replace-text-regex "\u200f\\|\ufeff" "" "~/web/" "\\.html$" t nil t)
 
 ;; count ZERO WIDTH NO-BREAK SPACE
 (xah-find-count (char-to-string 65279) ">" "0" "~/web/" "\\.html$")
