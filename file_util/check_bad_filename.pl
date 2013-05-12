@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # perl
+
 # File name: check_bad_filename.pl
+
 # Purpose: Report file names that contains chars not allowed in NTFS (Windows), and,
 # also report file names with non-ascii chars.
 # this script is designed for transferring files from Mac/Unix to Windows

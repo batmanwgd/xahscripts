@@ -4,9 +4,10 @@
 # 2005-03-07
 # http://xahlee.info/perl-python/charset_encoding.html
 
-# Note: better is the “iconv” on linux.
+# Note: better is the “iconv” util on linux.
 
 import os
+
 mydir= "/Users/t/web/_tp/wiki"
 
 fromCharset="iso-8859-1"
