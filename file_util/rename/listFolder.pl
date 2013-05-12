@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 #perl! -w
 
 # a temp quick script to list folder contents for my generating links to midi files for my classical keyboard music web page. Xah 1998-07.

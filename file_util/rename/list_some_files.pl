@@ -1,21 +1,21 @@
-#!/usr/local/bin/perl5
+# -*- coding: utf-8 -*-
+# perl
 
-# a temp quick script to replace strings in file or folder names. Used for facilitating of creating my classical keyboard music web page. Xah 1998-07.
+# list files that doesn't end in
 
-# warning: file will be renamed. check script before run.
+# .jpg
+# .jpeg
+# .png
+# .gif
 
-#--
+# 2013-05-12
 
 use strict;
 use File::Find;
 use File::Basename;
 use Data::Dumper;
 
-#--
-
-my $folderPath = q{/Users/o/web/bb/i/x};
-
-#--
+my $folderPath = q{~/Pictures/cinse_pixra3/4chan};
 
 # @fileArray contains a array of full paths (including subfolders) in the given $folderPath.
 my @fileArray;

@@ -111,7 +111,7 @@ Print it like this:
       (insert
        (format "<a href=\"%s\">%s</a>◇"
                (xahsite-filepath-to-href-value xx ξ-outputFileFullpath )
-               (get-html-file-title xx)
+               (xhm-get-html-file-title xx)
                )))
     (delete-char -1)
     (insert "\n")
