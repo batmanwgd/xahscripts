@@ -33,16 +33,11 @@
 
 
 (defvar ξ-inputPath nil "Input dir. Must end with a slash")
-(setq ξ-inputPath "c:/Users/h3/web/xahporn_org/" )
-(setq ξ-inputPath "c:/Users/h3/web/wordyenglish_com/" )
-(setq ξ-inputPath "c:/Users/h3/web/xahlee_org/" )
-(setq ξ-inputPath "c:/Users/h3/web/ergoemacs_org/" )
-(setq ξ-inputPath "c:/Users/h3/web/xahlee_info/" )
 (setq ξ-inputPath "c:/Users/h3/web/" )
-(setq ξ-inputPath "~/web/" )
+(setq ξ-inputPath "/home/xah/web/xahlee_info/" )
 
 (defvar ξ-writeToFile-p nil "whether to write to file.")
-(setq ξ-writeToFile-p nil)
+(setq ξ-writeToFile-p t)
 
 (defvar ξ-debug-p nil "Boolean. Print debug info.")
 (setq ξ-debug-p nil )

@@ -19,9 +19,8 @@ use File::Basename;
 # normal linux path
 # "/home/xah/web/"
 
-my $inDirPath = q{/home/xah/web/xahlee_org/diklo/xy_xah_emacs_tutorial/};
+my $inDirPath = q{/home/xah/git/xah-emacs-tutorial/};
 my $inDirPath = q{/home/xah/web/};
-
 
 my $webRootPath = q{/home/xah/web};
 

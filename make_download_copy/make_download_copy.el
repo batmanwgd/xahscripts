@@ -18,12 +18,9 @@
 
 
 (load-file "/home/xah/git/xah_emacs_init/xah_emacs_xahsite_path_lisp_util.el")
-(load-file "/home/xah/git/ergoemacs/packages/xfrp_find_replace_pairs.el")
 
- (require 'xeu_elisp_util) ; substract-path
-;(load-file "/home/xah/git/ergoemacs/packages/xeu_elisp_util.el")
-
-;; (require 'xfrp_find_replace_pairs)      ; replace-pairs-region etc
+(require 'xeu_elisp_util) ; substract-path
+(require 'xfrp_find_replace_pairs)      ; replace-pairs-region etc
 (require 'find-lisp)
 
 
