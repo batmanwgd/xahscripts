@@ -7,11 +7,8 @@
 
 (setq inputFile "xx_test_file.txt" ) ; a test file.
 
-(setq inputDir "~/web/xahlee_org/emacs/") ; must end in slash
-(setq inputDir "~/web/xahlee_org/comp/") ; must end in slash
-(setq inputDir "~/web/xahlee_org/p/") ; must end in slash
-(setq inputDir "~/web/xahlee_org/p/alice/") ; must end in slash
 (setq inputDir "~/web/xahlee_org/") ; must end in slash
+(setq inputDir "~/web/xahlee_info/") ; must end in slash
 
 (setq ξbracketMatchList '())
 
