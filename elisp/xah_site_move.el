@@ -36,7 +36,7 @@
 (setq ξ-inputPath "/home/xah/web/" )
 
 (defvar ξ-writeToFile-p nil "whether to write to file.")
-(setq ξ-writeToFile-p nil)
+(setq ξ-writeToFile-p t)
 
 (defvar ξ-debug-p nil "Boolean. Print debug info.")
 (setq ξ-debug-p nil )
