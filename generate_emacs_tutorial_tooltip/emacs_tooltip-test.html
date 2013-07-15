@@ -1,0 +1,342 @@
+<!doctype html><html><head><meta charset="utf-8" />
+<meta name="keywords" content="emacs, emacs lisp, lisp tutorial, elisp cheat sheet" />
+<link rel="stylesheet" href="../lbasic.css" />
+<title>Emacs Lisp Basics by Example</title>
+</head>
+<body>
+
+<h1>Emacs Lisp Basics by Example</h1>
+
+<p>This page is a short, practical, tutorial of Emacs Lisp the language.</p>
+
+<p>To evaluate elisp code, type it in a blank file. For example, type <code>(+ 3 4)</code>, then move your cursor after the closing parenthesis, then
+call <code class="elisp-ƒ">eval-last-sexp</code> 【<kbd>Ctrl</kbd>+<kbd>x</kbd> <kbd>Ctrl</kbd>+<kbd>e</kbd>】. Emacs will evaluate the lisp expression to the left of the cursor. Alternatively, you can select the lisp code, then call <code class="elisp-ƒ">eval-region</code>.</p>
+
+<p>Alternatively, you can call <code class="elisp-ƒ">ielm</code>. It will start a interactive elisp command line interface.</p>
+
+<p>To find the inline documentation of a function, call <code class="elisp-ƒ">describe-function</code> 【<kbd>F1</kbd> <kbd>f</kbd>】.</p>
+
+<h2>Printing</h2>
+
+<pre class="emacs-lisp">
+<span class="comment-delimiter">; </span><span class="comment">printing
+</span>(<span class="keyword">message</span> <span class="string">"hi"</span>)
+
+<span class="comment-delimiter">; </span><span class="comment">printing variable values
+</span>(<span class="keyword">message</span> <span class="string">"Her age is: %d"</span> 16)        <span class="comment-delimiter">; </span><span class="comment">%d is for number
+</span>(<span class="keyword">message</span> <span class="string">"Her name is: %s"</span> <span class="string">"Vicky"</span>)  <span class="comment-delimiter">; </span><span class="comment">%s is for string
+</span>(<span class="keyword">message</span> <span class="string">"My list is: %S"</span> (<span class="keyword">list</span> 8 2 3))  <span class="comment-delimiter">; </span><span class="comment">%S is for any lisp expression</span></pre>
+
+<p>You can see the output in the buffer named “*Messages*”. You can switch to it by calling <code class="elisp-ƒ">view-echo-area-messages</code> 【<kbd>F1</kbd> <kbd>e</kbd>】.</p>
+
+<p>More detail: <a href="elisp_printing.html">Emacs Lisp's print, princ, prin1, format, message</a>.</p>
+
+<h2>Arithmetic Functions</h2>
+
+<pre class="emacs-lisp">
+(+ 4 5 1)     <span class="comment-delimiter">;    </span><span class="comment">⇒ 10
+</span>(- 9 2)       <span class="comment-delimiter">;    </span><span class="comment">⇒  7
+</span>(- 9 2 3)     <span class="comment-delimiter">;    </span><span class="comment">⇒  4
+</span>(* 2 3)       <span class="comment-delimiter">;    </span><span class="comment">⇒  6
+</span>(* 2 3 2)     <span class="comment-delimiter">;    </span><span class="comment">⇒ 12
+</span>(/ 7 2)       <span class="comment-delimiter">;    </span><span class="comment">⇒  3 (Integer part of quotient)
+</span>(/ 7 2.0)     <span class="comment-delimiter">;    </span><span class="comment">⇒  3.5
+</span>(% 7 4)       <span class="comment-delimiter">;    </span><span class="comment">⇒  3 (Remainder)
+</span>(<span class="keyword">expt</span> 2 3)    <span class="comment-delimiter">;    </span><span class="comment">⇒ 8</span></pre>
+
+<p>WARNING: When you need to input a decimal number, you need to include a zero after the dot, like this: <code>2.0</code>. A number without “0” after the dot is still integer.
+So, for example, <code>(/ 7 2.)</code> returns 3, not 3.5.</p>
+
+<pre class="emacs-lisp">
+<span class="comment-delimiter">;; </span><span class="comment">float must have a dot followed by a zero
+</span>(<span class="keyword">integerp</span> 3.) <span class="comment-delimiter">; </span><span class="comment">returns t
+</span>(<span class="keyword">floatp</span> 3.) <span class="comment-delimiter">; </span><span class="comment">returns nil
+</span>(<span class="keyword">floatp</span> 3.0) <span class="comment-delimiter">; </span><span class="comment">returns t</span></pre>
+
+<p>Function names that end with a “p” often means it return either true or false. (The “p” stands for “predicate”) <code>t</code> means true; <code>nil</code> means false.</p>
+
+<h3>Converting String and Numbers</h3>
+
+<pre class="emacs-lisp">
+(<span class="keyword">string-to-number</span> <span class="string">"3"</span>)
+(<span class="keyword">number-to-string</span> 3)</pre>
+
+<p><span class="ref"><a href="../emacs_manual/elisp/Numbers.html">(info "(elisp) Numbers")</a></span></p>
+
+<h2>True and False</h2>
+
+<p>In elisp, the symbol <code>nil</code> is false, anything else is considered true. So, <code>0</code> is true, and empty string <code>""</code> is also true. Also, <code>nil</code> is equivalent to the empty list <code>()</code>, so <code>()</code> is also false.</p>
+
+<pre class="emacs-lisp">
+<span class="comment-delimiter">; </span><span class="comment">all the following are false. They all evaluate to “nil”
+</span>(<span class="keyword">if</span> <span class="keyword">nil</span> <span class="string">"yes"</span> <span class="string">"no"</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ "no"
+</span>(<span class="keyword">if</span> () <span class="string">"yes"</span> <span class="string">"no"</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ "no"
+</span>(<span class="keyword">if</span> '() <span class="string">"yes"</span> <span class="string">"no"</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ "no"
+</span>(<span class="keyword">if</span> (<span class="keyword">list</span>) <span class="string">"yes"</span> <span class="string">"no"</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ "no", because (list) eval to a empty list, same as ()</span></pre>
+
+<p>By convention, the symbol <code>t</code> is used for true.</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">if</span> <span class="keyword">t</span> <span class="string">"yes"</span> <span class="string">"no"</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ "yes"
+</span>(<span class="keyword">if</span> 0 <span class="string">"yes"</span> <span class="string">"no"</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ "yes"
+</span>(<span class="keyword">if</span> <span class="string">""</span> <span class="string">"yes"</span> <span class="string">"no"</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ "yes"
+</span>(<span class="keyword">if</span> [] <span class="string">"yes"</span> <span class="string">"no"</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ "yes". The [] is vector of 0 elements
+</span>
+(<span class="keyword">and</span> <span class="keyword">t</span> <span class="keyword">nil</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ nil
+</span>(<span class="keyword">or</span> <span class="keyword">t</span> <span class="keyword">nil</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ t</span></pre>
+
+<p>There is no “boolean datatype” in elisp. Just remember that <code>nil</code> and empty list <code>()</code> are false, anything else is true.</p>
+
+<h3>Comparison Functions</h3>
+
+<p>Comparing numbers:</p>
+
+<pre class="emacs-lisp">
+(&lt; 3 4) <span class="comment-delimiter">; </span><span class="comment">less than
+</span>(&gt; 3 4) <span class="comment-delimiter">; </span><span class="comment">greater than
+</span>(&lt;= 3 4) <span class="comment-delimiter">; </span><span class="comment">less or equal to
+</span>(&gt;= 3 4) <span class="comment-delimiter">; </span><span class="comment">greater or equal to
+</span>
+(= 3 3)   <span class="comment-delimiter">; </span><span class="comment">⇒ t
+</span>(= 3 3.0) <span class="comment-delimiter">; </span><span class="comment">⇒ t
+</span>
+(/= 3 4) <span class="comment-delimiter">; </span><span class="comment">not equal. ⇒ t</span></pre>
+
+<p>Comparing strings:</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">string-equal</span> <span class="string">"this"</span> <span class="string">"this"</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ t. Case matters.</span></pre>
+
+<p>For generic equality test, use <code class="elisp-ƒ">equal</code>.
+It test if two variable/value/symbol have the same datatype and value.</p>
+
+<pre class="emacs-lisp">
+<span class="comment-delimiter">;; </span><span class="comment">testing if two values have the same datatype and value.
+</span>(<span class="keyword">equal</span> <span class="string">"abc"</span> <span class="string">"abc"</span>) <span class="comment-delimiter">; </span><span class="comment">⇒ t
+</span>(<span class="keyword">equal</span> 3 3) <span class="comment-delimiter">; </span><span class="comment">⇒ t
+</span>(<span class="keyword">equal</span> 3.0 3.0) <span class="comment-delimiter">; </span><span class="comment">⇒ t
+</span>(<span class="keyword">equal</span> 3 3.0) <span class="comment-delimiter">; </span><span class="comment">⇒ nil. Because datatype doesn't match.
+</span>
+<span class="comment-delimiter">;; </span><span class="comment">testing equality of lists
+</span>(<span class="keyword">equal</span> '(3 4 5) '(3 4 5))  <span class="comment-delimiter">; </span><span class="comment">⇒ t
+</span>(<span class="keyword">equal</span> '(3 4 5) '(3 4 <span class="string">"5"</span>)) <span class="comment-delimiter">; </span><span class="comment">⇒ nil
+</span>
+<span class="comment-delimiter">;; </span><span class="comment">testing equality of symbols
+</span>(<span class="keyword">equal</span> 'abc 'abc) <span class="comment-delimiter">; </span><span class="comment">⇒ t</span></pre>
+
+<p>There's also the function <code class="elisp-ƒ">eq</code>, but don't use it unless you know what you are doing.</p>
+
+<p>To test for inequality, the <code>/=</code> is for numbers only, and doesn't work for strings and other lisp data. Use <code class="elisp-ƒ">not</code> to negate your equality test, like this:</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">not</span> (= 3 4)) <span class="comment-delimiter">; </span><span class="comment">⇒ t
+</span>(/= 3 4) <span class="comment-delimiter">; </span><span class="comment">⇒ t. “/=” is for comparing numbers only
+</span>
+(<span class="keyword">not</span> (<span class="keyword">equal</span> 3 4)) <span class="comment-delimiter">; </span><span class="comment">⇒ t. General way to test inequality.</span></pre>
+
+<p><span class="ref"><a href="../emacs_manual/elisp/Comparison-of-Numbers.html">(info "(elisp) Comparison of Numbers")</a></span> ◇ <span class="ref"><a href="../emacs_manual/elisp/Equality-Predicates.html">(info "(elisp) Equality Predicates")</a></span></p>
+
+<h2>Global and Local Variables</h2>
+
+<p><code class="elisp-ƒ">setq</code> is used to set variables. Variables need not be declared, and is global.</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">setq</span> x 1) <span class="comment-delimiter">; </span><span class="comment">assign 1 to x
+</span>(<span class="keyword">setq</span> a 3 b 2 c 7) <span class="comment-delimiter">; </span><span class="comment">assign 3 to a, 2 to b, 7 to c</span></pre>
+
+<p>To define local variables, use <code class="elisp-ƒ">let</code>. The form is: <code>(let (‹var1› ‹var2› …) ‹body›)</code> where ‹body› is (one or more) lisp expressions. The body's last expression's value is returned.</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">let</span> (a b)
+ (<span class="keyword">setq</span> a 3)
+ (<span class="keyword">setq</span> b 4)
+ (+ a b)
+) <span class="comment-delimiter">; </span><span class="comment">returns 7</span></pre>
+
+<p>Another form of <code class="elisp-ƒ">let</code> is this: <code>(let ((‹var1› ‹val1›) (‹var2› ‹val2›) …) ‹body›)</code>. Example:</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">let</span> ((a 3) (b 4))
+ (+ a b)
+) <span class="comment-delimiter">; </span><span class="comment">returns 7</span></pre>
+
+<p>This form lets you set values to variable without using many <code class="elisp-ƒ">setq</code> in the body. This form is convenient if you just have a few simple local vars with known values.</p>
+
+<p><span class="ref"><a href="../emacs_manual/elisp/Variables.html">(info "(elisp) Variables")</a></span></p>
+
+<h2>If Then Else</h2>
+
+<p>The form for if statement is: <code>(if ‹test› ‹body›)</code>.</p>
+
+<p>If you want a “else” part, the form is <code>(if ‹test› ‹true body› ‹false body›)</code>.</p>
+
+<p>Examples:</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">if</span> (&lt; 3 2) (<span class="keyword">message</span> <span class="string">"yes"</span>) )
+(<span class="keyword">if</span> (&lt; 3 2) (<span class="keyword">message</span> <span class="string">"yes"</span>) (<span class="keyword">message</span> <span class="string">"no"</span>) )
+
+(<span class="keyword">if</span> <span class="keyword">nil</span> (<span class="keyword">message</span> <span class="string">"yes"</span>) (<span class="keyword">message</span> <span class="string">"no"</span>) )  <span class="comment-delimiter">; </span><span class="comment">prints no</span></pre>
+
+<p><span class="ref"><a href="../emacs_manual/elisp/Control-Structures.html">(info "(elisp) Control Structures")</a></span></p>
+
+<p>If you do not need a “else” part, you should use the function <code class="elisp-ƒ">when</code> instead, because it is more clear.  The form is this: <code>(when ‹test› ‹expr1› ‹expr2› …)</code>. Its meaning is the same as <code>(if ‹test› (progn ‹expr1› ‹expr2› …))</code>.</p>
+
+<h2>A Block of Expressions</h2>
+
+<p>Sometimes you need to group several expressions together as one single expression. This can be done with <code class="elisp-ƒ">progn</code>. For example, this code:</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">progn</span> (<span class="keyword">message</span> <span class="string">"a"</span>) (<span class="keyword">message</span> <span class="string">"b"</span>))</pre>
+
+<p>is equivalent to</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">message</span> <span class="string">"a"</span>) (<span class="keyword">message</span> <span class="string">"b"</span>)</pre>
+
+<p>The purpose of <code>(progn …)</code> is similar to a block of code <code>{…}</code> in C-like languages. It is used to group together a bunch of expressions into one single parenthesized expression. Most of the time it's used inside “if”. For example:</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">if</span> something
+    (<span class="keyword">progn</span> <span class="comment-delimiter">; </span><span class="comment">true
+</span>    …
+    )
+    (<span class="keyword">progn</span> <span class="comment-delimiter">; </span><span class="comment">else
+</span>    …
+    )
+)</pre>
+
+<p><span class="ref"><a href="../emacs_manual/elisp/Sequencing.html">(info "(elisp) Sequencing")</a></span></p>
+
+<h2>Iteration</h2>
+
+<p>The following code shows a loop using the <code class="elisp-ƒ">while</code> function. The form is: <code>(while ‹test›  ‹body›)</code>, where ‹body› is one or more lisp expressions.</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">setq</span> x 0)
+
+(<span class="keyword">while</span> (&lt; x 4)
+  (<span class="keyword">print</span> (<span class="keyword">format</span> <span class="string">"yay %d"</span> x))
+  (<span class="keyword">setq</span> x (1+ x)))</pre>
+
+<p><span class="ref"><a href="../emacs_manual/elisp/Iteration.html">(info "(elisp) Iteration")</a></span></p>
+
+<p>In the following sample code, it inserts Unicode chars 32 to 126.  First, it sets a local variable x to 32. Then it starts a <code class="elisp-ƒ">while</code> loop, insert the corresponding Unicode char (in current buffer), then increase x by 1.</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">let</span> ((x 32))
+  (<span class="keyword">while</span> (&lt; x 127)
+    (ucs-insert x)
+    (<span class="keyword">setq</span> x (+ x 1))))</pre>
+
+<p>Note: There is no “for” loop construct.</p>
+
+<h3>Break/Exit a Loop</h3>
+
+<p>See: <a href="elisp_break_loop.html">Emacs Lisp: Throw ＆ Catch, Exit a Loop</a>.</p>
+
+<h2>Sequence, List, Vector, Array</h2>
+
+<p>See: <a href="elisp_list_vector.html">Emacs Lisp Tutorial: List ＆ Vector</a>.</p>
+
+<h2>Defining a Function</h2>
+
+<p>Basic function definition is of the form: <code>(defun ‹function name› (‹param1› ‹param2› …) "‹doc string›" ‹body›)</code> . Example:</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">defun</span> myFunction () <span class="string">"testing"</span> (<span class="keyword">message</span> <span class="string">"Yay!"</span>) )</pre>
+
+<p>When a function is called, the last expression in the function's definition body is returned. (You do not have to write “Return …”.)</p>
+
+<p>This function can be called in other places in a elisp program but the function won't be available when user types 【<kbd>Alt</kbd>+<kbd>x</kbd>】.</p>
+
+<p>See also: <a href="elisp_optional_params.html">Emacs Lisp Functions Optional Parameters</a> ◇
+<a href="inline_doc.html">Emacs Function's Inline Doc String Markups</a>.</p>
+
+<h3>Defining Commands</h3>
+
+<p>
+To make a function available for interactive use, add the
+<code>(interactive)</code> right after the doc string.
+</p>
+
+<p>The following is a basic function definition for interactive use. The function takes no argument.
+Evaluate the following code. Then, you can call it by 【<kbd>Alt</kbd>+<kbd>x</kbd> yay】
+</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">defun</span> yay ()
+  <span class="string">"Insert “Yay!” at cursor position."</span>
+  (<span class="function-name">interactive</span>)
+  (<span class="function-name">insert</span> <span class="string">"Yay!"</span>))</pre>
+
+<p>The following is a basic function definition, taking one argument from <code class="elisp-ƒ">universal-argument</code> 【<kbd>Ctrl</kbd>+<kbd>u</kbd>】. You can call it by typing 【<kbd>Ctrl</kbd>+<kbd>u</kbd> <kbd>7</kbd> <kbd>Alt</kbd>+<kbd>x</kbd> myFunction】.</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">defun</span> myFunction (myArg)
+  <span class="string">"Prints the argument"</span>
+  (<span class="function-name">interactive</span> <span class="string">"p"</span>)
+  (<span class="keyword">message</span> <span class="string">"Your argument is: %d"</span> myArg)
+)</pre>
+
+<p>The following is a basic function definition taking region as arg.
+Note the <code>(interactive "r")</code>. The <code>"r"</code> is a code that tells emacs that the function will receive the buffer's begin/end text selection positions as its argument.</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">defun</span> myFunction (myStart myEnd)
+  <span class="string">"Prints region start and end positions"</span>
+  (<span class="function-name">interactive</span> <span class="string">"r"</span>)
+  (<span class="keyword">message</span> <span class="string">"Region begin at: %d, end at: %d"</span> myStart myEnd)
+)</pre>
+
+<p>In summary:</p>
+
+<ul>
+<li>The <code>(interactive …)</code> clause is a way to make your function interactively callable, and a way to fill out your function's parameters when used interactively.</li>
+<li>A function with the <code>(interactive …)</code> clause is called a <b>command</b>, and can be called by <code class="elisp-ƒ">execute-extended-command</code> 【<kbd>Alt</kbd>+<kbd>x</kbd>】.</li>
+</ul>
+
+<p>The <code>(interactive "‹x›…")</code> form takes a single-letter code to indicate how the command gets its arguments from user. There are about 30 codes for <code class="elisp-ƒ">interactive</code>, but the most useful are the following:</p>
+
+<ul>
+<li><code>(interactive)</code>, for commands that takes no argument.</li>
+<li><code>(interactive "n")</code>, prompt user for a number as argument. (prompt string can follow right after "n" as part of the string, like this: <code>(interactive "nWhat is your age?")</code>.)</li>
+<li><code>(interactive "s")</code>, prompt user for a string as argument.</li>
+<li><code>(interactive "r")</code>, for commands that takes 2 arguments, the beginning and ending positions of the current region. This form is typically used for commands that act on a text selection.</li>
+</ul>
+
+<p>Here is a function definition template that majority of elisp commands follow:</p>
+
+<pre class="emacs-lisp">
+(<span class="keyword">defun</span> myCommand ()
+  <span class="string">"One sentence summary of what this command do.
+
+More detailed documentation here."</span>
+  (<span class="function-name">interactive</span>)
+  (<span class="keyword">let</span> (localVar1 localVar2 …)
+    <span class="comment-delimiter">; </span><span class="comment">do something here …
+</span>    <span class="comment-delimiter">; </span><span class="comment">…
+</span>    <span class="comment-delimiter">; </span><span class="comment">last expression is returned
+</span>  )
+)</pre>
+
+<p><span class="ref"><a href="../emacs_manual/elisp/Defining-Functions.html">(info "(elisp) Defining Functions")</a></span> ◇ <span class="ref"><a href="../emacs_manual/elisp/Defining-Commands.html">(info "(elisp) Defining Commands")</a></span></p>
+
+<h2>The Concept of Symbols in Lisp</h2>
+
+<p>LISP differs from most programing languages such as C, <a href="http://xahlee.info/java-a-day/java.html">Java</a>, <a href="http://xahlee.info/perl-python/perl_basics.html">Perl</a>, <a href="http://xahlee.info/python/python3_basics.html">Python</a>, in that it deals with symbols, as opposed to just variables and values.</p>
+
+<p>In practice, this means that in lisp, variables can be manipulated in its un-evaluated state. The situation is like the need for the “evaluate” command in many languages, where the programer can built code as strings and do <code>evaluate(‹string›)</code> to achieve meta-programing.
+In lisp, variable's unevaluated form are always available. You just put a apostrophe in front of it. This is why lisp refers to variable or function as “symbols”. This makes meta-programing more powerful.</p>
+
+<p>For example, in most languages, once you defined <code>x=3</code>, you cannot manipulate the variable “x” because it gets evaluated to 3 right away. If you want, you have to build a string <code>"x"</code> and manipulate this string, then finally use something like <code>evaluate(‹string›)</code> to achieve the effect. In most languages, the use of <code>evaluate()</code> breaks down quickly because the language is not designed for doing it. It's slow, difficult to debug, and there lacks many facilities for such meta programing.</p>
+
+<p>The ability to meta-program has many applications. For example, when you need to take user input as code (such as math formulas), or need to manipulate math expressions, or writing programs that modify itself at run-time.</p>
+
+<p>Lisp symbol is a advanced topic. But if you are curious, you can read this short intro: <a href="elisp_symbol.html">Emacs Lisp Symbol</a>.</p>
+
+<footer><span class="xsignet">∑</span> <a href="../index.html">ErgoEmacs Home</a><div style="font-size:small">© 2006, …, 2012 Xah Lee.</div></footer>
+
+<p><script src="emacs_tooltip-chose.js"></script></p>
+
+</body></html>
