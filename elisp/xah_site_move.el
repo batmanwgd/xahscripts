@@ -33,7 +33,16 @@
 
 
 (defvar ξ-inputPath nil "Input dir. Must end with a slash")
+(setq ξ-inputPath "/home/xah/web/xahsl_org/" )
+(setq ξ-inputPath "/home/xah/web/wordyenglish_com/" )
+(setq ξ-inputPath "/home/xah/web/xahmusic_org/" )
+(setq ξ-inputPath "/home/xah/web/xaharts_org/" )
+(setq ξ-inputPath "/home/xah/web/xahlee_org/" )
+(setq ξ-inputPath "/home/xah/web/xahlee_info/" )
+(setq ξ-inputPath "/home/xah/web/ergoemacs_org/" )
 (setq ξ-inputPath "/home/xah/web/" )
+
+;/home/xah/web/xahlee_org/sex/gender_feminist_of_the_year_Anita_Sarkeesian.html
 
 (defvar ξ-writeToFile-p nil "whether to write to file.")
 (setq ξ-writeToFile-p nil)
@@ -43,7 +52,7 @@
 
 (defun ξ-check-this-link-p (linkString hostFilePath)
   "Return true or false.
-This function can change arbitrarily. Its' meant to be modified on-the-fly according to requirement.
+This function can change arbitrarily. Its meant to be modified on-the-fly according to requirement.
 
 linkString is the string of “href=…” value or “src=…” value.
 hostFilePath is the file full path that contains the link."
@@ -64,6 +73,8 @@ Each entry is of the form (‹from› . ‹to›).
  '(
 
 ;; remove or regenerate ../wikipedia_links.html
+
+;("/home/xah/web/xaharts_org/movie/stories_from_the_editorial_board_smart_robot.html" . "/home/xah/web/wordyenglish_com/chinese/stories_from_the_editorial_board_smart_robot.html")
 
 ;; ("c:/Users/h3/web/xahlee_org/sex/is_YouTube_porn_fodder.html" . "c:/Users/h3/web/xahlee_org/Periodic_dosage_dir/is_YouTube_porn_fodder.html")
 
@@ -164,7 +175,7 @@ moveFromToList is a alist."
     (when
         ;; (not (string-match-p "/xx" βhostFilePath)) ; skip file whose name starts with “xx”
 t
-      (when βdebug-p (princ (format "▸βhostFilePath 「%s」\n" βhostFilePath ) ))
+      (when βdebug-p (princ (format "\n▸βhostFilePath 「%s」\n" βhostFilePath ) ))
       (with-temp-buffer
         (insert-file-contents βhostFilePath)
         (while
