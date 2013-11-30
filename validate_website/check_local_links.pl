@@ -21,6 +21,7 @@ use File::Basename;
 
 my $inDirPath = q{/home/xah/git/xah-emacs-tutorial/};
 my $inDirPath = q{/home/xah/web/};
+my $inDirPath = q{/home/xah/web/xahlee_org/diklo/xy_xah_emacs_tutorial/};
 
 my $webRootPath = q{/home/xah/web};
 
@@ -78,7 +79,7 @@ sub process_file {
       $pathToCheck =~ s{^http://xahsl\.org/}{$webRootPath/xahsl_org/};
 
       if ( $pathToCheck !~ m[^//|^http:|^https:|^mailto:|^irc:|^ftp:|^javascript:]) {
-        $pathToCheck =~ s/#.+//; # delete url fragment identifier e.g. 「http://example.com/index.html#a」
+        $pathToCheck =~ s/#.*//; # delete url fragment identifier e.g. 「http://example.com/index.html#a」
         $pathToCheck =~ s/%20/ /g; # decode percent encode url
         $pathToCheck =~ s/%27/'/g;
 
