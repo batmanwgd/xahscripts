@@ -66,7 +66,7 @@ var inputHandler = function (dataBuf, skt) {
     if ( ! skt.hasOwnProperty("nickname") ) {
         var newNick = filterChars(dataBuf.toString());
         if ( checkNickTaken(newNick) || newNick.length < 1 ) {
-            skt.write("Sorry, nickname " + newNick + " already taken. Type 1 to 10 chars. Try another./n");
+            skt.write("Sorry, nickname " + newNick + " already taken. Type 1 to 10 chars. Try another.\n");
             return;
         } else {
             skt.nickname = newNick;
@@ -88,6 +88,7 @@ var inputHandler = function (dataBuf, skt) {
     }
 
     if ( dataBuf.toString().trim() === "/quit" ) {
+        console.log("Disconnected from: " + skt.remoteAddress + " " + skt.remotePort);
         skt.destroy();
         return;
     }
@@ -151,15 +152,14 @@ var connectionHandler = function (xxsocket) {
     xxsocket.write(welcomeMsg);
     xxsocket.write(helpMsg);
 
-
     xxsocket.write("Type a nickname.\n");
 
     xxsocket.on("data", function (x) { inputHandler(x, xxsocket)});
 
     xxsocket.on("end", function () {
         var i = socketList.indexOf(xxsocket);
+        console.log("Disconnected from: " + socketList[i].remoteAddress + " " + socketList[i].remotePort);
         socketList.splice(i,1); //delete that one
-        console.log("Disconnected from: " + xxsocket.remoteAddress + " " + xxsocket.remotePort);
     });
 }
 
@@ -174,3 +174,20 @@ myServer.listen(xPort, xIP);
 // Error: read ECONNRESET
 //     at errnoException (net.js:901:11)
 //     at TCP.onread (net.js:556:19)
+
+
+// events.js:72
+//         throw er; // Unhandled 'error' event
+//               ^
+// Error: This socket is closed.
+//     at Socket._write (net.js:635:19)
+//     at doWrite (_stream_writable.js:221:10)
+//     at writeOrBuffer (_stream_writable.js:211:5)
+//     at Socket.Writable.write (_stream_writable.js:180:11)
+//     at Socket.write (net.js:613:40)
+//     at inputHandler (/home/xah/git/xahscripts/nodeserver/xah_chat_server.js:136:31)
+//     at Socket.<anonymous> (/home/xah/git/xahscripts/nodeserver/xah_chat_server.js:154:40)
+//     at Socket.EventEmitter.emit (events.js:95:17)
+//     at Socket.<anonymous> (_stream_readable.js:746:14)
+//     at Socket.EventEmitter.emit (events.js:92:17)
+// xah@xahnode:~/git/xahscripts/nodeserver$ 
