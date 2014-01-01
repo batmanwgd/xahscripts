@@ -11,16 +11,17 @@
 
 var xPort = 9399;
 var xIP = "127.0.0.1";
+var xIP = "162.243.151.192";
 
 var xnet = require('net');
 
 // each socket needs a nickname, and its room.
 
 var socketList = [];
-var rooms = {"lobby":{},"lounge":{}};
+var rooms = {"lobby":0, "lounge":0}; // key is room name, value is number of people
 var defaultRoom = "lobby";
 
-var cmds = ["rooms","join", "leave", "quit", "help"];
+var cmds = ["rooms","join", "leave", "quit", "help", "whoshere"];
 
 var welcomeMsg = "welcome gc!\nType /help to see commands.\n";
 var helpMsg = "/" + cmds.join("\n/") + "\n";
@@ -31,17 +32,29 @@ var checkNickTaken = function (inputNick) {
     return socketList.some(function (x) { if ( x.nickname === inputNick ) {return true;} })
 }
 
+// recompute the number of people in rooms. That is, set the rooms object's values. 
+var recomputeRooms = function () {
+    Object.keys(rooms).forEach(function (rname) { rooms[rname] = 0;});
+    socketList.forEach(function (sockk) { rooms[sockk["room"]]++; } )
+}
+
+// print room names with number of people in it
 var printRooms = function (skt) {
-    Object.keys(rooms).forEach(function (x) {
-        (x === skt["room"]) ?
-            skt.write(" * " + x + "\n") :
-            skt.write("   " + x + "\n") ;
+    Object.keys(rooms).forEach(function (rmName) {
+        if (skt["room"] === rmName) {
+            skt.write(" * " + rmName + " (" + rooms[rmName] + ")\n");
+        } else {
+            skt.write("   " + rmName + " (" + rooms[rmName] + ")\n");
+        }
     })
 }
 
+// list people in a given room
+// print to socket.
+// skt is socket. room is room name
 var listPeopleInRoom = function (skt, room) {
     socketList.forEach(function (x) {
-        if ( x["room"] === room && x !== skt) {
+        if ( x["room"] === room) {
             skt.write( x["nickname"] + "\n");
         } }) }
 
@@ -53,10 +66,11 @@ var inputHandler = function (dataBuf, skt) {
     if ( ! skt.hasOwnProperty("nickname") ) {
         var newNick = filterChars(dataBuf.toString());
         if ( checkNickTaken(newNick) || newNick.length < 1 ) {
-            skt.write("Sorry, nickname " + newNick + "taken. Type 1 to 10 chars. Try another.");
+            skt.write("Sorry, nickname " + newNick + " already taken. Type 1 to 10 chars. Try another./n");
+            return;
         } else {
             skt.nickname = newNick;
-            skt.write("your nick is now:" + skt.nickname + "\n");
+            skt.write("your nick is now: " + skt.nickname + "\n");
             skt.write(skt.nickname + ">");
             return;
         } }
@@ -85,6 +99,12 @@ var inputHandler = function (dataBuf, skt) {
         return;
     }
 
+    if ( dataBuf.toString().trim() === "/whoshere" ) {
+        listPeopleInRoom(skt, skt["room"] );
+        skt.write(skt.nickname + ">");
+        return;
+    }
+
     if ( dataBuf.toString().search(/^\/join/) !== -1 ) {
         var roomName = (dataBuf.toString().trim().split(/ +/))[1];
         // roomName = filterChars(roomName);
@@ -101,7 +121,7 @@ var inputHandler = function (dataBuf, skt) {
         }
         else {
             skt["room"] = roomName;
-            skt.write("joined room:" + roomName + "\n");
+            skt.write("joined room: " + roomName + "\n");
             listPeopleInRoom(skt, roomName);
         }
 
@@ -122,9 +142,10 @@ var inputHandler = function (dataBuf, skt) {
     } }
 
 var connectionHandler = function (xxsocket) {
-    console.log("server connected");
+    console.log("Connected from: " + xxsocket.remoteAddress + " " + xxsocket.remotePort);
 
     xxsocket["room"] = defaultRoom;
+    recomputeRooms();
     socketList.push(xxsocket);
 
     xxsocket.write(welcomeMsg);
@@ -138,10 +159,18 @@ var connectionHandler = function (xxsocket) {
     xxsocket.on("end", function () {
         var i = socketList.indexOf(xxsocket);
         socketList.splice(i,1); //delete that one
-        console.log("server disconnected");
+        console.log("Disconnected from: " + xxsocket.remoteAddress + " " + xxsocket.remotePort);
     });
 }
 
 var myServer = xnet.createServer(connectionHandler);
 
 myServer.listen(xPort, xIP);
+
+
+// events.js:72
+//         throw er; // Unhandled 'error' event
+//               ^
+// Error: read ECONNRESET
+//     at errnoException (net.js:901:11)
+//     at TCP.onread (net.js:556:19)
