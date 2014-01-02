@@ -32,7 +32,7 @@ var checkNickTaken = function (inputNick) {
     return socketList.some(function (x) { if ( x.nickname === inputNick ) {return true;} })
 }
 
-// recompute the number of people in rooms. That is, set the rooms object's values. 
+// recompute the number of people in rooms. That is, set the rooms object's values.
 var recomputeRooms = function () {
     Object.keys(rooms).forEach(function (rname) { rooms[rname] = 0;});
     socketList.forEach(function (sockk) { rooms[sockk["room"]]++; } )
@@ -65,10 +65,20 @@ var inputHandler = function (dataBuf, skt) {
 
     if ( ! skt.hasOwnProperty("nickname") ) {
         var newNick = filterChars(dataBuf.toString());
-        if ( checkNickTaken(newNick) || newNick.length < 1 ) {
-            skt.write("Sorry, nickname " + newNick + " already taken. Type 1 to 10 chars. Try another.\n");
+
+        if ( newNick.length < 1 ) {
+            skt.write("Type a nickname.\n");
             return;
-        } else {
+        }
+        else if ( checkNickTaken(newNick)) {
+            skt.write("Sorry, nickname [" + newNick + "] already taken. Type 1 to 10 chars. Try another.\n");
+            return;
+        }
+        else if ( cmds.indexOf(newNick) !== -1 ) {
+            skt.write("Sorry, nickname [" + newNick + "] can be the same as command name. Try another.\n");
+            return;
+        }
+        else if {
             skt.nickname = newNick;
             skt.write("your nick is now: " + skt.nickname + "\n");
             skt.write(skt.nickname + ">");
@@ -132,7 +142,7 @@ var inputHandler = function (dataBuf, skt) {
 
     // broadcast to all in the same room, except self
     for (var i = 0; i < socketList.length; i++) {
-        if ( socketList[i] === skt ) { 
+        if ( socketList[i] === skt ) {
             skt.write(skt.nickname + ">");
             continue; }
         else {
@@ -166,28 +176,3 @@ var connectionHandler = function (xxsocket) {
 var myServer = xnet.createServer(connectionHandler);
 
 myServer.listen(xPort, xIP);
-
-
-// events.js:72
-//         throw er; // Unhandled 'error' event
-//               ^
-// Error: read ECONNRESET
-//     at errnoException (net.js:901:11)
-//     at TCP.onread (net.js:556:19)
-
-
-// events.js:72
-//         throw er; // Unhandled 'error' event
-//               ^
-// Error: This socket is closed.
-//     at Socket._write (net.js:635:19)
-//     at doWrite (_stream_writable.js:221:10)
-//     at writeOrBuffer (_stream_writable.js:211:5)
-//     at Socket.Writable.write (_stream_writable.js:180:11)
-//     at Socket.write (net.js:613:40)
-//     at inputHandler (/home/xah/git/xahscripts/nodeserver/xah_chat_server.js:136:31)
-//     at Socket.<anonymous> (/home/xah/git/xahscripts/nodeserver/xah_chat_server.js:154:40)
-//     at Socket.EventEmitter.emit (events.js:95:17)
-//     at Socket.<anonymous> (_stream_readable.js:746:14)
-//     at Socket.EventEmitter.emit (events.js:92:17)
-// xah@xahnode:~/git/xahscripts/nodeserver$ 
