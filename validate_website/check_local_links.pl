@@ -22,6 +22,8 @@ use File::Basename;
 my $inDirPath = q{/home/xah/git/xah-emacs-tutorial/};
 my $inDirPath = q{/home/xah/web/xahlee_info/node_api/};
 my $inDirPath = q{/home/xah/web/};
+# my $inDirPath = q{/home/xah/web/xahlee_org/diklo/xy_xah_emacs_tutorial/};
+
 
 # my $inDirPath = q{/home/xah/web/xahlee_org/diklo/xy_xah_emacs_tutorial/};
 

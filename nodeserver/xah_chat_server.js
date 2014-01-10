@@ -1,13 +1,5 @@
 // -*- coding: utf-8 -*-
-// simple chat client
-
-// ask user for login name, not same as existing
-// command to list rooms, with number of users in that room
-// 「/rooms」
-// 「/join roomname」 join a room
-// when user joins a room, list all user names
-// 「/leave」 leave room
-// 「/quit」 disconnect
+// basic chat client
 
 var xPort = 9399;
 var xIP = "127.0.0.1";
@@ -75,12 +67,13 @@ var inputHandler = function (dataBuf, skt) {
             return;
         }
         else if ( cmds.indexOf(newNick) !== -1 ) {
-            skt.write("Sorry, nickname [" + newNick + "] can be the same as command name. Try another.\n");
+            skt.write("Sorry, nickname [" + newNick + "] cannot be the same as command name. Try another.\n");
             return;
         }
-        else if {
+        else {
             skt.nickname = newNick;
             skt.write("your nick is now: " + skt.nickname + "\n");
+            skt.write(helpMsg);
             skt.write(skt.nickname + ">");
             return;
         } }
@@ -158,10 +151,7 @@ var connectionHandler = function (xxsocket) {
     xxsocket["room"] = defaultRoom;
     recomputeRooms();
     socketList.push(xxsocket);
-
     xxsocket.write(welcomeMsg);
-    xxsocket.write(helpMsg);
-
     xxsocket.write("Type a nickname.\n");
 
     xxsocket.on("data", function (x) { inputHandler(x, xxsocket)});
