@@ -19,17 +19,13 @@ use File::Basename;
 # normal linux path
 # "/home/xah/web/"
 
-my $inDirPath = q{/home/xah/git/xah-emacs-tutorial/};
-my $inDirPath = q{/home/xah/web/xahlee_info/node_api/};
-my $inDirPath = q{/home/xah/web/wordyenglish_com/diklo/xxtitus/};
-my $inDirPath = q{/home/xah/web/};
+# TODO 2014-02-01 need to fix on Mac, remove all hardcoded home dir
 
-# my $inDirPath = q{/home/xah/web/xahlee_org/diklo/xy_xah_emacs_tutorial/};
+my $userHomeDir = $ENV{"HOME"};
+my $webRootPath = q{$userHomeDir/web};
 
-
-# my $inDirPath = q{/home/xah/web/xahlee_org/diklo/xy_xah_emacs_tutorial/};
-
-my $webRootPath = q{/home/xah/web};
+my $inDirPath = qq{$webRootPath};
+my $inDirPath = qq{$webRootPath/xahlee_info/comp};
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
