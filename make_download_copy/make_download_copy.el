@@ -16,7 +16,6 @@
 ;; • bug: links to some files such as “c:/Users/xah/web/xahlee_org/kml/Aapua_wind_park.kmz”, are not created in the copy.
 ;; • bug: image links to dir outside of the copy dir are not copied.
 
-
 (load-file "/home/xah/git/xah_emacs_init/xah_emacs_xahsite_path_lisp_util.el")
 
 (require 'xeu_elisp_util) ; substract-path
@@ -234,16 +233,16 @@ if exist, it'll be overridden.
 
 ;; programing
 
- (make-downloadable-copy
-  "~/web/ergoemacs_org/"
-  [
-   "~/web/ergoemacs_org/"
-;   "~/web/ergoemacs_org/emacs/"
-;   "~/web/ergoemacs_org/emacs_manual/"
-;   "~/web/ergoemacs_org/misc/"
-;   "~/web/ergoemacs_org/i/"
-   ]
-  "~/web/xahlee_org/diklo/xy_xah_emacs_tutorial/")
+;;  (make-downloadable-copy
+;;   "~/web/ergoemacs_org/"
+;;   [
+;;    "~/web/ergoemacs_org/"
+;; ;   "~/web/ergoemacs_org/emacs/"
+;; ;   "~/web/ergoemacs_org/emacs_manual/"
+;; ;   "~/web/ergoemacs_org/misc/"
+;; ;   "~/web/ergoemacs_org/i/"
+;;    ]
+;;   "~/web/xahlee_org/diklo/xy_xah_emacs_tutorial/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/"
@@ -295,10 +294,15 @@ if exist, it'll be overridden.
 
 ;; (make-downloadable-copy "~/web/xahlee_org/" [ "~/web/xahlee_org/flatland/" ]  "~/xx283/")
 
+;; 2014-01-22
+;; ;; need to remove nav bar
+;; ;; need to include the JavaScript annotation script
 ;; (make-downloadable-copy
-;;  "~/web/xahlee_org/"
-;;  [ "~/web/xahlee_org/p/titus/" ]
-;;  "~/web/xahlee_org/diklo/titus/")
+;;  "~/web/wordyenglish_com/"
+;;  [ "~/web/wordyenglish_com/titus/" ]
+;;  "~/web/wordyenglish_com/diklo/xxtitus/")
+
+;; "~/web/wordyenglish_com/titus/"
 
 ;; (make-downloadable-copy
 ;;  "~/web/wordyenglish_com/"
