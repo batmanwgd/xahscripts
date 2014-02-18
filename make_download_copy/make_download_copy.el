@@ -233,16 +233,16 @@ if exist, it'll be overridden.
 
 ;; programing
 
-;;  (make-downloadable-copy
-;;   "~/web/ergoemacs_org/"
-;;   [
-;;    "~/web/ergoemacs_org/"
-;; ;   "~/web/ergoemacs_org/emacs/"
-;; ;   "~/web/ergoemacs_org/emacs_manual/"
-;; ;   "~/web/ergoemacs_org/misc/"
-;; ;   "~/web/ergoemacs_org/i/"
-;;    ]
-;;   "~/web/xahlee_org/diklo/xy_xah_emacs_tutorial/")
+ (make-downloadable-copy
+  "~/web/ergoemacs_org/"
+  [
+   "~/web/ergoemacs_org/"
+;   "~/web/ergoemacs_org/emacs/"
+;   "~/web/ergoemacs_org/emacs_manual/"
+;   "~/web/ergoemacs_org/misc/"
+;   "~/web/ergoemacs_org/i/"
+   ]
+  "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
 
 ;; (make-downloadable-copy
 ;;  "~/web/"
