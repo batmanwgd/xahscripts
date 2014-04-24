@@ -32,9 +32,9 @@ This deletes all files ending in “~”."
  (lambda (x) (delete-file x))
  (find-lisp-find-files dir regex-pattern)) )
 
-;; (compute-url-from-relative-link "c:/Users/h3/web/xahlee_org/emacs/emacs.html" "../Periodic_dosage_dir/skami_prosa.html" "c:/Users/h3/web/xahlee_org/" "xahlee.org")
+;; (xah-get-full-url "c:/Users/h3/web/xahlee_org/emacs/emacs.html" "../Periodic_dosage_dir/skami_prosa.html" "c:/Users/h3/web/xahlee_org/" "xahlee.org")
 
-(defun compute-url-from-relative-link (fPath linkPath webDocRoot hostName)
+(defun xah-get-full-url (fPath linkPath webDocRoot hostName)
   "Returns a “http://” based URL of a given linkPath,
 based on its fPath, webDocRoot, hostName.
 
@@ -46,7 +46,7 @@ Returns a url of the form “http://hostName/‹urlPath›”
 that points to the same file as linkPath.
 
 For example:
- (compute-url-from-relative-link
+ (xah-get-full-url
 \"/Users/xah/web/xahlee_org/Periodic_dosage_dir/t2/mirrored.html\"
 \"../../p/demonic_males.html\"
 \"/Users/xah/web/xahlee_org/\"
@@ -132,14 +132,14 @@ amazon_ad_tag = \"xahh-20\"; amazon_ad_width = \"728\"; amazon_ad_height = \"90\
         (when (not (file-exists-p linkPathSansJumper))
           (delete-region p1 p2)
           (let (newLinkPath)
-            (setq newLinkPath (compute-url-from-relative-link originalFilePath linkPath ξwebroot "xahlee.org"))
+            (setq newLinkPath (xah-get-full-url originalFilePath linkPath ξwebroot "xahlee.org"))
             (insert newLinkPath))
           (search-forward "</a>")
           (backward-char 4))))
     (save-buffer)
     (kill-buffer myBuffer)))
 
-(defun drop-last-slashed-substring (path)
+(defun xah-drop-last-slash (path)
   "drop the last path separated by “/”.
 For example:
 “/a/b/c/d” → “/a/b/c”
@@ -151,12 +151,12 @@ For example:
       (substring path 0 (1- (match-end 0)))
     path))
 
-(defun copy-dir-single-level (sourcedir destdir)
+(defun xah-copy-dir-single-level (sourcedir destdir)
   "Copy all files from SOURCEDIR to DESTDIR.
 
 The input dir should not end in a slash.
 Example usage:
- (copy-dir-single-level
+ (xah-copy-dir-single-level
  \"/Users/xah/web/p/um\"
  \"/Users/xah/web/diklo/xx\")
 
@@ -209,7 +209,7 @@ Note: no consideration is taken about links, alias, or file perms."
   ;;    (let (fromDir toDir)
   ;;      (setq fromDir (concat ξwebroot x))
   ;;      (setq toDir
-  ;;            (drop-last-slashed-substring (concat ξwebroot ξdestDirRelativePath "/" ξzipCoreName "/" x)) )
+  ;;            (xah-drop-last-slash (concat ξwebroot ξdestDirRelativePath "/" ξzipCoreName "/" x)) )
   ;;      (make-directory toDir t)
   ;;      (princ (concat "copying " fromDir " " toDir "\n"))
   ;;      (shell-command (concat "cp -R " fromDir " " toDir))
@@ -281,32 +281,32 @@ Note: no consideration is taken about links, alias, or file perms."
 ;; § ----------------------------------------
 ;; programing
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "/Users/h3/web/xahlee_org/"
 ;; (list "emacs" "emacs_manual")
 ;;  "diklo" "xah_emacs_tutorial")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "/Users/h3/web/xahlee_org/"
 ;; (list "emacs")
 ;;  "diklo" "xah_emacs_tutorial")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "js")
 ;;  "diklo" "xah_dhtml_tutorial")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "elisp")
 ;;  "diklo" "elisp_manual")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "java-a-day")
 ;;  "diklo" "xah_java_tutorial")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "perl-python")
 ;;  "diklo" "xah_perl-python_tutorial")
@@ -314,7 +314,7 @@ Note: no consideration is taken about links, alias, or file perms."
 ;; ;; ----------------------
 ;; ;; math
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "Wallpaper_dir")
 ;;  "diklo" "wallpaper_groups")
@@ -323,46 +323,46 @@ Note: no consideration is taken about links, alias, or file perms."
 ;; ;; literature
 
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "PageTwo_dir/Vocabulary_dir")
 ;;  "diklo" "vocabulary")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "p/time_machine")
 ;;  "diklo" "time_machine")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "flatland")
 ;;  "diklo" "flatland")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "p/titus")
 ;;  "diklo" "titus")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "p/monkey_king")
 ;;  "diklo" "monkey_king")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "p/arabian_nights")
 ;;  "diklo" "arabian_nights")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "C:/Users/h3/web/xahlee_org/"
 ;;  (list "p/um")
 ;;  "diklo" "unabomber_manifesto")
 
-;; ;; (make-downloadable-copy
+;; ;; (xah-make-downloadable-copy
 ;; ;;  "C:/Users/h3/web/xahlee_org/" 
 ;; ;; (list "p/mopi") "diklo" "mopi")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;; "C:/Users/h3/web/xahlee_org/"
 ;; (list "SpecialPlaneCurves_dir")
 ;;  "diklo" "plane_curves_aw")

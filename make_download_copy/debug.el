@@ -38,7 +38,7 @@
    (let (fromDir toDir)
      (setq fromDir (concat webroot x))
      (setq toDir
-           (drop-last-slashed-substring (concat webroot destDirRelativePath "/" zipCoreName "/" x)) )
+           (xah-drop-last-slash (concat webroot destDirRelativePath "/" zipCoreName "/" x)) )
      (make-directory toDir t)
      (shell-command (concat "cp -R " fromDir " " toDir))
      )

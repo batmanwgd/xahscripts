@@ -1,7 +1,7 @@
 ;; -*- coding: utf-8 -*-
 ;; 2008-06-12, 2009-08-10, 2009-08-24, 2012-05-05
 
-;; make a downloadable copy of my website. See function “make-downloadable-copy”
+;; make a downloadable copy of my website. See function “xah-make-downloadable-copy”
 ;; this is personal code.
 ;; Works in unix, and relies on my particular dir structure.
 
@@ -25,9 +25,9 @@
 
 ;;;; functions
 
-;; (compute-url-from-relative-link "~/web/xahlee_org/emacs/emacs.html" "../Periodic_dosage_dir/skami_prosa.html" "~/web/xahlee_org/" "xahlee.org")
+;; (xah-get-full-url "~/web/xahlee_org/emacs/emacs.html" "../Periodic_dosage_dir/skami_prosa.html" "~/web/xahlee_org/" "xahlee.org")
 
-(defun compute-url-from-relative-link (fPath linkPath webDocRoot hostName)
+(defun xah-get-full-url (fPath linkPath webDocRoot hostName)
   "Returns a “http://” based URL of a given linkPath,
 based on its fPath, webDocRoot, hostName.
 
@@ -38,7 +38,7 @@ webDocRoot is the path to a ancestor dir of fPath (i.e. it should be part of sta
 Returns a URL of the form “http://‹hostName›/‹urlPath›” that points to the same file as linkPath.
 
 For example:
- (compute-url-from-relative-link
+ (xah-get-full-url
  \"/Users/xah/web/xahlee_org/Periodic_dosage_dir/t2/mirrored.html\"
  \"../../p/demonic_males.html\"
  \"/Users/xah/web/xahlee_org/\"
@@ -53,7 +53,7 @@ Note that webDocRoot may or may not end in a slash."
            (expand-file-name (concat (file-name-directory fPath) linkPath))
            (length (file-name-as-directory (directory-file-name (expand-file-name webDocRoot)))))))
 
-(defun drop-last-slashed-substring (path)
+(defun xah-drop-last-slash (path)
   "drop the last path separated by “/”.
 For example:
 “/a/b/c/d” → “/a/b/c”
@@ -65,12 +65,12 @@ For example:
       (substring path 0 (1- (match-end 0)))
     path))
 
-(defun copy-dir-single-level (sourcedir destdir)
+(defun xah-copy-dir-single-level (sourcedir destdir)
   "Copy all files from SOURCEDIR to DESTDIR.
 
 The input dir should not end in a slash.
 Example usage:
- (copy-dir-single-level
+ (xah-copy-dir-single-level
  \"/Users/xah/web/p/um\"
  \"/Users/xah/web/diklo/xx\")
 
@@ -83,7 +83,7 @@ Note: no consideration is taken about links, alias, or file perms."
           (concat sourcedir "/" ξx) destdir) ) ) )
    (directory-files sourcedir) ) )
 
- (defun delete-xahtemp-files (mydir)
+ (defun xah-delete-xahtemp-files (mydir)
    "Delete some files and dirs…
  dir/files starting with xx
   ends with ~
@@ -100,7 +100,7 @@ Note: no consideration is taken about links, alias, or file perms."
      (shell-command "find . -depth -type d -name 'xx*' -exec rm {} ';'")
      ))
 
-(defun remove-ads-scripts-in-file (fPath originalFilePath webRoot)
+(defun xah-remove-ads-in-file (fPath originalFilePath webRoot)
   "Modify the HTML file at fPath, to make it ready for download bundle.
 
 This function change local links to “http://” links, Delete the google javascript snippet, and other small changes, so that the file is nicer to be viewed off-line at some computer without the entire xahlee.org's web dir structure.
@@ -136,7 +136,7 @@ originalFilePath is used to construct new relative links."
             (delete-region p1 p2)
             (insert
              ;; (xahsite-filepath-to-href-value (xahsite-href-value-to-filepath hrefValue originalFilePath) originalFilePath)
-             (compute-url-from-relative-link originalFilePath hrefValue webRoot (xahsite-get-domain-of-local-file-path originalFilePath))
+             (xah-get-full-url originalFilePath hrefValue webRoot (xahsite-get-domain-of-local-file-path originalFilePath))
 )
 )))
 
@@ -152,11 +152,11 @@ originalFilePath is used to construct new relative links."
           (setq default-directory (file-name-directory fPath) )
           (when (not (file-exists-p hrefValue))
             (delete-region p1 p2)
-            (insert (compute-url-from-relative-link originalFilePath hrefValue webRoot (xahsite-get-domain-of-local-file-path originalFilePath)))
+            (insert (xah-get-full-url originalFilePath hrefValue webRoot (xahsite-get-domain-of-local-file-path originalFilePath)))
             )))
       ) ))
 
-(defun make-downloadable-copy (ξwebDocRoot ξsourceDirList ξdestDir )
+(defun xah-make-downloadable-copy (ξwebDocRoot ξsourceDirList ξdestDir )
   "Make a copy of a set of subdirs of Xah Site, for download.
 
 All paths must be full paths.
@@ -212,7 +212,7 @@ if exist, it'll be overridden.
     (copy-file "~/web/xahlee_org/lit.css" ξdestDir "OK-IF-ALREADY-EXISTS")
     (copy-directory "~/web/xahlee_org/ics/" (concat ξdestDir "ics/") "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
 
-;     (delete-xahtemp-files ξdestDir)
+;     (xah-delete-xahtemp-files ξdestDir)
     (princ
      (shell-command (format "python3 ./delete_temp_files.py3 %s"  ξdestDir) )
  )
@@ -222,7 +222,7 @@ if exist, it'll be overridden.
     (mapc
      (lambda (ξoneSrcDir)
        (mapc
-        (lambda (ξf) (remove-ads-scripts-in-file ξf (concat ξwebDocRoot (substring ξf (length ξdestDir))) ξwebDocRoot))
+        (lambda (ξf) (xah-remove-ads-in-file ξf (concat ξwebDocRoot (substring ξf (length ξdestDir))) ξwebDocRoot))
         (find-lisp-find-files (concat ξdestDir (substract-path ξoneSrcDir ξwebDocRoot) ) "\\.html$")))
      ξsourceDirList)
 
@@ -233,7 +233,7 @@ if exist, it'll be overridden.
 
 ;; programing
 
- (make-downloadable-copy
+ (xah-make-downloadable-copy
   "~/web/ergoemacs_org/"
   [
    "~/web/ergoemacs_org/"
@@ -244,29 +244,36 @@ if exist, it'll be overridden.
    ]
   "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
 
-;; (make-downloadable-copy
+ ;; (xah-make-downloadable-copy
+ ;;  "~/web/xahlee_info/"
+ ;;  [
+ ;;   "~/web/xahlee_info/"
+ ;;   ]
+ ;;  "~/web/xahlee_org/diklo/xx_xahlee_info/")
+
+;; (xah-make-downloadable-copy
 ;;  "~/web/"
 ;;  [
 ;;   "~/web/ergoemacs_org/"
 ;;   ]
 ;;  "~/web/xahlee_org/diklo/xx23/")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_org/"
 ;;  [ "~/web/xahlee_org/js/" ]
 ;;  "~/web/xahlee_org/diklo/xxxx3/")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_org/"
 ;;  [ "~/web/xahlee_org/js/" ]
 ;;  "~/web/xahlee_org/diklo/xah_dhtml_tutorial/")
 
-;; (make-downloadable-copy
-;;  "~/web/xahlee_org/"
-;;  [ "~/web/xahlee_org/java-a-day/" ]
-;;  "~/web/xahlee_org/diklo/xah_java_tutorial/")
+;; (xah-make-downloadable-copy
+;;  "~/web/xahlee_info/"
+;;  [ "~/web/xahlee_info/java-a-day/" ]
+;;  "~/web/xahlee_org/diklo/xx_xah_java_tutorial/")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_org/"
 ;;  [ "~/web/xahlee_org/perl-python/" ]
 ;;  "~/web/xahlee_org/diklo/xah_perl-python_tutorial/")
@@ -274,7 +281,7 @@ if exist, it'll be overridden.
 ;; ----------------------
 ;; math
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_org/"
 ;;  [ "~/web/xahlee_org/Wallpaper_dir/" ]
 ;;  "~/web/xahlee_org/diklo/wallpaper_groups/")
@@ -282,50 +289,50 @@ if exist, it'll be overridden.
 ;; ----------------------
 ;; literature
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/wordyenglish_com/"
 ;;  [ "~/web/wordyenglish_com/words/" ]
 ;;  "~/web/xahlee_org/diklo/xxwords/")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_org/"
 ;;  [ "~/web/xahlee_org/p/time_machine/" ]
 ;;  "~/web/xahlee_org/diklo/time_machine/")
 
-;; (make-downloadable-copy "~/web/xahlee_org/" [ "~/web/xahlee_org/flatland/" ]  "~/xx283/")
+;; (xah-make-downloadable-copy "~/web/xahlee_org/" [ "~/web/xahlee_org/flatland/" ]  "~/xx283/")
 
 ;; 2014-01-22
 ;; ;; need to remove nav bar
 ;; ;; need to include the JavaScript annotation script
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/wordyenglish_com/"
 ;;  [ "~/web/wordyenglish_com/titus/" ]
 ;;  "~/web/wordyenglish_com/diklo/xxtitus/")
 
 ;; "~/web/wordyenglish_com/titus/"
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/wordyenglish_com/"
 ;;  [
 ;;  "~/web/wordyenglish_com/monkey_king/" ]
 ;;  "~/web/xahlee_org/diklo/monkey_king/")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_org/"
 ;;  [ "~/web/xahlee_org/p/arabian_nights/" ]
 ;;  "~/web/xahlee_org/diklo/arabian_nights/")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_org/"
 ;;  [ "~/web/xahlee_org/p/um/" ]
 ;;  "~/web/xahlee_org/diklo/xy-unabomber/")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_info/"
 ;;  [ "~/web/xahlee_info/SpecialPlaneCurves_dir/" ]
 ;;  "~/web/xahlee_org/diklo/xx-plane_curves_aw/")
 
-;; (make-downloadable-copy
+;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_info/"
 ;;  [ "~/web/xahlee_info/SpecialPlaneCurves_dir/_curves_robert_yates/" ]
 ;; "~/web/xahlee_org/diklo/xx_yates"
