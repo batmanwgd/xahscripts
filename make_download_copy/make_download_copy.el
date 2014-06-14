@@ -27,15 +27,14 @@
 
 ;; (xah-get-full-url "~/web/xahlee_org/emacs/emacs.html" "../Periodic_dosage_dir/skami_prosa.html" "~/web/xahlee_org/" "xahlee.org")
 
-(defun xah-get-full-url (fPath linkPath webDocRoot hostName)
-  "Returns a “http://” based URL of a given linkPath,
-based on its fPath, webDocRoot, hostName.
+(defun xah-get-full-url (φ-file-path φ-linkpath φ-web-doc-root φ-host-name)
+  "Returns a “http://” based URL of a given φ-linkpath, based on its φ-file-path, and {φ-web-doc-root, φ-host-name}.
 
-fPath is the full path to a html file.
-linkPath is a string that's relative path to fPath. e.g. 「<a href=\"‹linkPath›\">」.
-webDocRoot is the path to a ancestor dir of fPath (i.e. it should be part of start of fPath).
+φ-file-path is the full path to a html file.
+φ-linkpath is a string that's relative path to φ-file-path. e.g. 「<a href=\"‹φ-linkpath›\">」.
+φ-web-doc-root is the path to a ancestor dir of φ-file-path (i.e. it should be part of start of φ-file-path).
 
-Returns a URL of the form “http://‹hostName›/‹urlPath›” that points to the same file as linkPath.
+Returns a URL of the form “http://‹φ-host-name›/‹urlPath›” that points to the same file as φ-linkpath.
 
 For example:
  (xah-get-full-url
@@ -47,26 +46,26 @@ For example:
 Returns
  「\"http://xahlee.org/xahlee_org/p/demonic_males.html\"」
 
-Note that webDocRoot may or may not end in a slash."
-  (concat "http://" hostName "/"
+Note that φ-web-doc-root may or may not end in a slash."
+  (concat "http://" φ-host-name "/"
           (substring
-           (expand-file-name (concat (file-name-directory fPath) linkPath))
-           (length (file-name-as-directory (directory-file-name (expand-file-name webDocRoot)))))))
+           (expand-file-name (concat (file-name-directory φ-file-path) φ-linkpath))
+           (length (file-name-as-directory (directory-file-name (expand-file-name φ-web-doc-root)))))))
 
-(defun xah-drop-last-slash (path)
-  "drop the last path separated by “/”.
+(defun xah-drop-last-slash (φ-path)
+  "Remove the last φ-path separated by “/”.
 For example:
 “/a/b/c/d” → “/a/b/c”
 “/a/b/c/d/” → “/a/b/c/d”
 “/” → “”
 “//” → “/”
 “” → “”"
-  (if (string-match "\\(.*/\\)+" path)
-      (substring path 0 (1- (match-end 0)))
-    path))
+  (if (string-match "\\(.*/\\)+" φ-path)
+      (substring φ-path 0 (1- (match-end 0)))
+    φ-path))
 
-(defun xah-copy-dir-single-level (sourcedir destdir)
-  "Copy all files from SOURCEDIR to DESTDIR.
+(defun xah-copy-dir-single-level (φ-sourcedir φ-destdir)
+  "Copy all files from Φ-SOURCEDIR to Φ-DESTDIR.
 
 The input dir should not end in a slash.
 Example usage:
@@ -80,42 +79,45 @@ Note: no consideration is taken about links, alias, or file perms."
      (let ()
        (when (and (not (string-equal ξx ".")) (not (string-equal ξx "..")))
          (copy-file
-          (concat sourcedir "/" ξx) destdir) ) ) )
-   (directory-files sourcedir) ) )
+          (concat φ-sourcedir "/" ξx) φ-destdir) ) ) )
+   (directory-files φ-sourcedir) ) )
 
- (defun xah-delete-xahtemp-files (mydir)
-   "Delete some files and dirs…
- dir/files starting with xx
-  ends with ~
-  #…#
-  .DS_Store
+ (defun xah-delete-xahtemp-files (φ-dir-path)
+   "Delete some files and dirs in dir φ-dir-path.
+
+File/Dir deleted are file/dir names that:
+
+• start with xx
+• ends with ~
+• #…#
+• .DS_Store
   etc."
    (progn
      ;; remove emacs backup files, temp files, mac os x files, etc.
      (princ "Removing temp files…\n")
-     (delete-files-by-regex mydir "\\`\\.htaccess\\'")
-     (delete-files-by-regex mydir "\\`#.?+#\\'")
-     (delete-files-by-regex mydir "\\`xx")
-     (delete-files-by-regex mydir "\\`\\.DS_Store\\'")
-     (shell-command "find . -depth -type d -name 'xx*' -exec rm {} ';'")
+     (delete-files-by-regex φ-dir-path "\\`\\.htaccess\\'")
+     (delete-files-by-regex φ-dir-path "\\`#.?+#\\'")
+     (delete-files-by-regex φ-dir-path "\\`xx")
+     (delete-files-by-regex φ-dir-path "\\`\\.DS_Store\\'")
+     (shell-command "find . -depth -type d -name 'xx*' -exec rm {} ';'")  ; TODO: stop calling shell command. use elisp instead
      ))
 
-(defun xah-remove-ads-in-file (fPath originalFilePath webRoot)
-  "Modify the HTML file at fPath, to make it ready for download bundle.
+(defun xah-process-file-for-download (φ-file-path φ-original-file-path webRoot)
+  "Modify the HTML file at φ-file-path, to make it ready for download bundle.
 
 This function change local links to “http://” links, Delete the google javascript snippet, and other small changes, so that the file is nicer to be viewed off-line at some computer without the entire xahlee.org's web dir structure.
 
 The google javascript is the Google Analytics webbug that tracks web stat to xahlee.org.
 
-fPath is the full path to the html file that will be processed.
-originalFilePath is full path to the “same” file in the original web structure.
-originalFilePath is used to construct new relative links."
+φ-file-path is the full path to the html file that will be processed.
+φ-original-file-path is full path to the “same” file in the original web structure.
+φ-original-file-path is used to construct new relative links."
   (let ( bds p1 p2 hrefValue default-directory
              (case-fold-search nil)
              )
 
-    (with-temp-file fPath
-      (insert-file-contents fPath)
+    (with-temp-file φ-file-path
+      (insert-file-contents φ-file-path)
       (goto-char 1)
 
       (xahsite-remove-ads (point-min) (point-max))
@@ -131,12 +133,12 @@ originalFilePath is used to construct new relative links."
         (setq hrefValue (buffer-substring-no-properties p1 p2))
 
         (when (xahsite-local-link-p hrefValue)
-          (setq default-directory (file-name-directory fPath) )
+          (setq default-directory (file-name-directory φ-file-path) )
           (when (not (file-exists-p (elt (split-uri-hashmark hrefValue) 0)))
             (delete-region p1 p2)
             (insert
-             ;; (xahsite-filepath-to-href-value (xahsite-href-value-to-filepath hrefValue originalFilePath) originalFilePath)
-             (xah-get-full-url originalFilePath hrefValue webRoot (xahsite-get-domain-of-local-file-path originalFilePath))
+             ;; (xahsite-filepath-to-href-value (xahsite-href-value-to-filepath hrefValue φ-original-file-path) φ-original-file-path)
+             (xah-get-full-url φ-original-file-path hrefValue webRoot (xahsite-get-domain-of-local-file-path φ-original-file-path))
 )
 )))
 
@@ -149,40 +151,44 @@ originalFilePath is used to construct new relative links."
         (setq hrefValue (buffer-substring-no-properties p1 p2))
 
         (when (xahsite-local-link-p hrefValue)
-          (setq default-directory (file-name-directory fPath) )
+          (setq default-directory (file-name-directory φ-file-path) )
           (when (not (file-exists-p hrefValue))
             (delete-region p1 p2)
-            (insert (xah-get-full-url originalFilePath hrefValue webRoot (xahsite-get-domain-of-local-file-path originalFilePath)))
+            (insert (xah-get-full-url φ-original-file-path hrefValue webRoot (xahsite-get-domain-of-local-file-path φ-original-file-path)))
             )))
       ) ))
 
-(defun xah-make-downloadable-copy (ξwebDocRoot ξsourceDirList ξdestDir )
+(defun xah-make-downloadable-copy (φ-web-doc-root φ-source-dir-list φ-dest-dir )
   "Make a copy of a set of subdirs of Xah Site, for download.
 
 All paths must be full paths.
 All dir paths should end in slash.
 
-• ξwebDocRoot is the website doc root dir. e.g. “/Users/xah/web/xahlee_org/”
+• φ-web-doc-root is the website doc root dir. e.g. “/Users/xah/web/xahlee_org/”
 
-• ξsourceDirList is a list/sequence of dir paths to be copied for download. e.g.
+• φ-source-dir-list is a list/sequence of dir paths to be copied for download. e.g.
  [\"/Users/xah/web/xahlee_org/emacs/\" \"/Users/xah/web/xahlee_org/comp/\" ]
-Each path should be a subdir of ξwebDocRoot.
+Each path should be a subdir of φ-web-doc-root.
 
-• ξdestDir is the destination dir. e.g.
+• φ-dest-dir is the destination dir. e.g.
  “/Users/xah/web/xahlee_org/diklo/emacs_tutorial_2012-05-05”
 if exist, it'll be overridden.
 "
   (let (
         ;; add ending slash, to be safe
-        (ξwebDocRoot (file-name-as-directory (expand-file-name ξwebDocRoot)))
-        (ξdestDir (file-name-as-directory (expand-file-name ξdestDir)))
-        (ξsourceDirList (mapcar (lambda (ξx) (file-name-as-directory (expand-file-name ξx))) ξsourceDirList) ) )
+        (ξroot (file-name-as-directory (expand-file-name φ-web-doc-root)))
+        (ξsourceDirList (mapcar (lambda (ξx) (file-name-as-directory (expand-file-name ξx))) φ-source-dir-list) ) 
+        (ξdestDir (file-name-as-directory (expand-file-name φ-dest-dir)))
+        )
+
+         (princ "ξsourceDirList")
+         (princ ξsourceDirList)
 
     ;; copy to destination
     (mapc
      (lambda (ξoneSrcDir)
        (let ((fromDir ξoneSrcDir)
-             (toDir (concat ξdestDir (substract-path ξoneSrcDir ξwebDocRoot)) ))
+             (toDir (concat ξdestDir (substract-path ξoneSrcDir ξroot)) ))
          (make-directory toDir t)
 
          (cond
@@ -221,9 +227,25 @@ if exist, it'll be overridden.
     (princ "Removing javascript etc in files…\n")
     (mapc
      (lambda (ξoneSrcDir)
-       (mapc
-        (lambda (ξf) (xah-remove-ads-in-file ξf (concat ξwebDocRoot (substring ξf (length ξdestDir))) ξwebDocRoot))
-        (find-lisp-find-files (concat ξdestDir (substract-path ξoneSrcDir ξwebDocRoot) ) "\\.html$")))
+       (let ((ξfileList (find-lisp-find-files (concat ξdestDir (substract-path ξoneSrcDir ξroot) ) "\\.html$")))
+
+         (mapc
+          (lambda (ξf)
+
+            (let ((ξorigPath (concat ξroot (substring ξf (length ξdestDir)))))
+              (princ "---------------\n")
+              (princ ξf)
+              (princ "\n")
+              (princ ξorigPath)
+              (princ "\n")
+              (princ ξroot)
+
+              (xah-process-file-for-download ξf ξorigPath ξroot)
+              )
+            )
+          ξfileList)
+         )
+       )
      ξsourceDirList)
 
     (princ "Making download copy completed.\n")
@@ -244,12 +266,23 @@ if exist, it'll be overridden.
    ]
   "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
 
+;; ;; 2014-05-19 doesn't work well
+;;  (xah-make-downloadable-copy
+;;   "~/web/xahlee_info/"
+;;   [
+;; "~/web/xahlee_info/js/"
+;; "~/web/xahlee_info/javascript_ecma-262_5.1_2011/"
+;; "~/web/xahlee_info/jquery_doc/"
+;; "~/web/xahlee_info/node_api/"
+;;    ]
+;;   "~/web/xahlee_org/diklo/xx_xah_js_tutorial/")
+
  ;; (xah-make-downloadable-copy
  ;;  "~/web/xahlee_info/"
  ;;  [
  ;;   "~/web/xahlee_info/"
  ;;   ]
- ;;  "~/web/xahlee_org/diklo/xx_xahlee_info/")
+ ;;  "~/web/xahlee_org/diklo/xahlee_info/")
 
 ;; (xah-make-downloadable-copy
 ;;  "~/web/"
