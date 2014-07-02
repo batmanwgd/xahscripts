@@ -3,6 +3,10 @@ cp -r ~/git/ergoemacs-mode/ ~/git/ergoemacs/ergoemacs/
 rm -r ~/git/ergoemacs/ergoemacs/ergoemacs-mode/.git
 mv ~/git/ergoemacs/ergoemacs/ergoemacs-mode ~/git/ergoemacs/ergoemacs/ergoemacs-keybindings
 
+rm -r ~/git/ergoemacs/packages/xah-fly-keys
+cp -r ~/git/xah-fly-keys/ ~/git/ergoemacs/packages/
+rm -r ~/git/ergoemacs/packages/xah-fly-keys/.git
+
 cp ~/git/xah-elisp-mode/xah-elisp-mode.el ~/git/ergoemacs/packages/
 
 cp ~/git/xah-css-mode/xah-css-mode.el ~/git/ergoemacs/packages/

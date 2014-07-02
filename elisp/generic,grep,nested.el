@@ -6,7 +6,7 @@
 (setq inputDir "~/web/xahlee_org/" ) ; must end with a slash
 
 ;; add a ending slash if not there
-(when (not (string= "/" (substring inputDir -1) )) (setq inputDir (concat inputDir "/") ) )
+(when (not (string= "/" (substring inputDir -1))) (setq inputDir (concat inputDir "/")))
 
 (defun my-process-file (fPath)
   "Process the file at FPATH …"
@@ -27,28 +27,18 @@
 
         (goto-char 1)
         (while (search-forward strA nil t)
-          (setq ξi (1+ ξi))
-          )
+          (setq ξi (1+ ξi)))
 
         (when (>= ξi 1)
           (when (/= ξi 1)
-            (princ (format "ξi is: %d %s\n" ξi fPath))
-            )
+            (princ (format "ξi is: %d %s\n" ξi fPath)))
 
           (goto-char 1)
           (while (search-forward strB nil t)
-            (setq ξj (1+ ξj))
-            )
+            (setq ξj (1+ ξj)))
 
           (when (/= ξj 1)
-            (princ (format "problem: %d %s\n" ξj fPath))
-            )
-
-          )
-        )
-      )
-
-    ))
+            (princ (format "problem: %d %s\n" ξj fPath))))))))
 
 (require 'find-lisp)
 
