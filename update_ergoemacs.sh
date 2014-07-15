@@ -36,7 +36,7 @@ cp ~/git/xfrp_find_replace_pairs.el/xfrp_find_replace_pairs.el ~/git/ergoemacs/p
 
 cp ~/git/xub-mode.el/xub-mode.el ~/git/ergoemacs/packages/
 
-cp ~/git/lookup-word-on-internet.el/lookup-word-on-internet.el ~/git/ergoemacs/packages/
+cp ~/git/lookup-word-on-internet/lookup-word-on-internet.el ~/git/ergoemacs/packages/
 
 # xlsl-mode.el
 # xmsi-math-symbols-input.el

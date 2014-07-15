@@ -84,6 +84,7 @@ Note: no consideration is taken about links, alias, or file perms."
 
  (defun xah-delete-xahtemp-files (φ-dir-path)
    "Delete some files and dirs in dir φ-dir-path.
+φ-dir-path must be full path.
 
 File/Dir deleted are file/dir names that:
 
@@ -99,7 +100,11 @@ File/Dir deleted are file/dir names that:
      (delete-files-by-regex φ-dir-path "\\`#.?+#\\'")
      (delete-files-by-regex φ-dir-path "\\`xx")
      (delete-files-by-regex φ-dir-path "\\`\\.DS_Store\\'")
-     (shell-command "find . -depth -type d -name 'xx*' -exec rm {} ';'")  ; TODO: stop calling shell command. use elisp instead
+     (delete-files-by-regex φ-dir-path "~\\'")
+
+     ;; (expand-file-name φ-dir-path)
+
+     (shell-command "find . -depth -type d -name 'xx*' -exec rm {} ';'") ; TODO: stop calling shell command. use elisp instead
      ))
 
 (defun xah-process-file-for-download (φ-file-path φ-original-file-path webRoot)
@@ -255,27 +260,16 @@ if exist, it'll be overridden.
 
 ;; programing
 
- (xah-make-downloadable-copy
-  "~/web/ergoemacs_org/"
-  [
-   "~/web/ergoemacs_org/"
-;   "~/web/ergoemacs_org/emacs/"
-;   "~/web/ergoemacs_org/emacs_manual/"
-;   "~/web/ergoemacs_org/misc/"
-;   "~/web/ergoemacs_org/i/"
-   ]
-  "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
-
-;; ;; 2014-05-19 doesn't work well
 ;;  (xah-make-downloadable-copy
-;;   "~/web/xahlee_info/"
+;;   "~/web/ergoemacs_org/"
 ;;   [
-;; "~/web/xahlee_info/js/"
-;; "~/web/xahlee_info/javascript_ecma-262_5.1_2011/"
-;; "~/web/xahlee_info/jquery_doc/"
-;; "~/web/xahlee_info/node_api/"
+;;    "~/web/ergoemacs_org/"
+;; ;   "~/web/ergoemacs_org/emacs/"
+;; ;   "~/web/ergoemacs_org/emacs_manual/"
+;; ;   "~/web/ergoemacs_org/misc/"
+;; ;   "~/web/ergoemacs_org/i/"
 ;;    ]
-;;   "~/web/xahlee_org/diklo/xx_xah_js_tutorial/")
+;;   "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
 
  ;; (xah-make-downloadable-copy
  ;;  "~/web/xahlee_info/"
