@@ -1,6 +1,5 @@
 ;; -*- coding: utf-8 -*-
 
-;; 2014-05-19 doesn't work well
  (xah-make-downloadable-copy
   "~/web/xahlee_info/"
   [
