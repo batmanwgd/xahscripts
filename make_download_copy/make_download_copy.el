@@ -16,7 +16,7 @@
 ;; • bug: links to some files such as “c:/Users/xah/web/xahlee_org/kml/Aapua_wind_park.kmz”, are not created in the copy.
 ;; • bug: image links to dir outside of the copy dir are not copied.
 
-(load-file "/home/xah/git/xah_emacs_init/xah_emacs_xahsite_path_lisp_util.el")
+(load-file "~/git/xah_emacs_init/xah_emacs_xahsite_path_lisp_util.el")
 
 (require 'xeu_elisp_util) ; substract-path
 (require 'xfrp_find_replace_pairs)      ; replace-pairs-region etc

@@ -53,9 +53,9 @@ This number is not necessarily the length of ξ-inputDir. It can be smaller for 
 2011-07-22 TODO: questionable feature here. Do not rely on it.
 ")
 
-(defconst ξ-siteHeaderFilePath (fullpath-relative-to-current-file "site_report_wikipedia_links_header.txt") "The header text for xahlee.org.")
+(defconst ξ-siteHeaderFilePath (xah-get-fullpath "site_report_wikipedia_links_header.txt") "The header text for xahlee.org.")
 
-(defconst ξ-siteFooterFilePath (fullpath-relative-to-current-file "site_report_wikipedia_links_footer.txt") "The footer text for xahlee.org.")
+(defconst ξ-siteFooterFilePath (xah-get-fullpath "site_report_wikipedia_links_footer.txt") "The footer text for xahlee.org.")
 
 
 ;;;; loading package. global vars.

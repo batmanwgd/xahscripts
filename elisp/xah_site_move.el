@@ -40,9 +40,10 @@
 (setq ξ-inputPath "/home/xah/web/xahlee_org/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/python_doc_2.7.6/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/python_doc_3.3.3/" )
-(setq ξ-inputPath "/home/xah/web/ergoemacs_org/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/" )
 (setq ξ-inputPath "/home/xah/web/" )
+(setq ξ-inputPath "/home/xah/web/xahlee_info/js/" )
+(setq ξ-inputPath "/home/xah/web/ergoemacs_org/" )
 
 ;/home/xah/web/xahlee_org/sex/gender_feminist_of_the_year_Anita_Sarkeesian.html
 
@@ -277,7 +278,7 @@ t
           (error "Input path 「%s」 isn't a regular file nor dir." ξ-inputPath) ) ) )
     (princ "Done ☺")
     (switch-to-buffer outputBuffer)
-    (xah-html-mode)
+    (html-mode)
     (highlight-lines-matching-regexp "\\`• " (quote hi-pink))
     )
   )
