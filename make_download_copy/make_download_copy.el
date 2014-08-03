@@ -260,24 +260,6 @@ if exist, it'll be overridden.
 
 ;; programing
 
-;;  (xah-make-downloadable-copy
-;;   "~/web/ergoemacs_org/"
-;;   [
-;;    "~/web/ergoemacs_org/"
-;; ;   "~/web/ergoemacs_org/emacs/"
-;; ;   "~/web/ergoemacs_org/emacs_manual/"
-;; ;   "~/web/ergoemacs_org/misc/"
-;; ;   "~/web/ergoemacs_org/i/"
-;;    ]
-;;   "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
-
- ;; (xah-make-downloadable-copy
- ;;  "~/web/xahlee_info/"
- ;;  [
- ;;   "~/web/xahlee_info/"
- ;;   ]
- ;;  "~/web/xahlee_org/diklo/xahlee_info/")
-
 ;; (xah-make-downloadable-copy
 ;;  "~/web/"
 ;;  [
