@@ -26,8 +26,8 @@ my $webRootPath = qq{$userHomeDir/web};
 
 my $inDirPath = qq{$webRootPath/xahlee_info/comp};
 my $inDirPath = qq{$webRootPath/xahlee_org/diklo/xx_xah_java_tutorial/java-a-day};
-my $inDirPath = qq{$webRootPath};
 my $inDirPath = qq{$webRootPath/xahlee_org/diklo/xx_xah_emacs_tutorial};
+my $inDirPath = qq{$webRootPath};
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
