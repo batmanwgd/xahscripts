@@ -1,0 +1,47 @@
+2014-09-04
+
+this doesn't seem to exist	
+xahlee_sidebar-right-1_AdSense1_160x600_as
+
+7230579589
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- xahlee_sidebar-right-1_AdSense1_160x600_as -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-5125343095650532"
+     data-ad-slot="7230579589"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+
+2014-09-04
+
+old
+
+<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 160x600 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-5125343095650532"
+     data-ad-slot="4521229185"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+new code
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- side300x600 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:600px"
+     data-ad-client="ca-pub-5125343095650532"
+     data-ad-slot="7031204381"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+

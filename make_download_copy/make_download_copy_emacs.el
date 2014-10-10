@@ -13,5 +13,3 @@
    ]
   "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
 
-
-

@@ -35,17 +35,17 @@
 (defvar ξ-inputPath nil "Input dir. Must end with a slash")
 (setq ξ-inputPath "/home/xah/web/xahsl_org/" )
 (setq ξ-inputPath "/home/xah/web/wordyenglish_com/" )
-(setq ξ-inputPath "/home/xah/web/xahmusic_org/" )
 (setq ξ-inputPath "/home/xah/web/xaharts_org/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_org/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/python_doc_2.7.6/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/python_doc_3.3.3/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/" )
 (setq ξ-inputPath "/home/xah/web/" )
-(setq ξ-inputPath "/home/xah/web/ergoemacs_org/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/css_2.1_spec/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/js/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/" )
+(setq ξ-inputPath "/home/xah/web/ergoemacs_org/" )
+(setq ξ-inputPath "/home/xah/web/xahmusic_org/" )
 
 ;/home/xah/web/xahlee_org/sex/gender_feminist_of_the_year_Anita_Sarkeesian.html
 

@@ -277,10 +277,7 @@ if exist, it'll be overridden.
 ;;  [ "~/web/xahlee_org/js/" ]
 ;;  "~/web/xahlee_org/diklo/xah_dhtml_tutorial/")
 
-;; (xah-make-downloadable-copy
-;;  "~/web/xahlee_info/"
-;;  [ "~/web/xahlee_info/java-a-day/" ]
-;;  "~/web/xahlee_org/diklo/xx_xah_java_tutorial/")
+
 
 ;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_org/"
