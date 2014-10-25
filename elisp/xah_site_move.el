@@ -43,9 +43,9 @@
 (setq ξ-inputPath "/home/xah/web/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/css_2.1_spec/" )
 (setq ξ-inputPath "/home/xah/web/xahlee_info/js/" )
-(setq ξ-inputPath "/home/xah/web/xahlee_info/" )
 (setq ξ-inputPath "/home/xah/web/ergoemacs_org/" )
 (setq ξ-inputPath "/home/xah/web/xahmusic_org/" )
+(setq ξ-inputPath "/home/xah/web/xahlee_info/" )
 
 ;/home/xah/web/xahlee_org/sex/gender_feminist_of_the_year_Anita_Sarkeesian.html
 

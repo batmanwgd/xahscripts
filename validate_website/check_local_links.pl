@@ -29,8 +29,6 @@ my $inDirPath = qq{$webRootPath/xahlee_org/diklo/xx_xah_java_tutorial/java-a-day
 my $inDirPath = qq{$webRootPath/xahlee_org/diklo/xx_xah_emacs_tutorial};
 my $inDirPath = qq{$webRootPath};
 
-my $inDirPath = qq{$webRootPath/xahlee_org/diklo/xx_xah_js_tutorial};
-
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
 die qq{dir $inDirPath doesn't exist! $!} unless -e $inDirPath;

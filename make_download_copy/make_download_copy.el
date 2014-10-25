@@ -163,59 +163,56 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
             )))
       ) ))
 
-(defun xah-make-downloadable-copy (φ-web-doc-root φ-source-dir-list φ-dest-dir )
+(defun xah-make-downloadable-copy (φweb-doc-root φsource-dir-list φdest-dir )
   "Make a copy of a set of subdirs of Xah Site, for download.
 
 All paths must be full paths.
 All dir paths should end in slash.
 
-• φ-web-doc-root is the website doc root dir. e.g. “/Users/xah/web/xahlee_org/”
+• φweb-doc-root is the website doc root dir. e.g. “/Users/xah/web/xahlee_org/”
 
-• φ-source-dir-list is a list/sequence of dir paths to be copied for download. e.g.
+• φsource-dir-list is a list/sequence of dir paths to be copied for download. e.g.
  [\"/Users/xah/web/xahlee_org/emacs/\" \"/Users/xah/web/xahlee_org/comp/\" ]
-Each path should be a subdir of φ-web-doc-root.
+Each path should be a subdir of φweb-doc-root.
 
-• φ-dest-dir is the destination dir. e.g.
+• φdest-dir is the destination dir. e.g.
  “/Users/xah/web/xahlee_org/diklo/emacs_tutorial_2012-05-05”
 if exist, it'll be overridden.
 "
   (let (
         ;; add ending slash, to be safe
-        (ξroot (file-name-as-directory (expand-file-name φ-web-doc-root)))
-        (ξsourceDirList (mapcar (lambda (ξx) (file-name-as-directory (expand-file-name ξx))) φ-source-dir-list) ) 
-        (ξdestDir (file-name-as-directory (expand-file-name φ-dest-dir)))
-        )
+        (ξroot (file-name-as-directory (expand-file-name φweb-doc-root)))
+        (ξsourceDirList (mapcar (lambda (ξx) (file-name-as-directory (expand-file-name ξx))) φsource-dir-list)) 
+        (ξdestDir (file-name-as-directory (expand-file-name φdest-dir))))
 
-         (princ "ξsourceDirList")
-         (princ ξsourceDirList)
+    (princ "ξsourceDirList")
+    (princ ξsourceDirList)
 
     ;; copy to destination
     (mapc
      (lambda (ξoneSrcDir)
        (let ((fromDir ξoneSrcDir)
-             (toDir (concat ξdestDir (substract-path ξoneSrcDir ξroot)) ))
+             (toDir (concat ξdestDir (substract-path ξoneSrcDir ξroot))))
          (make-directory toDir t)
 
          (cond
-          ((< emacs-major-version 24) (copy-directory fromDir toDir))
+          ((>= emacs-major-version 25) 
+           (progn (copy-directory fromDir toDir "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
+                  (message "coccccccy→ %s %s" fromDir toDir)))
           ((= emacs-major-version 24)
            (if (>= emacs-minor-version 3)
                (progn (copy-directory fromDir toDir "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
-                      (message "coccccccy→ %s %s" fromDir toDir)
-                      )
+                      (message "coccccccy→ %s %s" fromDir toDir))
              (if (file-exists-p toDir)
                  (copy-directory fromDir (concat toDir "/../"))
-               (copy-directory fromDir toDir) )
-             )
-           )
-          )
-;         (if (>= emacs-major-version 24)
-;             (if (file-exists-p toDir)
-;                 (copy-directory fromDir (concat toDir "/../"))
-;               (copy-directory fromDir toDir) )
-;           (copy-directory fromDir toDir) )
-         (princ (format "Copying from 「%s」 to 「%s」\n" fromDir  toDir))
-         ))
+               (copy-directory fromDir toDir))))
+          ((< emacs-major-version 24) (copy-directory fromDir toDir)))
+  ;         (if (>= emacs-major-version 24)
+  ;             (if (file-exists-p toDir)
+  ;                 (copy-directory fromDir (concat toDir "/../"))
+  ;               (copy-directory fromDir toDir) )
+  ;           (copy-directory fromDir toDir) )
+         (princ (format "Copying from 「%s」 to 「%s」\n" fromDir  toDir))))
      ξsourceDirList)
 
     ;; copy the style sheets over, and icons dir
@@ -223,16 +220,15 @@ if exist, it'll be overridden.
     (copy-file "~/web/xahlee_org/lit.css" ξdestDir "OK-IF-ALREADY-EXISTS")
     (copy-directory "~/web/xahlee_org/ics/" (concat ξdestDir "ics/") "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
 
-;     (xah-delete-xahtemp-files ξdestDir)
+  ;     (xah-delete-xahtemp-files ξdestDir)
     (princ
-     (shell-command (format "python3 ./delete_temp_files.py3 %s"  ξdestDir) )
- )
+     (shell-command (format "python3 ./delete_temp_files.py3 %s"  ξdestDir)))
 
     ;; change local links to “http://” links. Delete the google javascript snippet, and other small fixes.
     (princ "Removing javascript etc in files…\n")
     (mapc
      (lambda (ξoneSrcDir)
-       (let ((ξfileList (find-lisp-find-files (concat ξdestDir (substract-path ξoneSrcDir ξroot) ) "\\.html$")))
+       (let ((ξfileList (find-lisp-find-files (concat ξdestDir (substract-path ξoneSrcDir ξroot)) "\\.html$")))
 
          (mapc
           (lambda (ξf)
@@ -245,12 +241,8 @@ if exist, it'll be overridden.
               (princ "\n")
               (princ ξroot)
 
-              (xah-process-file-for-download ξf ξorigPath ξroot)
-              )
-            )
-          ξfileList)
-         )
-       )
+              (xah-process-file-for-download ξf ξorigPath ξroot)))
+          ξfileList)))
      ξsourceDirList)
 
     (princ "Making download copy completed.\n")
