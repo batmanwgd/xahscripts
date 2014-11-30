@@ -18,7 +18,6 @@ import sys
 import shutil
 
 inPath = sys.argv[1]
-
 print(inPath)
 
 # ##################################################
