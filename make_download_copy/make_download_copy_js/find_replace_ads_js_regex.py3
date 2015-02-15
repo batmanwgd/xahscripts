@@ -24,9 +24,21 @@ max_level = 6 # inclusive
 
 find_replace_list = [
 
-(re.compile(r"""<div class="¤tla"><a href="[^"]+?">[^<]+?</a></div>""", re.U|re.M|re.DOTALL), r''),
+(re.compile(r'''<button id="i54391" type="button">Random Page</button><script async src="(\.\./)*random_page.js"></script>''', re.U|re.M|re.DOTALL), r''),
 
-(re.compile(r"""<div id="share-buttons-97729"><div class="g-plusone" data-size="medium" data-annotation="none"></div></div><script defer src="(\.\./)*share_widgets.js"></script>""", re.U|re.M|re.DOTALL), r''),
+(re.compile(r'''<div id="share-buttons-97729"></div><script defer src="(\.\./)*share_widgets.js"></script>''', re.U|re.M|re.DOTALL), r''),
+
+(re.compile(r'''<section class="buy-book">
+Want to master JavaScript in a week? Buy <a href="buy_xah_js_tutorial.html">Xah JavaScript Tutorial</a>.
+<div class="pp_xah_js_tutorial">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick" />
+<input type="hidden" name="hosted_button_id" value="J3BC865C77JUC" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" />
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
+</div>
+</section>''', re.U|re.M|re.DOTALL), r''),
 
 ]
 
@@ -34,7 +46,7 @@ def replace_string_in_file(file_path):
    "Replaces all strings by regex in find_replace_list at file_path."
    backup_fname = file_path + "~re~"
 
-   print("reading:", file_path)
+   # print "reading:", file_path
    input_file = open(file_path, "rb")
    file_content = str(input_file.read(), "utf-8")
    input_file.close()
@@ -49,7 +61,7 @@ def replace_string_in_file(file_path):
    if (num_replaced > 0):
       print(("◆ %d %s" % (num_replaced, file_path.replace("/cygdrive/c/Users/h3", "~")) ))
 
-      # shutil.copy2(file_path, backup_fname)
+      shutil.copy2(file_path, backup_fname)
       output_file = open(file_path, "r+b")
       output_file.read() # we do this way to preserve file creation date
       output_file.seek(0)

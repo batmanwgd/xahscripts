@@ -1,6 +1,9 @@
 ;; -*- coding: utf-8 -*-
 
-(delete-directory "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/" t )
+(setq outputPath "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
+
+(when (file-exists-p outputPath)
+  (delete-directory outputPath "RECURSIVE" ) )
 
  (xah-make-downloadable-copy
   "~/web/ergoemacs_org/"
@@ -11,5 +14,5 @@
 ;   "~/web/ergoemacs_org/misc/"
 ;   "~/web/ergoemacs_org/i/"
    ]
-  "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
+  outputPath)
 

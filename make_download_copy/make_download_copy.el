@@ -222,7 +222,7 @@ if exist, it'll be overridden.
 
   ;     (xah-delete-xahtemp-files ξdestDir)
     (princ
-     (shell-command (format "python3 ./delete_temp_files.py3 %s"  ξdestDir)))
+     (shell-command (format "python3 /home/xah/git/xahscripts/make_download_copy/delete_temp_files.py3 %s"  ξdestDir)))
 
     ;; change local links to “http://” links. Delete the google javascript snippet, and other small fixes.
     (princ "Removing javascript etc in files…\n")

@@ -32,30 +32,18 @@
 
 
 
-(defvar ξ-inputPath nil "Input dir. Must end with a slash")
-(setq ξ-inputPath "/home/xah/web/xahsl_org/" )
-(setq ξ-inputPath "/home/xah/web/wordyenglish_com/" )
-(setq ξ-inputPath "/home/xah/web/xaharts_org/" )
-(setq ξ-inputPath "/home/xah/web/xahlee_org/" )
-(setq ξ-inputPath "/home/xah/web/xahlee_info/python_doc_2.7.6/" )
-(setq ξ-inputPath "/home/xah/web/xahlee_info/python_doc_3.3.3/" )
-(setq ξ-inputPath "/home/xah/web/xahlee_info/" )
-(setq ξ-inputPath "/home/xah/web/" )
-(setq ξ-inputPath "/home/xah/web/xahlee_info/css_2.1_spec/" )
-(setq ξ-inputPath "/home/xah/web/xahlee_info/js/" )
-(setq ξ-inputPath "/home/xah/web/ergoemacs_org/" )
-(setq ξ-inputPath "/home/xah/web/xahmusic_org/" )
-(setq ξ-inputPath "/home/xah/web/xahlee_info/" )
+(defvar γinputPath nil "Input dir. Must end with a slash")
+(setq γinputPath "/home/xah/web/xahlee_info/" )
 
 ;/home/xah/web/xahlee_org/sex/gender_feminist_of_the_year_Anita_Sarkeesian.html
 
-(defvar ξ-writeToFile-p nil "whether to write to file.")
-(setq ξ-writeToFile-p nil)
+(defvar γwriteToFile-p nil "whether to write to file.")
+(setq γwriteToFile-p nil)
 
-(defvar ξ-debug-p nil "Boolean. Print debug info.")
-(setq ξ-debug-p nil )
+(defvar γdebug-p nil "Boolean. Print debug info.")
+(setq γdebug-p nil )
 
-(defun ξ-check-this-link-p (linkString hostFilePath)
+(defun γcheck-this-link-p (linkString hostFilePath)
   "Return true or false.
 This function can change arbitrarily. Its meant to be modified on-the-fly according to requirement.
 
@@ -64,22 +52,13 @@ hostFilePath is the file full path that contains the link."
 t
   )
 
-(defvar ξ-skip-list nil "list of dirs to skip")
-(setq ξ-skip-list '(
-                    "/home/xah/web/xahlee_info/css_2.1_spec/"
-                    "/home/xah/web/xahlee_info/dom3-core/"
-                    "/home/xah/web/xahlee_info/dom3-load_save/"
-                    "/home/xah/web/xahlee_info/dom3-validation/"
-                    "/home/xah/web/xahlee_info/dom-whatwg/"
-                    "/home/xah/web/xahlee_info/git-bottomup/"
-                    "/home/xah/web/xahlee_info/javascript_ecma-262_5.1_2011/"
-                    "/home/xah/web/xahlee_info/jquery_doc/"
-                    "/home/xah/web/xahlee_info/python_doc_2.7.6/"
-                    "/home/xah/web/xahlee_info/python_doc_3.3.3/"
-                    "/home/xah/web/xahlee_info/REC-SVG11-20110816/"
-                    ))
+(defvar γskip-list nil "list of dirs to skip")
+(setq γskip-list
+      (mapcar
+       (lambda (x) (concat (xahsite-server-root-path) "xahlee_info/" x))
+       (xahsite-xahlee-info-external-docs)))
 
-(defvar ξ-moveFromToList nil "A alist of dirs that are to be moved.
+(defvar γmoveFromToList nil "A alist of dirs that are to be moved.
 Each entry is of the form (‹from› . ‹to›).
 • ‹from› and ‹to› must be full path.
 • The ‹from› can be a file or dir.
@@ -89,7 +68,7 @@ Each entry is of the form (‹from› . ‹to›).
 • No “from” should be a identical to a “to” dir.
 ")
 
-(setq ξ-moveFromToList
+(setq γmoveFromToList
  '(
 
 ;; remove or regenerate ../wikipedia_links.html
@@ -132,36 +111,30 @@ Each entry is of the form (‹from› . ‹to›).
 
 
 
-(defvar ξ-movedFromPaths nil "The first elements of ξ-moveFromToList.")
-(setq ξ-movedFromPaths (vconcat (mapcar (lambda (ξx) (car ξx) ) ξ-moveFromToList )) )
+(defvar γmovedFromPaths nil "The first elements of γmoveFromToList.")
+(setq γmovedFromPaths (vconcat (mapcar (lambda (ξx) (car ξx) ) γmoveFromToList )) )
 
-(defvar ξ-backup-filename-suffix nil "")
-(setq ξ-backup-filename-suffix (concat "~s" (format-time-string "%Y%m%d_%H%M%S") "~"))
+(defvar γbackup-filename-suffix nil "")
+(setq γbackup-filename-suffix (concat "~s" (format-time-string "%Y%m%d_%H%M%S") "~"))
 
 
 
-(defun get-new-fpath (ξfPath moveFromToList)
-  "Return a new file full path for ξfPath.
-moveFromToList is a alist."
-  (let ((ξfoundResult nil) (ξi 0) (ξlen (length moveFromToList)) )
+(defun get-new-fpath (φfPath φmoveFromToList)
+  "Return a new file full path for φfPath.
+φmoveFromToList is a alist."
+  (let ((ξfoundResult nil) (ξi 0) (ξlen (length φmoveFromToList)))
     ;; compare to each moved dir.
     (while (and (not ξfoundResult) (< ξi ξlen))
-      (when (string-match (concat "\\`" (regexp-quote (car (elt moveFromToList ξi))) ) ξfPath )
+      (when (string-match (concat "\\`" (regexp-quote (car (elt φmoveFromToList ξi)))) φfPath )
         (let (
-              (fromDir (car (elt moveFromToList ξi)))
-              (toDir (cdr (elt moveFromToList ξi)))
-              )
-          (setq ξfoundResult (concat toDir (substract-path ξfPath fromDir)) )
-          )
-        )
-      (setq ξi (1+ ξi) )
-      )
-    (if ξfoundResult ξfoundResult ξfPath )
-    )
-  )
-;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs/th" ξ-moveFromToList)
-;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs_manual/elisp/tt" ξ-moveFromToList)
-;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs" ξ-moveFromToList)
+              (fromDir (car (elt φmoveFromToList ξi)))
+              (toDir (cdr (elt φmoveFromToList ξi))))
+          (setq ξfoundResult (concat toDir (substract-path φfPath fromDir)))))
+      (setq ξi (1+ ξi)))
+    (if ξfoundResult ξfoundResult φfPath )))
+;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs/th" γmoveFromToList)
+;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs_manual/elisp/tt" γmoveFromToList)
+;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs" γmoveFromToList)
 
 
 
@@ -265,7 +238,7 @@ t
         (when ξchangeNecessary-p
           (princ (format "• %s\n" (replace-regexp-in-string "^c:/Users/h3/" "~/" φhost-file-path) ) )
           (when φwrite-to-file-p
-            (copy-file φhost-file-path (concat φhost-file-path ξ-backup-filename-suffix) t) ; backup
+            (copy-file φhost-file-path (concat φhost-file-path γbackup-filename-suffix) t) ; backup
             (write-region (point-min) (point-max) φhost-file-path)
             )  )) ) ))
 
@@ -276,22 +249,22 @@ t
   (with-output-to-temp-buffer outputBuffer
 
     (princ (format "-*- coding: utf-8 -*-
-%s, xah site move link change results. Input path: 〔%s〕 \n\n" (current-date-time-string) ξ-inputPath))
-    (if (file-regular-p ξ-inputPath)
-        (fix-html-links ξ-inputPath ξ-moveFromToList ξ-movedFromPaths ξ-writeToFile-p ξ-debug-p)
+%s, xah site move link change results. Input path: 〔%s〕 \n\n" (current-date-time-string) γinputPath))
+    (if (file-regular-p γinputPath)
+        (fix-html-links γinputPath γmoveFromToList γmovedFromPaths γwriteToFile-p γdebug-p)
 
       (progn
-        (if (file-directory-p ξ-inputPath)
+        (if (file-directory-p γinputPath)
             (mapc
              (lambda (ξf)
-               (fix-html-links ξf ξ-moveFromToList ξ-movedFromPaths ξ-writeToFile-p ξ-debug-p))
+               (fix-html-links ξf γmoveFromToList γmovedFromPaths γwriteToFile-p γdebug-p))
 
              (xah-filter-list
-              (lambda (φh) (not (xah-string-match-in-list-p φh ξ-skip-list "match case" t)))
-              (find-lisp-find-files ξ-inputPath "\\.html\\'\\|\\.xml\\'"))
+              (lambda (φh) (not (xah-string-match-in-list-p φh γskip-list "match case" t)))
+              (find-lisp-find-files γinputPath "\\.html\\'\\|\\.xml\\'"))
 
              ;; (xah-filter-list
-             ;;  (lambda (φh) (not (xah-string-match-in-list-p φh ξ-skip-list "match case" t)))
+             ;;  (lambda (φh) (not (xah-string-match-in-list-p φh γskip-list "match case" t)))
              ;;  '("/home/xah/web/xahlee_info/php/php_install.html"
              ;;    "/home/xah/web/xahlee_info/css_2.1_spec/"
              ;;    "/home/xah/web/xahlee_info/css_2.1_spec/propidx.html"
@@ -302,10 +275,10 @@ t
              ;;    "/home/xah/web/xahlee_info/php/mysql.html"
              ;;    "/home/xah/web/xahlee_info/php/misc.html" ))
 
-             ;; (find-lisp-find-files ξ-inputPath "\\.html\\'\\|\\.xml\\'")
+             ;; (find-lisp-find-files γinputPath "\\.html\\'\\|\\.xml\\'")
 
              )
-          (error "Input path 「%s」 isn't a regular file nor dir." ξ-inputPath))))
+          (error "Input path 「%s」 isn't a regular file nor dir." γinputPath))))
     (princ "Done ☺")
     (switch-to-buffer outputBuffer)
     (html-mode)

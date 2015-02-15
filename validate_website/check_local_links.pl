@@ -24,13 +24,8 @@ use File::Basename;
 my $userHomeDir = $ENV{"HOME"};
 my $webRootPath = qq{$userHomeDir/web};
 
-my $inDirPath = qq{$webRootPath/xahlee_info/comp};
-my $inDirPath = qq{$webRootPath/xahlee_org/diklo/xx_xah_java_tutorial/java-a-day};
-my $inDirPath = qq{$webRootPath/xahlee_org/diklo/xx_xah_emacs_tutorial};
-
-my $inDirPath = qq{$webRootPath/xahlee_info/clojure-doc-1.6};
 my $inDirPath = qq{$webRootPath};
-
+# my $inDirPath = qq{$webRootPath/xahlee_org/diklo/xx_xah_js_tutorial};
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
@@ -68,7 +63,12 @@ sub get_links ($) {
 sub process_file {
   if (
       $File::Find::name =~ m[\.html$|\.xml$]
-      # && $File::Find::dir !~ m(/xx)
+      && $File::Find::dir !~ m(xahlee_info/clojure-doc-1.6)
+      && $File::Find::dir !~ m(xahlee_info/java8_doc)
+      && $File::Find::dir !~ m(xahlee_info/css_2.1_spec)
+      && $File::Find::dir !~ m(xahlee_info/dom3-core)
+      && $File::Find::dir !~ m(xahlee_info/REC-SVG11-20110816)
+
      ) {
     my @myLinks = get_links($File::Find::name);
 
