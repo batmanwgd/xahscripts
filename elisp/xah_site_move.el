@@ -249,7 +249,7 @@ t
   (with-output-to-temp-buffer outputBuffer
 
     (princ (format "-*- coding: utf-8 -*-
-%s, xah site move link change results. Input path: 〔%s〕 \n\n" (current-date-time-string) γinputPath))
+%s, xah site move link change results. Input path: 〔%s〕 \n\n" (xah-current-date-time-string) γinputPath))
     (if (file-regular-p γinputPath)
         (fix-html-links γinputPath γmoveFromToList γmovedFromPaths γwriteToFile-p γdebug-p)
 
