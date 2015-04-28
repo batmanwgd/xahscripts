@@ -16,7 +16,7 @@
 ;; • bug: links to some files such as “c:/Users/xah/web/xahlee_org/kml/Aapua_wind_park.kmz”, are not created in the copy.
 ;; • bug: image links to dir outside of the copy dir are not copied.
 
-(require 'xfrp_find_replace_pairs)
+(require 'xah-replace-pairs)
 
 
 ;; § ----------------------------------------

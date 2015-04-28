@@ -19,7 +19,6 @@
 (load-file "~/git/xah_emacs_init/xah_emacs_xahsite_path_lisp_util.el")
 
 (require 'xeu_elisp_util) ; substract-path
-(require 'xfrp_find_replace_pairs)      ; replace-pairs-region etc
 (require 'find-lisp)
 
 
@@ -117,7 +116,7 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
 φ-file-path is the full path to the html file that will be processed.
 φ-original-file-path is full path to the “same” file in the original web structure.
 φ-original-file-path is used to construct new relative links."
-  (let ( bds p1 p2 hrefValue default-directory
+  (let ( ξbds ξp1 ξp2 ξhrefValue default-directory
              (case-fold-search nil)
              )
 
@@ -132,34 +131,34 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
       (while (search-forward-regexp "<a href=\"" nil t)
 
         (forward-char 1)
-        (setq bds (bounds-of-thing-at-point 'filename))
-        (setq p1 (car bds))
-        (setq p2 (cdr bds))
-        (setq hrefValue (buffer-substring-no-properties p1 p2))
+        (setq ξbds (bounds-of-thing-at-point 'filename))
+        (setq ξp1 (car ξbds))
+        (setq ξp2 (cdr ξbds))
+        (setq ξhrefValue (buffer-substring-no-properties ξp1 ξp2))
 
-        (when (xahsite-local-link-p hrefValue)
+        (when (xahsite-local-link-p ξhrefValue)
           (setq default-directory (file-name-directory φ-file-path) )
-          (when (not (file-exists-p (elt (split-uri-hashmark hrefValue) 0)))
-            (delete-region p1 p2)
+          (when (not (file-exists-p (elt (split-uri-hashmark ξhrefValue) 0)))
+            (delete-region ξp1 ξp2)
             (insert
-             ;; (xahsite-filepath-to-href-value (xahsite-href-value-to-filepath hrefValue φ-original-file-path) φ-original-file-path)
-             (xah-get-full-url φ-original-file-path hrefValue webRoot (xahsite-get-domain-of-local-file-path φ-original-file-path))
+             ;; (xahsite-filepath-to-href-value (xahsite-href-value-to-filepath ξhrefValue φ-original-file-path) φ-original-file-path)
+             (xah-get-full-url φ-original-file-path ξhrefValue webRoot (xahsite-get-domain-of-local-file-path φ-original-file-path))
 )
 )))
 
       (goto-char 1)
       (while (search-forward-regexp "<img src[[:blank:]]*=[[:blank:]]*" nil t)
         (forward-char 1)
-        (setq bds (bounds-of-thing-at-point 'filename))
-        (setq p1 (car bds))
-        (setq p2 (cdr bds))
-        (setq hrefValue (buffer-substring-no-properties p1 p2))
+        (setq ξbds (bounds-of-thing-at-point 'filename))
+        (setq ξp1 (car ξbds))
+        (setq ξp2 (cdr ξbds))
+        (setq ξhrefValue (buffer-substring-no-properties ξp1 ξp2))
 
-        (when (xahsite-local-link-p hrefValue)
+        (when (xahsite-local-link-p ξhrefValue)
           (setq default-directory (file-name-directory φ-file-path) )
-          (when (not (file-exists-p hrefValue))
-            (delete-region p1 p2)
-            (insert (xah-get-full-url φ-original-file-path hrefValue webRoot (xahsite-get-domain-of-local-file-path φ-original-file-path)))
+          (when (not (file-exists-p ξhrefValue))
+            (delete-region ξp1 ξp2)
+            (insert (xah-get-full-url φ-original-file-path ξhrefValue webRoot (xahsite-get-domain-of-local-file-path φ-original-file-path)))
             )))
       ) ))
 

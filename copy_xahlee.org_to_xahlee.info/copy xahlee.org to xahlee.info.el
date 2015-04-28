@@ -3,7 +3,7 @@
 ;; 2009-09-10, 2011-04-02
 
 
-(require 'xfrp_find_replace_pairs)
+(require 'xah-replace-pairs)
 
 
 ;; constants
