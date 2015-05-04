@@ -25,7 +25,6 @@ cp ~/git/xah-html6-mode.el/xah-html6-mode.el ~/git/ergoemacs/packages/
 
 cp ~/git/xah-js-mode.el/xah-js-mode.el ~/git/ergoemacs/packages/
 
-cp ~/git/xahk-mode.el/xahk-mode.el ~/git/ergoemacs/packages/
 cp ~/git/xah-misc-commands.el/xah-misc-commands.el ~/git/ergoemacs/packages/
 
 cp ~/git/xbbcode-mode.el/xbbcode-mode.el ~/git/ergoemacs/packages/
