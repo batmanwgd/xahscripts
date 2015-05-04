@@ -27,8 +27,6 @@ cp ~/git/xah-js-mode.el/xah-js-mode.el ~/git/ergoemacs/packages/
 
 cp ~/git/xah-misc-commands.el/xah-misc-commands.el ~/git/ergoemacs/packages/
 
-cp ~/git/xbbcode-mode.el/xbbcode-mode.el ~/git/ergoemacs/packages/
-
 cp ~/git/xeu_elisp_util.el/xeu_elisp_util.el ~/git/ergoemacs/packages/
 
 cp ~/git/xah-replace-pairs/xah-replace-pairs.el ~/git/ergoemacs/packages/
