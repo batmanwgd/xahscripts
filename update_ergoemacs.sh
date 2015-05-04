@@ -32,11 +32,11 @@ cp ~/git/xbbcode-mode.el/xbbcode-mode.el ~/git/ergoemacs/packages/
 
 cp ~/git/xeu_elisp_util.el/xeu_elisp_util.el ~/git/ergoemacs/packages/
 
-cp ~/git/xfrp_find_replace_pairs.el/xfrp_find_replace_pairs.el ~/git/ergoemacs/packages/
+cp ~/git/xah-replace-pairs/xah-replace-pairs.el ~/git/ergoemacs/packages/
 
 cp ~/git/xub-mode.el/xub-mode.el ~/git/ergoemacs/packages/
 
-cp ~/git/lookup-word-on-internet/lookup-word-on-internet.el ~/git/ergoemacs/packages/
+cp ~/git/lookup-word-on-internet/xah-lookup.el ~/git/ergoemacs/packages/
 
 # xlsl-mode.el
 # xmsi-math-symbols-input.el
