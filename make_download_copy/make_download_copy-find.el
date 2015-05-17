@@ -22,10 +22,10 @@
 ;; § ----------------------------------------
 ;;;; functions
 
-(defun delete-files-by-regex (dir regex-pattern)
+(defun xah-delete-files-by-regex (dir regex-pattern)
   "Delete all files in a DIR matching a REGEX-PATTERN.
 Example:
- (delete-files-by-regex \"~/web\" \"~$\")
+ (xah-delete-files-by-regex \"~/web\" \"~$\")
 This deletes all files ending in “~”."
 (require 'find-lisp)
 (mapc
@@ -236,10 +236,10 @@ Note: no consideration is taken about links, alias, or file perms."
 
   ;; remove emacs backup files, temp files, mac os x files, etc.
   (princ "Removing temp files…\n")
-  (delete-files-by-regex ζdestDir "~$")
-  (delete-files-by-regex ζdestDir "^#.+#$")
-  (delete-files-by-regex ζdestDir "^xx")
-  (delete-files-by-regex ζdestDir "^\\.DS_Store$")
+  (xah-delete-files-by-regex ζdestDir "~$")
+  (xah-delete-files-by-regex ζdestDir "^#.+#$")
+  (xah-delete-files-by-regex ζdestDir "^xx")
+  (xah-delete-files-by-regex ζdestDir "^\\.DS_Store$")
 
   (shell-command (concat "find " ζdestDir " -type f -empty -exec rm {} ';'"))
   (shell-command (concat "find " ζdestDir " -type d -empty -exec rmdir {} ';'"))

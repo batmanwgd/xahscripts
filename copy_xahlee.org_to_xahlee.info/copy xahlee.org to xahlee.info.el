@@ -15,19 +15,19 @@
 (setq destDir "~/web/xahlee_info/")
 
 (defvar htaccessContent nil "root .htaccess file content for xahlee.info")
-(setq htaccessContent (get-string-from-file "xahlee.info .htaccess content.txt"))
+(setq htaccessContent (xah-get-string-from-file "xahlee.info .htaccess content.txt"))
 
 (defvar templateText nil "template text for nsfw pages.")
-(setq templateText (get-string-from-file "porn_access_template.txt"))
+(setq templateText (xah-get-string-from-file "porn_access_template.txt"))
 
 (defvar findReplacePairsList nil "A list of replacement pairs. Each element is a vector of 2 elements. Each element is a string, from a file content.")
 
 (setq findReplacePairsList
       (list
        (vector "['_setAccount', 'UA-10884311-2']" "['_setAccount', 'UA-10884311-1']")
-       (vector (get-string-from-file "t ad f chitika.txt") (get-string-from-file "t ad r adsense.txt"))
-       (vector (get-string-from-file "t header f.txt") (get-string-from-file "t header r.txt"))
-       (vector (get-string-from-file "t footer f.txt") (get-string-from-file "t footer r.txt"))
+       (vector (xah-get-string-from-file "t ad f chitika.txt") (xah-get-string-from-file "t ad r adsense.txt"))
+       (vector (xah-get-string-from-file "t header f.txt") (xah-get-string-from-file "t header r.txt"))
+       (vector (xah-get-string-from-file "t footer f.txt") (xah-get-string-from-file "t footer r.txt"))
        (vector
  "<script type=\"text/javascript\" src=\"http://xahlee.org/xlomain.js\"></script>"
  "<script type=\"text/javascript\" src=\"http://xahlee.info/xlomain.js\"></script>" )

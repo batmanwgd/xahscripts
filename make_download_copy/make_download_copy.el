@@ -95,11 +95,11 @@ File/Dir deleted are file/dir names that:
    (progn
      ;; remove emacs backup files, temp files, mac os x files, etc.
      (princ "Removing temp files…\n")
-     (delete-files-by-regex φ-dir-path "\\`\\.htaccess\\'")
-     (delete-files-by-regex φ-dir-path "\\`#.?+#\\'")
-     (delete-files-by-regex φ-dir-path "\\`xx")
-     (delete-files-by-regex φ-dir-path "\\`\\.DS_Store\\'")
-     (delete-files-by-regex φ-dir-path "~\\'")
+     (xah-delete-files-by-regex φ-dir-path "\\`\\.htaccess\\'")
+     (xah-delete-files-by-regex φ-dir-path "\\`#.?+#\\'")
+     (xah-delete-files-by-regex φ-dir-path "\\`xx")
+     (xah-delete-files-by-regex φ-dir-path "\\`\\.DS_Store\\'")
+     (xah-delete-files-by-regex φ-dir-path "~\\'")
 
      ;; (expand-file-name φ-dir-path)
 
