@@ -31,6 +31,8 @@
 ;; may be relative link. e.g. 〔qi_logo.html〕, 〔../i/qi_logo.html〕
 
 
+(require 'find-lisp) ; in emacs
+(require 'hi-lock) ; in emacs
 
 (defvar εinputPath nil "Input dir. Must end with a slash")
 (setq εinputPath "/home/xah/web/xahlee_info/" )
@@ -56,17 +58,17 @@ t
        (lambda (x) (concat (xahsite-server-root-path) "xahlee_info/" x))
        (xahsite-xahlee-info-external-docs)))
 
-(defvar εmoveFromToList nil "A alist of dirs that are to be moved.
+(defvar εmove-from-to-list nil "alist of dirs that are to be moved.
 Each entry is of the form (‹from› . ‹to›).
 • ‹from› and ‹to› must be full path.
 • The ‹from› can be a file or dir.
 • All dir paths must end with slash.
 • If ‹from› is a dir, then ‹to› must also be a dir. Same for file.
 • No ‹from› should be a subdir of each other.
-• No “from” should be a identical to a “to” dir.
+• No ‹from› should be a identical to a ‹to› dir.
 ")
 
-(setq εmoveFromToList
+(setq εmove-from-to-list
  '(
 
 ;; remove or regenerate ../wikipedia_links.html
@@ -109,13 +111,21 @@ Each entry is of the form (‹from› . ‹to›).
 
 
 
-(defvar εmovedFromPaths nil "The first elements of εmoveFromToList.")
-(setq εmovedFromPaths (vconcat (mapcar (lambda (ξx) (car ξx) ) εmoveFromToList )) )
+(defvar εmoved-from-paths nil "The first elements of εmove-from-to-list.")
+(setq εmoved-from-paths (vconcat (mapcar (lambda (ξx) (car ξx) ) εmove-from-to-list )) )
 
 (defvar εbackup-filename-suffix nil "")
 (setq εbackup-filename-suffix (concat "~s" (format-time-string "%Y%m%d_%H%M%S") "~"))
 
 
+
+(defun xahsite--79237-filter-list (φpredicate φlist)
+  "Return a new list such that φpredicate is true on all members of φlist.
+Note: φlist should not have a element equal to the string \"e3824ad41f2ec1ed\"."
+  (let ((ξresult (mapcar (lambda (ξx) (if (funcall φpredicate ξx) ξx "e3824ad41f2ec1ed" )) φlist)))
+    (setq ξresult (delete "e3824ad41f2ec1ed" ξresult))
+    ξresult
+    ))
 
 (defun get-new-fpath (φfPath φmoveFromToList)
   "Return a new file full path for φfPath.
@@ -130,85 +140,80 @@ Each entry is of the form (‹from› . ‹to›).
           (setq ξfoundResult (concat toDir (substract-path φfPath fromDir)))))
       (setq ξi (1+ ξi)))
     (if ξfoundResult ξfoundResult φfPath )))
-;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs/th" εmoveFromToList)
-;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs_manual/elisp/tt" εmoveFromToList)
-;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs" εmoveFromToList)
+;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs/th" εmove-from-to-list)
+;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs_manual/elisp/tt" εmove-from-to-list)
+;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs" εmove-from-to-list)
 
 
 
-(defun fix-html-links (φhost-file-path φmove-from-to-list φmoved-from-paths &optional φwrite-to-file-p φdebug-p )
-  "Process the file at FPATH …"
+(defun xahsite-fix-html-links (φhost-file-path φmove-from-to-list φmoved-from-paths &optional φwrite-to-file-p φdebug-p )
+  "Process the file at xxxxxxx"
   (let (
-        ρmatch-b
-        ρmatch-e
-        ρhrefValue-b
-        ρhrefValue-e
-        ρbeginTag-b ; begin tag begin. <
-        ρbeginTag-e ; begin tag end. >
+
+        ξp-match-b ξp-match-e ξp-hrefValue-b ξp-hrefValue-e
+
+        ξp-beginTag-b ; begin tag begin. <
+        ξp-beginTag-e ; begin tag end. >
 
         ξhrefValue
         ξlinkFileFullPath
         (ξhostFileMoved-p nil)
         (ξlinkedFileMoved-p nil)
-        ξlinkFragmentHead       ;the part before “#”
-        ξlinkFragmentTail       ;the part after “#” including #
+        ξlinkFragmentHead ;the part before “#”
+        ξlinkFragmentTail ;the part after “#” including #
         ξnewHrefValue
         (ξneed-to-update-link-p nil)
-        (ξchangeNecessary-p nil)
-        )
+        (ξchangeNecessary-p nil))
 
     ;; open file, search for a “href=”
     (when
         ;; (not (string-match-p "/xx" φhost-file-path)) ; skip file whose name starts with “xx”
-t
-      (when φdebug-p (princ (format "\n▸φhost-file-path 「%s」\n" φhost-file-path ) ))
+        t
+      (when φdebug-p (princ (format "\n▸φhost-file-path 「%s」\n" φhost-file-path )))
       (with-temp-buffer
         (insert-file-contents φhost-file-path)
         (while
             (search-forward-regexp "\\(href\\|src\\)=\"\\(?3:[^\"]+?\\)\"" nil t)
-          (setq ρmatch-b (match-beginning 0) )
-          (setq ρmatch-e (match-end 0) )
-          (setq ρhrefValue-b (match-beginning 3) )
-          (setq ρhrefValue-e (match-end 3) )
+          (setq ξp-match-b (match-beginning 0))
+          (setq ξp-match-e (match-end 0))
+          (setq ξp-hrefValue-b (match-beginning 3))
+          (setq ξp-hrefValue-e (match-end 3))
           (setq ξhrefValue (match-string 3))
           (save-excursion
             (search-backward "<" nil t)
-            (setq ρbeginTag-b (point))
+            (setq ξp-beginTag-b (point))
             (search-forward ">" nil t)
-            (setq ρbeginTag-e (point))
-            )
+            (setq ξp-beginTag-e (point)))
 
           ;; check if 「href="…"」 is inside <…>, and <…> doesn't contain any < or > character. If so, consider it's a link.
-          (when (and (< ρbeginTag-b ρmatch-b) (< ρmatch-e ρbeginTag-e)
-                     (not (string-match "<\\|>" (buffer-substring-no-properties (+ ρbeginTag-b 1) (- ρbeginTag-e 1) )) )
-                     (not (string-match-p "\\`#" ξhrefValue ) ) ; skip links that's only http://en.wikipedia.org/wiki/Fragment_identifier
+          (when (and (< ξp-beginTag-b ξp-match-b) (< ξp-match-e ξp-beginTag-e)
+                     (not (string-match "<\\|>" (buffer-substring-no-properties (+ ξp-beginTag-b 1) (- ξp-beginTag-e 1))))
+                     (not (string-match-p "\\`#" ξhrefValue )) ; skip links that's only http://en.wikipedia.org/wiki/Fragment_identifier
                      )
 
-            (when φdebug-p (princ (format "▸ξhrefValue 「%s」\n" ξhrefValue ) ))
+            (when φdebug-p (princ (format "▸ξhrefValue 「%s」\n" ξhrefValue )))
 
             (when  (xahsite-is-link-to-xahsite-p ξhrefValue)
               (progn
                 (let ((x (split-uri-hashmark ξhrefValue)))
-                  (setq ξlinkFragmentHead (elt x 0) )
-                  (setq ξlinkFragmentTail (elt x 1) )
-                  )
+                  (setq ξlinkFragmentHead (elt x 0))
+                  (setq ξlinkFragmentTail (elt x 1)))
 
                 (setq ξlinkFileFullPath
                       (if (xahsite-local-link-p ξhrefValue)
                           (expand-file-name ξlinkFragmentHead (file-name-directory φhost-file-path))
-                        (xahsite-url-to-filepath ξlinkFragmentHead "addFileName")
-                        ))
-                (when φdebug-p (princ (format "▸ξlinkFileFullPath 「%s」\n" ξlinkFileFullPath ) ))
+                        (xahsite-url-to-filepath ξlinkFragmentHead "addFileName")))
+                (when φdebug-p (princ (format "▸ξlinkFileFullPath 「%s」\n" ξlinkFileFullPath )))
 
                 (setq ξhostFileMoved-p (file-moved-p φhost-file-path φmoved-from-paths ))
                 (setq ξlinkedFileMoved-p (file-moved-p ξlinkFileFullPath φmoved-from-paths ))
                 (setq ξneed-to-update-link-p (or ξhostFileMoved-p ξlinkedFileMoved-p))
 
-                (when φdebug-p (princ (format "▸ξhostFileMoved-p: 「%s」\n" ξhostFileMoved-p ) ))
-                (when φdebug-p (princ (format "▸ξlinkedFileMoved-p: 「%s」\n" ξlinkedFileMoved-p ) ))
-                (when φdebug-p (princ (format "▸ξneed-to-update-link-p: 「%s」\n" ξneed-to-update-link-p ) ))
+                (when φdebug-p (princ (format "▸ξhostFileMoved-p: 「%s」\n" ξhostFileMoved-p )))
+                (when φdebug-p (princ (format "▸ξlinkedFileMoved-p: 「%s」\n" ξlinkedFileMoved-p )))
+                (when φdebug-p (princ (format "▸ξneed-to-update-link-p: 「%s」\n" ξneed-to-update-link-p )))
 
-                (when t                 ; ξneed-to-update-link-p
+                (when t ; ξneed-to-update-link-p
                   (setq ξnewHrefValue
                         (concat (xahsite-filepath-to-href-value
                                  (if ξlinkedFileMoved-p
@@ -218,30 +223,27 @@ t
                                  (if ξhostFileMoved-p
                                      (get-new-fpath φhost-file-path φmove-from-to-list)
                                    φhost-file-path
-                                   )
-                                 ) ξlinkFragmentTail) )
-                  (when φdebug-p (princ (format "▸ξnewHrefValue 「%s」\n" ξnewHrefValue ) ))
+                                   )) ξlinkFragmentTail))
+                  (when φdebug-p (princ (format "▸ξnewHrefValue 「%s」\n" ξnewHrefValue )))
 
-                  (when (not (string= ξhrefValue ξnewHrefValue) )
+                  (when (not (string= ξhrefValue ξnewHrefValue))
                     (setq ξchangeNecessary-p t )
                     (progn
-                      (princ (format "  「%s」\n" ξhrefValue ) )
-                      (princ (format "  『%s』\n" (replace-regexp-in-string "^c:/Users/h3/" "~/" ξnewHrefValue) ) )
-                      )
+                      (princ (format "  「%s」\n" ξhrefValue ))
+                      (princ (format "  『%s』\n" (replace-regexp-in-string "^c:/Users/h3/" "~/" ξnewHrefValue))))
                     (when φwrite-to-file-p
-                      (delete-region ρhrefValue-b ρhrefValue-e )
-                      (goto-char ρhrefValue-b)
-                      (insert ξnewHrefValue) ) ) ) ) ) ) )
+                      (delete-region ξp-hrefValue-b ξp-hrefValue-e )
+                      (goto-char ξp-hrefValue-b)
+                      (insert ξnewHrefValue))))))))
 
         (when ξchangeNecessary-p
-          (princ (format "• %s\n" (replace-regexp-in-string "^c:/Users/h3/" "~/" φhost-file-path) ) )
+          (princ (format "• %s\n" (replace-regexp-in-string "^c:/Users/h3/" "~/" φhost-file-path)))
           (when φwrite-to-file-p
             (copy-file φhost-file-path (concat φhost-file-path εbackup-filename-suffix) t) ; backup
-            (write-region (point-min) (point-max) φhost-file-path)
-            )  )) ) ))
+            (write-region (point-min) (point-max) φhost-file-path)))))))
 
 
-(require 'find-lisp)
+
 
 (let ((outputBuffer "*xah sitemove output*" ))
   (with-output-to-temp-buffer outputBuffer
@@ -249,37 +251,19 @@ t
     (princ (format "-*- coding: utf-8 -*-
 %s, xah site move link change results. Input path: 〔%s〕 \n\n" (xah-current-date-time-string) εinputPath))
     (if (file-regular-p εinputPath)
-        (fix-html-links εinputPath εmoveFromToList εmovedFromPaths εwriteToFile-p εdebug-p)
+        (xahsite-fix-html-links εinputPath εmove-from-to-list εmoved-from-paths εwriteToFile-p εdebug-p)
 
       (progn
         (if (file-directory-p εinputPath)
             (mapc
              (lambda (ξf)
-               (fix-html-links ξf εmoveFromToList εmovedFromPaths εwriteToFile-p εdebug-p))
+               (xahsite-fix-html-links ξf εmove-from-to-list εmoved-from-paths εwriteToFile-p εdebug-p))
 
-             (xah-filter-list
-              (lambda (φh) (not (xah-string-match-in-list-p φh εskip-list "match case" t)))
-              (find-lisp-find-files εinputPath "\\.html\\'\\|\\.xml\\'"))
-
-             ;; (xah-filter-list
-             ;;  (lambda (φh) (not (xah-string-match-in-list-p φh εskip-list "match case" t)))
-             ;;  '("/home/xah/web/xahlee_info/php/php_install.html"
-             ;;    "/home/xah/web/xahlee_info/css_2.1_spec/"
-             ;;    "/home/xah/web/xahlee_info/css_2.1_spec/propidx.html"
-             ;;    "/home/xah/web/xahlee_info/php/keyed_list.html"
-             ;;    "/home/xah/web/xahlee_info/php/list_basics.html"
-             ;;    "/home/xah/web/xahlee_info/php/send_html_mail.html"
-             ;;    "/home/xah/web/xahlee_info/php/loop_thru_list.html"
-             ;;    "/home/xah/web/xahlee_info/php/mysql.html"
-             ;;    "/home/xah/web/xahlee_info/php/misc.html" ))
-
-             ;; (find-lisp-find-files εinputPath "\\.html\\'\\|\\.xml\\'")
-
-             )
+             (xahsite--79237-filter-list
+              (lambda (ξh) (not (xah-string-match-in-list-p ξh εskip-list "match case" t)))
+              (find-lisp-find-files εinputPath "\\.html\\'\\|\\.xml\\'")))
           (error "Input path 「%s」 isn't a regular file nor dir." εinputPath))))
-    (princ "Done ☺")
+    (princ "Done")
     (switch-to-buffer outputBuffer)
     (html-mode)
-    (highlight-lines-matching-regexp "\\`• " (quote hi-pink))
-    )
-  )
+    (highlight-lines-matching-regexp "\\`• " (quote hi-pink))))
