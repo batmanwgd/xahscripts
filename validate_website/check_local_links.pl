@@ -68,6 +68,7 @@ sub process_file {
       && $File::Find::dir !~ m(xahlee_info/css_2.1_spec)
       && $File::Find::dir !~ m(xahlee_info/dom3-core)
       && $File::Find::dir !~ m(xahlee_info/REC-SVG11-20110816)
+      && $File::Find::dir !~ m(xahlee_info/php-doc)
 
      ) {
     my @myLinks = get_links($File::Find::name);
