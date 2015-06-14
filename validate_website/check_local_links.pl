@@ -25,7 +25,7 @@ my $userHomeDir = $ENV{"HOME"};
 my $webRootPath = qq{$userHomeDir/web};
 
 my $inDirPath = qq{$userHomeDir/web/};
-
+# my $inDirPath = qq{$userHomeDir/web/ergoemacs_org};
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
@@ -46,7 +46,7 @@ die qq{dir $inDirPath doesn't exist! $!} unless -e $inDirPath;
 sub get_links ($) {
   my $full_file_path = $_[0];
   my @myLinks = ();
-  open (FF, "<$full_file_path") or die qq[error: can not open $full_file_path $!];
+  open (FF, "<$full_file_path") or die qq[error: cannot open $full_file_path $!];
 
   # read each line. Split on char “<”. Then use regex on 「href=…」 or 「src=…」 to get the url. This assumes that a tag 「<…>」 is not broken into more than one line.
   while (my $fileContent = <FF>) {
@@ -77,6 +77,21 @@ sub process_file {
       my $orig_link_value = $_;
       my $pathToCheck = $_;
 
+        # report local links that goes outside domain
+        if (
+            $pathToCheck =~ m{/ergoemacs_org}
+            or $pathToCheck =~ m{/wordyenglish_com}
+            or $pathToCheck =~ m{/xaharts_org}
+            or $pathToCheck =~ m{/xahlee_info}
+            or $pathToCheck =~ m{/xahlee_org}
+            or $pathToCheck =~ m{/xahmusic_org}
+            or $pathToCheck =~ m{/xahporn_org}
+            or $pathToCheck =~ m{/xahsl_org}
+           ) {
+          print qq[• $File::Find::name $orig_link_value\n];
+        }
+
+      # change xah inter domain links to file path
       $pathToCheck =~ s{^http://ergoemacs\.org/}{$webRootPath/ergoemacs_org/};
       $pathToCheck =~ s{^http://wordyenglish\.com/}{$webRootPath/wordyenglish_com/};
       $pathToCheck =~ s{^http://xaharts\.org/}{$webRootPath/xaharts_org/};
@@ -91,20 +106,19 @@ sub process_file {
         $pathToCheck =~ s/%20/ /g; # decode percent encode url
         $pathToCheck =~ s/%27/'/g;
 
+        # change it to full path
         if ( $pathToCheck !~ m{$webRootPath} ) {
           $pathToCheck = qq[$File::Find::dir/$pathToCheck]; # relative path. prepend dir
         }
+
         if (not -e $pathToCheck) {
           print qq[• $File::Find::name $orig_link_value\n];
-          # my $mm = $orig_link_value;
-          # $mm =~ s{^http://xahlee.org/}{http://xahlee.info/};
-          # # print qq[(u"""<a href="$orig_link_value">""", u"""<a href="$mm">"""),\n];
-          # print qq[(u"""<img src="$orig_link_value" """, u"""<img src="$mm" """),\n];
         }
+
       }
- }
-      @myLinks;
- } }
+    }
+       @myLinks;
+    } }
 
 my $mytime = localtime();
 print "$mytime, Broken links in 「$inDirPath」.\n\n";
