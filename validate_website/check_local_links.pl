@@ -77,19 +77,19 @@ sub process_file {
       my $orig_link_value = $_;
       my $pathToCheck = $_;
 
-        # report local links that goes outside domain
-        if (
-            $pathToCheck =~ m{/ergoemacs_org}
-            or $pathToCheck =~ m{/wordyenglish_com}
-            or $pathToCheck =~ m{/xaharts_org}
-            or $pathToCheck =~ m{/xahlee_info}
-            or $pathToCheck =~ m{/xahlee_org}
-            or $pathToCheck =~ m{/xahmusic_org}
-            or $pathToCheck =~ m{/xahporn_org}
-            or $pathToCheck =~ m{/xahsl_org}
-           ) {
+      # report local links that goes outside domain
+      if (
+          $pathToCheck =~ m{/ergoemacs_org/}
+          or $pathToCheck =~ m{/wordyenglish_com/}
+          or $pathToCheck =~ m{/xaharts_org/}
+          or $pathToCheck =~ m{/xahlee_info/}
+          or $pathToCheck =~ m{/xahlee_org/}
+          or $pathToCheck =~ m{/xahmusic_org/}
+          or $pathToCheck =~ m{/xahporn_org/}
+          or $pathToCheck =~ m{/xahsl_org/}
+          ) {
           print qq[• $File::Find::name $orig_link_value\n];
-        }
+      }
 
       # change xah inter domain links to file path
       $pathToCheck =~ s{^http://ergoemacs\.org/}{$webRootPath/ergoemacs_org/};
@@ -102,23 +102,23 @@ sub process_file {
       $pathToCheck =~ s{^http://xahsl\.org/}{$webRootPath/xahsl_org/};
 
       if ( $pathToCheck !~ m[^//|^http:|^https:|^mailto:|^irc:|^ftp:|^javascript:]) {
-        $pathToCheck =~ s/#.*//; # delete url fragment identifier e.g. 「http://example.com/index.html#a」
-        $pathToCheck =~ s/%20/ /g; # decode percent encode url
-        $pathToCheck =~ s/%27/'/g;
+          $pathToCheck =~ s/#.*//; # delete url fragment identifier e.g. 「http://example.com/index.html#a」
+          $pathToCheck =~ s/%20/ /g; # decode percent encode url
+          $pathToCheck =~ s/%27/'/g;
 
-        # change it to full path
-        if ( $pathToCheck !~ m{$webRootPath} ) {
-          $pathToCheck = qq[$File::Find::dir/$pathToCheck]; # relative path. prepend dir
-        }
+          # change it to full path
+          if ( $pathToCheck !~ m{$webRootPath} ) {
+              $pathToCheck = qq[$File::Find::dir/$pathToCheck]; # relative path. prepend dir
+          }
 
-        if (not -e $pathToCheck) {
-          print qq[• $File::Find::name $orig_link_value\n];
-        }
+          if (not -e $pathToCheck) {
+              print qq[• $File::Find::name $orig_link_value\n];
+          }
 
       }
     }
-       @myLinks;
-    } }
+    @myLinks;
+  } }
 
 my $mytime = localtime();
 print "$mytime, Broken links in 「$inDirPath」.\n\n";
