@@ -28,27 +28,60 @@ print_filename_when_no_change = False
 
 find_replace_list = [
 
+('''<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-10884311-1','xahlee.info');ga('require','displayfeatures');ga('send','pageview');</script>''',''),
+
 ('''<nav id="t5">
 <ul>
-<li><a href="http://xahlee.info/SpecialPlaneCurves_dir/specialPlaneCurves.html">Curves</a></li>
-<li><a href="http://xahlee.info/surface/gallery.html">Surfaces</a></li>
-<li><a href="http://xahlee.info/Wallpaper_dir/c0_WallPaper.html">Wallpaper Groups</a></li>
-<li><a href="http://xahlee.info/MathGraphicsGallery_dir/mathGraphicsGallery.html">Gallery</a></li>
-<li><a href="http://xahlee.info/math_software/mathPrograms.html">Math Software</a></li>
-<li><a href="http://xahlee.info/3d/index.html">POV-Ray</a></li>
+<li><a href="http://xahlee.info/math/math_index.html">Math</a></li>
+<li><a href="http://xahlee.info/comp/comp_index.html">Programing</a></li>
+<li><a href="http://xahlee.info/comp/unicode_index.html">Unicode ♥</a></li>
+<li><a href="http://xahlee.info/kbd/keyboarding.html">Keyboard ⌨</a></li>
 </ul>''','''<nav id="t5">'''),
 
-('''<ul>
-<li><a href="http://xahlee.info/linux/linux_index.html">Linux</a></li>
-<li><a href="http://xahlee.info/perl-python/index.html">Perl Python Ruby</a></li>
-<li><a href="http://xahlee.info/java-a-day/java.html">Java</a></li>
-<li><a href="http://xahlee.info/php/index.html">PHP</a></li>
-<li><a href="http://ergoemacs.org/emacs/emacs.html">Emacs</a></li>
-<li><a href="http://xahlee.info/comp/comp_lang.html">Syntax</a></li>
-<li><a href="http://xahlee.info/comp/unicode_index.html">Unicode 😸 ♥</a></li>
-<li><a href="http://xahlee.info/kbd/keyboarding.html">Keyboard ⌨</a></li>
-</ul>
-<button id="i54391" type="button">''','''<button id="i54391" type="button">'''),
+('''<script>
+amzn_assoc_ad_type = "responsive_search_widget";
+amzn_assoc_tracking_id = "xahhome-20";
+amzn_assoc_marketplace = "amazon";
+amzn_assoc_region = "US";
+amzn_assoc_placement = "";
+amzn_assoc_search_type = "search_widget";
+amzn_assoc_width = "auto";
+amzn_assoc_height = "auto";
+amzn_assoc_default_search_category = "";
+amzn_assoc_default_search_key = "";
+amzn_assoc_theme = "light";
+amzn_assoc_bg_color = "FFFFFF";
+</script>''',''),
+
+('''<div class="pp93653">
+Buy xahlee.info for offline reading.
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_xclick">
+<input type="hidden" name="business" value="JPHAB7F7QZRPC">
+<input type="hidden" name="lc" value="US">
+<input type="hidden" name="item_name" value="xahlee.info content">
+<input type="hidden" name="amount" value="49.00">
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="button_subtype" value="services">
+<input type="hidden" name="no_note" value="0">
+<input type="hidden" name="cn" value="Add special instructions to the seller:">
+<input type="hidden" name="no_shipping" value="1">
+<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+</form>
+</div>''',''),
+
+('''<section class="buy-book">
+Buy <a href="buy_xah_js_tutorial.html">Xah JavaScript Tutorial</a>.
+<div class="pp_xah_js_tutorial">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick" />
+<input type="hidden" name="hosted_button_id" value="J3BC865C77JUC" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" />
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+</form>
+</div>
+</section>''',''),
 
 ]
 

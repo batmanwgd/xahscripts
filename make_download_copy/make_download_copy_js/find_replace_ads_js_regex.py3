@@ -28,18 +28,6 @@ find_replace_list = [
 
 (re.compile(r'''<div id="share-buttons-97729"></div><script defer src="(\.\./)*share_widgets.js"></script>''', re.U|re.M|re.DOTALL), r''),
 
-(re.compile(r'''<section class="buy-book">
-Want to master JavaScript in a week? Buy <a href="buy_xah_js_tutorial.html">Xah JavaScript Tutorial</a>.
-<div class="pp_xah_js_tutorial">
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick" />
-<input type="hidden" name="hosted_button_id" value="J3BC865C77JUC" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" />
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-</form>
-</div>
-</section>''', re.U|re.M|re.DOTALL), r''),
-
 ]
 
 def replace_string_in_file(file_path):

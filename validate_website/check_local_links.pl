@@ -25,7 +25,8 @@ my $userHomeDir = $ENV{"HOME"};
 my $webRootPath = qq{$userHomeDir/web};
 
 my $inDirPath = qq{$userHomeDir/web/};
-# my $inDirPath = qq{$userHomeDir/web/ergoemacs_org};
+my $inDirPath = qq{$userHomeDir/web/xahlee_org/diklo/xx_xah_js_tutorial};
+
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
