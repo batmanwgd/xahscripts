@@ -57,7 +57,7 @@ find_replace_list = [
 
 ('''<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-10884311-1','xahlee.info');ga('require','displayfeatures');ga('send','pageview');</script>''',""),
 
-('''<script charset="utf-8" type="text/javascript">
+('''<script>
 amzn_assoc_ad_type = "responsive_search_widget";
 amzn_assoc_tracking_id = "xahhome-20";
 amzn_assoc_marketplace = "amazon";
@@ -160,6 +160,7 @@ Want to master JavaScript in a week? Buy <a href="../buy_xah_js_tutorial.html">X
 </form>
 </div>
 </section>''',""),
+
 
 ]
 
