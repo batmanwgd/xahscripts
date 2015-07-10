@@ -25,7 +25,6 @@ my $userHomeDir = $ENV{"HOME"};
 my $webRootPath = qq{$userHomeDir/web};
 
 my $inDirPath = qq{$userHomeDir/web/};
-my $inDirPath = qq{$userHomeDir/web/xahlee_info/javascript_es6/};
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
