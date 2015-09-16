@@ -18,7 +18,7 @@
 
 (load-file "~/git/xah_emacs_init/xah_emacs_xahsite_path_lisp_util.el")
 
-(require 'xeu_elisp_util) ; substract-path
+(require 'xeu_elisp_util) ; xah-substract-path
 (require 'find-lisp)
 
 
@@ -191,7 +191,7 @@ if exist, it'll be overridden.
     (mapc
      (lambda (ξoneSrcDir)
        (let ((fromDir ξoneSrcDir)
-             (toDir (concat ξdestDir (substract-path ξoneSrcDir ξroot))))
+             (toDir (concat ξdestDir (xah-substract-path ξoneSrcDir ξroot))))
          (make-directory toDir t)
 
          (cond
@@ -227,7 +227,7 @@ if exist, it'll be overridden.
     (princ "Removing javascript etc in files…\n")
     (mapc
      (lambda (ξoneSrcDir)
-       (let ((ξfileList (find-lisp-find-files (concat ξdestDir (substract-path ξoneSrcDir ξroot)) "\\.html$")))
+       (let ((ξfileList (find-lisp-find-files (concat ξdestDir (xah-substract-path ξoneSrcDir ξroot)) "\\.html$")))
 
          (mapc
           (lambda (ξf)

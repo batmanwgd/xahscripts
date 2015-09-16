@@ -137,7 +137,7 @@ Note: φlist should not have a element equal to the string \"e3824ad41f2ec1ed\".
         (let (
               (fromDir (car (elt φmoveFromToList ξi)))
               (toDir (cdr (elt φmoveFromToList ξi))))
-          (setq ξfoundResult (concat toDir (substract-path φfPath fromDir)))))
+          (setq ξfoundResult (concat toDir (xah-substract-path φfPath fromDir)))))
       (setq ξi (1+ ξi)))
     (if ξfoundResult ξfoundResult φfPath )))
 ;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs/th" εmove-from-to-list)

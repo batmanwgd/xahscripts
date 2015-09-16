@@ -29,7 +29,6 @@
 (defvar ξ-inputDir "" "The dir to process.")
 (setq ξ-inputDir (expand-file-name  "~/web/") )
 
-
 (if (elt argv 0)
     (setq ξ-inputDir (elt argv 0) )
   )
@@ -169,12 +168,11 @@ becomes
   )
 
 ;; fill wpdata-list
-(setq wpdata-list (hash-to-list wpdata-hash))
+(setq wpdata-list (xah-hash-to-list wpdata-hash))
 (setq wpdata-list
       (sort wpdata-list
             (lambda (a b) (string< (downcase (car a)) (downcase (car b))))
             ))
-
 
 ;; backup existing output file
 (when (file-exists-p ξ-outputFileFullpath)
