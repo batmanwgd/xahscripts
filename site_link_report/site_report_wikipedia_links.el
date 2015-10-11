@@ -16,45 +16,45 @@
 
 ;;;; user level globle parameters
 
-;; command line args (inputs): ξ-inputDir
+;; command line args (inputs): ξinputDir
 
 ;; webRootDir is the dir of web root.
 
 ;; Behavior:
 ;; generate all links of files in that dir.
-;; output these links in a file named “wikipedia_links.html” at the ξ-inputDir. (if the file exist, it is backup with “~” appended.) The URL base of these links will be web root.
+;; output these links in a file named “wikipedia_links.html” at the ξinputDir. (if the file exist, it is backup with “~” appended.) The URL base of these links will be web root.
 
 ;; Does not assume the environment variable HOME is set. No other assumption made.
 
-(defvar ξ-inputDir "" "The dir to process.")
-(setq ξ-inputDir (expand-file-name  "~/web/") )
+(defvar ξinputDir "" "The dir to process.")
+(setq ξinputDir (expand-file-name  "~/web/") )
 
 (if (elt argv 0)
-    (setq ξ-inputDir (elt argv 0) )
+    (setq ξinputDir (elt argv 0) )
   )
 
-(defvar ξ-outputFilename "" "The file name to save the generated report to.")
-(setq ξ-outputFilename "wikipedia_links.html")
+(defvar ξoutputFilename "" "The file name to save the generated report to.")
+(setq ξoutputFilename "wikipedia_links.html")
 
-;; add a ending slash to ξ-inputDir if not there
-(when (not (string= "/" (substring ξ-inputDir -1) )) (setq ξ-inputDir (concat ξ-inputDir "/") ) )
+;; add a ending slash to ξinputDir if not there
+(when (not (string= "/" (substring ξinputDir -1) )) (setq ξinputDir (concat ξinputDir "/") ) )
 
-(defconst ξ-outputFileFullpath
-(concat (expand-file-name  "~/web/") "xahlee_org/" ξ-outputFilename)
+(defconst ξoutputFileFullpath
+(concat (expand-file-name  "~/web/") "xahlee_org/" ξoutputFilename)
   "The file to save the generated report to. (existing file backedup as ~)")
 
-(when (not (file-exists-p ξ-inputDir)) (error "input dir does not exist: %s" ξ-inputDir))
+(when (not (file-exists-p ξinputDir)) (error "input dir does not exist: %s" ξinputDir))
 
-(defconst root-path-char-count (length ξ-inputDir)
+(defconst root-path-char-count (length ξinputDir)
   "A integer that counts how many chars to take off of a given file's full path, to result as a relative path for the link url. e.g. if file path is
 “/Users/xah/web/emacs/emacs.html” , and root-path-char-count is 15, then its url in link would be “emacs/emacs.html”.
-This number is not necessarily the length of ξ-inputDir. It can be smaller for flexibility.
+This number is not necessarily the length of ξinputDir. It can be smaller for flexibility.
 2011-07-22 TODO: questionable feature here. Do not rely on it.
 ")
 
-(defconst ξ-siteHeaderFilePath (xah-get-fullpath "site_report_wikipedia_links_header.txt") "The header text for xahlee.org.")
+(defconst ξsiteHeaderFilePath (xah-get-fullpath "site_report_wikipedia_links_header.txt") "The header text for xahlee.org.")
 
-(defconst ξ-siteFooterFilePath (xah-get-fullpath "site_report_wikipedia_links_footer.txt") "The footer text for xahlee.org.")
+(defconst ξsiteFooterFilePath (xah-get-fullpath "site_report_wikipedia_links_footer.txt") "The footer text for xahlee.org.")
 
 
 ;;;; loading package. global vars.
@@ -99,23 +99,21 @@ This number is not necessarily the length of ξ-inputDir. It can be smaller for 
   "Print each item. ELE is of the form (url (list filepath1 filepath2 …)).
 Print it like this:
 ‹link to url› : ‹link to file1›, ‹link to file2›, …"
-  (let (wplink files)
-    (setq wplink (car ele))
-    (setq files (cadr ele))
+  (let (ξwplink ξfiles)
+    (setq ξwplink (car ele))
+    (setq ξfiles (cadr ele))
 
-    (insert (wikipedia-url-to-linktext wplink))
+    (insert "<li>")
+    (insert (wikipedia-url-to-linktext ξwplink))
     (insert "—")
 
-    (dolist (xx files nil)
+    (dolist (xx ξfiles nil)
       (insert
-       (format "<a href=\"%s\">%s</a>◇"
-               (xahsite-filepath-to-href-value xx ξ-outputFileFullpath )
-               (xah-html-get-html-file-title xx)
-               )))
+       (format "<a href=\"%s\">%s</a>•"
+               (xahsite-filepath-to-href-value xx ξoutputFileFullpath )
+               (xah-html-get-html-file-title xx))))
     (delete-char -1)
-    (insert "\n")
-
-    )
+    (insert "</li>\n"))
   )
 
 
@@ -160,7 +158,7 @@ becomes
                       )
                    (setq filePaths (cons ξx filePaths) )
                    ))
-   (find-lisp-find-files ξ-inputDir "\\.html$"))
+   (find-lisp-find-files ξinputDir "\\.html$"))
 
   (mapc
    (lambda (ξx) (add-wplink-to-hash ξx wpdata-hash ))
@@ -175,14 +173,14 @@ becomes
             ))
 
 ;; backup existing output file
-(when (file-exists-p ξ-outputFileFullpath)
-  (copy-file ξ-outputFileFullpath (concat ξ-outputFileFullpath "~") t)
-  ;; (delete-file ξ-outputFileFullpath)
+(when (file-exists-p ξoutputFileFullpath)
+  (copy-file ξoutputFileFullpath (concat ξoutputFileFullpath "~") t)
+  ;; (delete-file ξoutputFileFullpath)
   )
 
 ;; write to file
-(with-temp-file ξ-outputFileFullpath
-  (insert-file-contents ξ-siteHeaderFilePath)
+(with-temp-file ξoutputFileFullpath
+  (insert-file-contents ξsiteHeaderFilePath)
   (goto-char (point-max))
 
   (insert
@@ -198,15 +196,15 @@ becomes
 "
    )
 
-  (insert "<div style=\"white-space:pre-wrap;width:100%\">\n")
+  (insert "<ol>\n")
 
   (mapc 'ξ-print-each wpdata-list)
 
-  (insert "</div>")
+  (insert "</ol>")
 
   (insert "\n\n")
 
-  (insert-file-contents ξ-siteFooterFilePath)
+  (insert-file-contents ξsiteFooterFilePath)
   (goto-char (point-max))
   )
 
@@ -215,4 +213,4 @@ becomes
 (setq wpdata-list '())
 
 ;; open the file
-(find-file ξ-outputFileFullpath )
+(find-file ξoutputFileFullpath )
