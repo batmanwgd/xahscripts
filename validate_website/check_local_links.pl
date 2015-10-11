@@ -52,8 +52,12 @@ sub get_links ($) {
     my @textSegments = ();
     @textSegments = split(m/</, $fileContent);
     for my $oneLine (@textSegments) {
-      if ($oneLine =~ m{href\s*=\s*"([^"]+)".*>}i) { push @myLinks, $1; }
-      if ($oneLine =~ m{src\s*=\s*\"([^"]+)".*>}i) { push @myLinks, $1; }
+
+        if ($oneLine !~ m{ -->$}i) { # the line isn't html comment
+            if ($oneLine =~ m{href\s*=\s*"([^"]+)".*>}i) { push @myLinks, $1; }
+            if ($oneLine =~ m{src\s*=\s*\"([^"]+)".*>}i) { push @myLinks, $1; }
+        }
+
     } }
   close FF;
   return @myLinks;
@@ -68,7 +72,7 @@ sub process_file {
       && $File::Find::dir !~ m(xahlee_info/dom3-core)
       && $File::Find::dir !~ m(xahlee_info/REC-SVG11-20110816)
       && $File::Find::dir !~ m(xahlee_info/php-doc)
-
+      && $File::Find::dir !~ m(xahlee_info/html5_whatwg)
      ) {
     my @myLinks = get_links($File::Find::name);
 
