@@ -81,7 +81,7 @@ Note: no consideration is taken about links, alias, or file perms."
           (concat φ-sourcedir "/" ξx) φ-destdir) ) ) )
    (directory-files φ-sourcedir) ) )
 
- (defun xah-delete-xahtemp-files (φ-dir-path)
+(defun xah-delete-xahtemp-files (φ-dir-path)
    "Delete some files and dirs in dir φ-dir-path.
 φ-dir-path must be full path.
 
@@ -116,9 +116,9 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
 φ-file-path is the full path to the html file that will be processed.
 φ-original-file-path is full path to the “same” file in the original web structure.
 φ-original-file-path is used to construct new relative links."
-  (let ( ξbds ξp1 ξp2 ξhrefValue default-directory
-             (case-fold-search nil)
-             )
+  (let ( ξp1 ξp2 ξhrefValue
+             default-directory
+             (case-fold-search nil))
 
     (with-temp-file φ-file-path
       (insert-file-contents φ-file-path)
@@ -130,37 +130,37 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
       (goto-char 1)
       (while (search-forward-regexp "<a href=\"" nil t)
 
-        (forward-char 1)
-        (setq ξbds (bounds-of-thing-at-point 'filename))
-        (setq ξp1 (car ξbds))
-        (setq ξp2 (cdr ξbds))
-        (setq ξhrefValue (buffer-substring-no-properties ξp1 ξp2))
+        (progn
+          (setq ξp1 (point))
+          (search-forward "\"")
+          (setq ξp2 (- (point) 1))
+          (setq ξhrefValue (buffer-substring-no-properties ξp1 ξp2))
+          (message "ξhrefValue is 「%s」" ξhrefValue))
 
         (when (xahsite-local-link-p ξhrefValue)
-          (setq default-directory (file-name-directory φ-file-path) )
+          (setq default-directory (file-name-directory φ-file-path))
           (when (not (file-exists-p (elt (split-uri-hashmark ξhrefValue) 0)))
             (delete-region ξp1 ξp2)
             (insert
              ;; (xahsite-filepath-to-href-value (xahsite-href-value-to-filepath ξhrefValue φ-original-file-path) φ-original-file-path)
-             (xah-get-full-url φ-original-file-path ξhrefValue webRoot (xahsite-get-domain-of-local-file-path φ-original-file-path))
-)
-)))
+             (xah-get-full-url φ-original-file-path ξhrefValue webRoot (xahsite-get-domain-of-local-file-path φ-original-file-path))))))
 
       (goto-char 1)
       (while (search-forward-regexp "<img src[[:blank:]]*=[[:blank:]]*" nil t)
-        (forward-char 1)
-        (setq ξbds (bounds-of-thing-at-point 'filename))
-        (setq ξp1 (car ξbds))
-        (setq ξp2 (cdr ξbds))
-        (setq ξhrefValue (buffer-substring-no-properties ξp1 ξp2))
+
+        (progn
+          (forward-char 1)
+          (setq ξp1 (point))
+          (search-forward "\"")
+          (setq ξp2 (- (point) 1))
+          (setq ξhrefValue (buffer-substring-no-properties ξp1 ξp2))
+          (message "ξhrefValue is 「%s」" ξhrefValue))
 
         (when (xahsite-local-link-p ξhrefValue)
-          (setq default-directory (file-name-directory φ-file-path) )
+          (setq default-directory (file-name-directory φ-file-path))
           (when (not (file-exists-p ξhrefValue))
             (delete-region ξp1 ξp2)
-            (insert (xah-get-full-url φ-original-file-path ξhrefValue webRoot (xahsite-get-domain-of-local-file-path φ-original-file-path)))
-            )))
-      ) ))
+            (insert (xah-get-full-url φ-original-file-path ξhrefValue webRoot (xahsite-get-domain-of-local-file-path φ-original-file-path)))))))))
 
 (defun xah-make-downloadable-copy (φweb-doc-root φsource-dir-list φdest-dir )
   "Make a copy of a set of subdirs of Xah Site, for download.
@@ -193,25 +193,10 @@ if exist, it'll be overridden.
        (let ((fromDir ξoneSrcDir)
              (toDir (concat ξdestDir (xah-substract-path ξoneSrcDir ξroot))))
          (make-directory toDir t)
-
-         (cond
-          ((>= emacs-major-version 25) 
-           (progn (copy-directory fromDir toDir "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
-                  (message "coccccccy→ %s %s" fromDir toDir)))
-          ((= emacs-major-version 24)
-           (if (>= emacs-minor-version 3)
-               (progn (copy-directory fromDir toDir "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
-                      (message "coccccccy→ %s %s" fromDir toDir))
-             (if (file-exists-p toDir)
-                 (copy-directory fromDir (concat toDir "/../"))
-               (copy-directory fromDir toDir))))
-          ((< emacs-major-version 24) (copy-directory fromDir toDir)))
-  ;         (if (>= emacs-major-version 24)
-  ;             (if (file-exists-p toDir)
-  ;                 (copy-directory fromDir (concat toDir "/../"))
-  ;               (copy-directory fromDir toDir) )
-  ;           (copy-directory fromDir toDir) )
-         (princ (format "Copying from 「%s」 to 「%s」\n" fromDir  toDir))))
+         (if (version<= "24.2" emacs-version)
+             (copy-directory fromDir toDir "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
+           (user-error "error75402: requires emacs version 24.3 or later." ))
+         (princ (format "Copying from 「%s」 to 「%s」\n" fromDir toDir))))
      ξsourceDirList)
 
     ;; copy the style sheets over, and icons dir
@@ -244,9 +229,7 @@ if exist, it'll be overridden.
           ξfileList)))
      ξsourceDirList)
 
-    (princ "Making download copy completed.\n")
-    )
-  )
+    (princ "Making download copy completed.\n")))
 
 
 ;; programing
