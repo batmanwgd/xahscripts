@@ -1,5 +1,5 @@
 ;; -*- coding: utf-8 -*-
-;; 2008-06-12, 2009-08-10, 2009-08-24, 2012-05-05
+;; first version 2008-06-12
 
 ;; make a downloadable copy of my website. See function “xah-make-downloadable-copy”
 ;; this is personal code.
@@ -18,11 +18,35 @@
 
 (load-file "~/git/xah_emacs_init/xah_emacs_xahsite_path_lisp_util.el")
 
-(require 'xeu_elisp_util) ; xah-substract-path
 (require 'find-lisp)
 
 
 ;;;; functions
+
+;; (xah-substract-path "c:/Users/lisa/web/a/b" "c:/Users/lisa/web/")
+
+;; (require 'subr-x)
+;; (string-remove-prefix "c:/Users/lisa/web/" "c:/Users/lisa/web/a/b")
+
+(defun xah-substract-path (φpath1 φpath2)
+  "Remove string φpath2 from the beginning of φpath1.
+length of φpath1 ≥ to length φpath2.
+
+path1
+c:/Users/lisa/web/a/b
+
+path2
+c:/Users/lisa/web/
+
+result
+a/b
+
+This is the similar to emacs 24.4's `string-remove-prefix' from (require 'subr-x).
+Version 2015-12-15"
+  (let ((ξp2length (length φpath2)))
+    (if (string= (substring φpath1 0 ξp2length) φpath2 )
+        (substring φpath1 ξp2length)
+      (error "error 34689: beginning doesn't match: 「%s」 「%s」" φpath1 φpath2))))
 
 ;; (xah-get-full-url "~/web/xahlee_org/emacs/emacs.html" "../Periodic_dosage_dir/skami_prosa.html" "~/web/xahlee_org/" "xahlee.org")
 
@@ -75,11 +99,10 @@ Example usage:
 Note: no consideration is taken about links, alias, or file perms."
   (mapc
    (lambda (ξx)
-     (let ()
-       (when (and (not (string-equal ξx ".")) (not (string-equal ξx "..")))
-         (copy-file
-          (concat φ-sourcedir "/" ξx) φ-destdir) ) ) )
-   (directory-files φ-sourcedir) ) )
+     (when (and (not (string-equal ξx ".")) (not (string-equal ξx "..")))
+       (copy-file
+        (concat φ-sourcedir "/" ξx) φ-destdir)))
+   (directory-files φ-sourcedir)))
 
 (defun xah-delete-xahtemp-files (φ-dir-path)
    "Delete some files and dirs in dir φ-dir-path.
@@ -181,7 +204,7 @@ if exist, it'll be overridden.
   (let (
         ;; add ending slash, to be safe
         (ξroot (file-name-as-directory (expand-file-name φweb-doc-root)))
-        (ξsourceDirList (mapcar (lambda (ξx) (file-name-as-directory (expand-file-name ξx))) φsource-dir-list)) 
+        (ξsourceDirList (mapcar (lambda (ξx) (file-name-as-directory (expand-file-name ξx))) φsource-dir-list))
         (ξdestDir (file-name-as-directory (expand-file-name φdest-dir))))
 
     (princ "ξsourceDirList")
@@ -250,8 +273,6 @@ if exist, it'll be overridden.
 ;;  "~/web/xahlee_org/"
 ;;  [ "~/web/xahlee_org/js/" ]
 ;;  "~/web/xahlee_org/diklo/xah_dhtml_tutorial/")
-
-
 
 ;; (xah-make-downloadable-copy
 ;;  "~/web/xahlee_org/"
