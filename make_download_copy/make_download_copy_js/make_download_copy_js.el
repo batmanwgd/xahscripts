@@ -19,5 +19,3 @@
 
 
 (xah-delete-files-by-regex xxoutputpath "^backbone")
-(delete-file (concat xxoutputpath "js/blog.xml"))
-

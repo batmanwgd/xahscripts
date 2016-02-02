@@ -158,7 +158,8 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
           (search-forward "\"")
           (setq ξp2 (- (point) 1))
           (setq ξhrefValue (buffer-substring-no-properties ξp1 ξp2))
-          (message "ξhrefValue is 「%s」" ξhrefValue))
+          ;; (message "ξhrefValue is 「%s」" ξhrefValue)
+          )
 
         (when (xahsite-local-link-p ξhrefValue)
           (setq default-directory (file-name-directory φ-file-path))
@@ -177,7 +178,8 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
           (search-forward "\"")
           (setq ξp2 (- (point) 1))
           (setq ξhrefValue (buffer-substring-no-properties ξp1 ξp2))
-          (message "ξhrefValue is 「%s」" ξhrefValue))
+          ;; (message "ξhrefValue is 「%s」" ξhrefValue)
+          )
 
         (when (xahsite-local-link-p ξhrefValue)
           (setq default-directory (file-name-directory φ-file-path))

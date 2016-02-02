@@ -26,35 +26,36 @@
 
 ;; Does not assume the environment variable HOME is set. No other assumption made.
 
-(defvar ξinputDir "" "The dir to process.")
-(setq ξinputDir (expand-file-name  "~/web/") )
+(defvar γ-inputDir nil "The dir to process")
+(setq γ-inputDir (expand-file-name  "~/web/") )
+
+(defvar γ-outputFilename nil "The file name to save the generated report to.")
+(setq γ-outputFilename "wikipedia_links.html")
+
+(defvar γ-outputFileFullpath nil "The file to save the generated report to. (existing file backedup as ~)")
+(setq γ-outputFileFullpath (concat (expand-file-name  "~/web/") "xahlee_org/" γ-outputFilename))
+
+
 
 (if (elt argv 0)
-    (setq ξinputDir (elt argv 0) )
+    (setq γ-inputDir (elt argv 0) )
   )
 
-(defvar ξoutputFilename "" "The file name to save the generated report to.")
-(setq ξoutputFilename "wikipedia_links.html")
+;; add a ending slash to γ-inputDir if not there
+(when (not (string= "/" (substring γ-inputDir -1) )) (setq γ-inputDir (concat γ-inputDir "/") ) )
 
-;; add a ending slash to ξinputDir if not there
-(when (not (string= "/" (substring ξinputDir -1) )) (setq ξinputDir (concat ξinputDir "/") ) )
+(when (not (file-exists-p γ-inputDir)) (error "input dir does not exist: %s" γ-inputDir))
 
-(defconst ξoutputFileFullpath
-(concat (expand-file-name  "~/web/") "xahlee_org/" ξoutputFilename)
-  "The file to save the generated report to. (existing file backedup as ~)")
-
-(when (not (file-exists-p ξinputDir)) (error "input dir does not exist: %s" ξinputDir))
-
-(defconst root-path-char-count (length ξinputDir)
+(defconst root-path-char-count (length γ-inputDir)
   "A integer that counts how many chars to take off of a given file's full path, to result as a relative path for the link url. e.g. if file path is
 “/Users/xah/web/emacs/emacs.html” , and root-path-char-count is 15, then its url in link would be “emacs/emacs.html”.
-This number is not necessarily the length of ξinputDir. It can be smaller for flexibility.
+This number is not necessarily the length of γ-inputDir. It can be smaller for flexibility.
 2011-07-22 TODO: questionable feature here. Do not rely on it.
 ")
 
-(defconst ξsiteHeaderFilePath (xah-get-fullpath "site_report_wikipedia_links_header.txt") "The header text for xahlee.org.")
+(defconst γ-siteHeaderFilePath (xah-get-fullpath "site_report_wikipedia_links_header.txt") "The header text for xahlee.org.")
 
-(defconst ξsiteFooterFilePath (xah-get-fullpath "site_report_wikipedia_links_footer.txt") "The footer text for xahlee.org.")
+(defconst γ-siteFooterFilePath (xah-get-fullpath "site_report_wikipedia_links_footer.txt") "The footer text for xahlee.org.")
 
 
 ;;;; loading package. global vars.
@@ -62,13 +63,10 @@ This number is not necessarily the length of ξinputDir. It can be smaller for f
 (require 'find-lisp)
 (require 'xeu_elisp_util)
 
-;; create hash table.
-;; for each entry, the key is Wikipedia url, and value is a list of file paths.
-;; like this: ("Wikipedia url" ("file1" "file2" …))
-(setq wpdata-hash (make-hash-table :test 'equal :size 8000))
+(defvar γ-wpdata-hash nil "hash table. for each entry, the key is string Wikipedia url, value is a list of file paths.")
+(setq γ-wpdata-hash (make-hash-table :test 'equal :size 8000))
 
-;; a list version of the hash for sorting & report
-(setq wpdata-list '())
+(defvar γ-wpdata-list nil "a list version of the hash for sorting & report")
 
 
 ;;;; subroutines
@@ -110,7 +108,7 @@ Print it like this:
     (dolist (xx ξfiles nil)
       (insert
        (format "<a href=\"%s\">%s</a>•"
-               (xahsite-filepath-to-href-value xx ξoutputFileFullpath )
+               (xahsite-filepath-to-href-value xx γ-outputFileFullpath )
                (xah-html-get-html-file-title xx))))
     (delete-char -1)
     (insert "</li>\n"))
@@ -118,36 +116,39 @@ Print it like this:
 
 
 
-(defun wikipedia-url-to-linktext (url)
+(defun wikipedia-url-to-linktext (φurl)
   "Return the title of a Wikipedia link.
 Example:
 http://en.wikipedia.org/wiki/Emacs
 becomes
 Emacs"
-  (let ((linktext url))
-    (require 'gnus-util)
-    (setq linktext (gnus-url-unhex-string linktext nil))
-    (setq linktext (concat (car (last (split-string linktext "/")))) )
-    (setq linktext (replace-regexp-in-string "&" "＆" linktext))
-    (setq linktext (replace-regexp-in-string "_" " " linktext))
-    linktext)
-)
+  (require 'url-util)
+  (decode-coding-string
+   (url-unhex-string
+    (replace-regexp-in-string
+     "_" " "
+     (replace-regexp-in-string
+      "&" "＆"
+      (car
+       (last
+        (split-string
+         φurl "/")))))) 'utf-8))
 
-(defun wikipedia-url-to-link (url)
-  "Return the url as html link string.\n
+(defun wikipedia-url-to-link (φurl)
+  "Return the φurl as html link string.\n
 Example:
 http://en.wikipedia.org/wiki/Emacs
 becomes
 <a href=\"http://en.wikipedia.org/wiki/Emacs\">Emacs</a>"
-  (format "<a href=\"%s\">%s</a>" url (wikipedia-url-to-linktext url))
+  (format "<a href=\"%s\">%s</a>" φurl (wikipedia-url-to-linktext φurl))
 )
 
 
 ;;;; main
 
-;; fill wpdata-hash
-(let (filePaths)
-  (setq filePaths '()) ; all files to process
+;; fill γ-wpdata-hash
+(let (ξfilePaths)
+  (setq ξfilePaths '()) ; all files to process
   ;; get files ending in “.html” but not starting with “xx”.
   (mapc
    (lambda ( ξx) (when
@@ -156,31 +157,31 @@ becomes
                       (not (string-match "emacs_manual/emacs/" ξx))
                       (not (string-match "emacs_manual/elisp/" ξx))
                       )
-                   (setq filePaths (cons ξx filePaths) )
+                   (setq ξfilePaths (cons ξx ξfilePaths) )
                    ))
-   (find-lisp-find-files ξinputDir "\\.html$"))
+   (find-lisp-find-files γ-inputDir "\\.html$"))
 
   (mapc
-   (lambda (ξx) (add-wplink-to-hash ξx wpdata-hash ))
-   filePaths)
+   (lambda (ξx) (add-wplink-to-hash ξx γ-wpdata-hash ))
+   ξfilePaths)
   )
 
-;; fill wpdata-list
-(setq wpdata-list (xah-hash-to-list wpdata-hash))
-(setq wpdata-list
-      (sort wpdata-list
+;; fill γ-wpdata-list
+(setq γ-wpdata-list (xah-hash-to-list γ-wpdata-hash))
+(setq γ-wpdata-list
+      (sort γ-wpdata-list
             (lambda (a b) (string< (downcase (car a)) (downcase (car b))))
             ))
 
 ;; backup existing output file
-(when (file-exists-p ξoutputFileFullpath)
-  (copy-file ξoutputFileFullpath (concat ξoutputFileFullpath "~") t)
-  ;; (delete-file ξoutputFileFullpath)
+(when (file-exists-p γ-outputFileFullpath)
+  (copy-file γ-outputFileFullpath (concat γ-outputFileFullpath "~") t)
+  ;; (delete-file γ-outputFileFullpath)
   )
 
 ;; write to file
-(with-temp-file ξoutputFileFullpath
-  (insert-file-contents ξsiteHeaderFilePath)
+(with-temp-file γ-outputFileFullpath
+  (insert-file-contents γ-siteHeaderFilePath)
   (goto-char (point-max))
 
   (insert
@@ -190,7 +191,7 @@ becomes
   (insert (format-time-string "%Y-%m-%d"))
 
   (insert
-   ". There are a total of " (number-to-string (length wpdata-list)) " links.</p>\n\n"
+   ". There are a total of " (number-to-string (length γ-wpdata-list)) " links.</p>\n\n"
    "<p>This file is automatically generated by a <a href=\"http://ergoemacs.org/emacs/elisp_link_report.html\">emacs lisp script</a>.</p>
 
 "
@@ -198,19 +199,19 @@ becomes
 
   (insert "<ol>\n")
 
-  (mapc 'ξ-print-each wpdata-list)
+  (mapc 'ξ-print-each γ-wpdata-list)
 
   (insert "</ol>")
 
   (insert "\n\n")
 
-  (insert-file-contents ξsiteFooterFilePath)
+  (insert-file-contents γ-siteFooterFilePath)
   (goto-char (point-max))
   )
 
 ;; clear memory
-(clrhash wpdata-hash)
-(setq wpdata-list '())
+(clrhash γ-wpdata-hash)
+(setq γ-wpdata-list '())
 
 ;; open the file
-(find-file ξoutputFileFullpath )
+(find-file γ-outputFileFullpath )
