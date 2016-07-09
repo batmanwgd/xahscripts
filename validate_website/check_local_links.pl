@@ -20,8 +20,7 @@ use File::Basename;
 # "/home/xah/web/"
 
 my $webRootPath = qq[/home/xah/web];
-my $inDirPath = qq[/home/xah/web/];
-
+my $inDirPath = qq[/home/xah/web];
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
@@ -63,7 +62,7 @@ sub get_links ($) {
 sub process_file {
   if (
       $File::Find::name =~ m[\.html$|\.xml$]
-      && $File::Find::dir !~ m(xahlee_info/clojure-doc-1.6)
+      && $File::Find::dir !~ m(xahlee_info/clojure-doc-1.8)
       && $File::Find::dir !~ m(xahlee_info/java8_doc)
       && $File::Find::dir !~ m(xahlee_info/css_2.1_spec)
       && $File::Find::dir !~ m(xahlee_info/dom3-core)

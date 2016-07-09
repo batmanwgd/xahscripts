@@ -5,14 +5,14 @@
 (when (file-exists-p xxoutputpath) (delete-directory xxoutputpath "RECURSIVE" ) )
 
 (xah-make-downloadable-copy
- "~/web/xahlee_info/"
+ "/home/xah/web/xahlee_info/"
  [
-  "~/web/xahlee_info/js/"
-  "~/web/xahlee_info/javascript_ecma-262_5.1_2011/"
-  "~/web/xahlee_info/javascript_ecma-262_6_2015/"
-  "~/web/xahlee_info/javascript_es6/"
-  "~/web/xahlee_info/jquery_doc/"
-  "~/web/xahlee_info/node_api/"
+  "/home/xah/web/xahlee_info/js/"
+  "/home/xah/web/xahlee_info/javascript_ecma-262_5.1_2011/"
+  "/home/xah/web/xahlee_info/javascript_ecma-262_6_2015/"
+  "/home/xah/web/xahlee_info/javascript_es6/"
+  "/home/xah/web/xahlee_info/jquery_doc/"
+  "/home/xah/web/xahlee_info/node_api/"
   ]
  xxoutputpath)
 

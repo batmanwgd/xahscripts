@@ -1,6 +1,6 @@
 ;; -*- coding: utf-8 -*-
 
-(setq outputPath "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
+(setq outputPath "/home/xah/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
 
 (when (file-exists-p outputPath)
   (delete-directory outputPath "RECURSIVE" ) )
@@ -16,3 +16,6 @@
    ]
   outputPath)
 
+(shell-command (concat "python3 find_replace_ads.py3 " outputPath))
+
+(shell-command (concat "python3 delete_temp_files.py3 " outputPath))

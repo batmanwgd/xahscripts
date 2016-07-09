@@ -147,7 +147,7 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
       (insert-file-contents φ-file-path)
       (goto-char 1)
 
-      (xahsite-remove-ads (point-min) (point-max))
+      ;; (xahsite-remove-ads (point-min) (point-max))
 
       ;; go thru each link, if the link is local, then check if the file exist. if not, replace the link with proper http://xahlee.org/ url
       (goto-char 1)
@@ -156,7 +156,8 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
         (progn
           (setq ξp1 (point))
           (search-forward "\"")
-          (setq ξp2 (- (point) 1))
+          (backward-char)
+          (setq ξp2 (point))
           (setq ξhrefValue (buffer-substring-no-properties ξp1 ξp2))
           ;; (message "ξhrefValue is 「%s」" ξhrefValue)
           )
@@ -225,9 +226,21 @@ if exist, it'll be overridden.
      ξsourceDirList)
 
     ;; copy the style sheets over, and icons dir
-    (copy-file "~/web/xahlee_org/lbasic.css" ξdestDir "OK-IF-ALREADY-EXISTS")
-    (copy-file "~/web/xahlee_org/lit.css" ξdestDir "OK-IF-ALREADY-EXISTS")
-    (copy-directory "~/web/xahlee_org/ics/" (concat ξdestDir "ics/") "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
+    (copy-file "~/web/xahlee_info/lbasic.css" ξdestDir "OK-IF-ALREADY-EXISTS")
+    (copy-file "~/web/xahlee_info/lit.css" ξdestDir "OK-IF-ALREADY-EXISTS")
+    (copy-file "~/web/xahlee_info/l_panel.css" ξdestDir "OK-IF-ALREADY-EXISTS")
+    (copy-file "~/web/xahlee_info/lmath.css" ξdestDir "OK-IF-ALREADY-EXISTS")
+    (copy-directory "~/web/xahlee_info/ics/" (concat ξdestDir "ics/") "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
+
+    (let ((fpath (concat ξdestDir "lbasic.css" ) ))
+      (with-temp-buffer
+        (insert-file-contents fpath)
+        (goto-char (point-max))
+        (insert "
+body { margin-right:1em; }
+#aside-right-89129 {display:none;}
+" )
+        (write-region 1 (point-max) fpath)))
 
   ;     (xah-delete-xahtemp-files ξdestDir)
     (princ

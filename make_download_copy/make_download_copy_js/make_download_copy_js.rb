@@ -5,8 +5,7 @@ require 'fileutils'
 outpath ="/home/xah/web/xahlee_org/diklo/xx_xah_js_tutorial"
 
 # replace scripts and ads
-%x[python3 find_replace_ads_js.py3 #{outpath}]
-%x[python3 find_replace_ads_js_regex.py3 #{outpath}]
+%x[python3 ../find_replace_ads.py3 #{outpath}]
 
 # remove existing
 if File.exist?(outpath + "/js/blog.xml")

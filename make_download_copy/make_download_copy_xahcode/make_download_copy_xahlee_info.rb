@@ -21,9 +21,6 @@ end
 # replace scripts and ads
 %x[python3 /home/xah/git/xahscripts/make_download_copy/find_replace_ads.py3 #{outpath}]
 
-# replace scripts and ads, by regex
-%x[python3 /home/xah/git/xahscripts/make_download_copy/find_replace_ads_regex.py3 #{outpath}]
-
 # remove xx files and temp files etc
 %x[python3 /home/xah/git/xahscripts/make_download_copy/delete_temp_files.py3 #{outpath}]
 
