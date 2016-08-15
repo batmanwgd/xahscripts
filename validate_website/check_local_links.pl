@@ -20,7 +20,8 @@ use File::Basename;
 # "/home/xah/web/"
 
 my $webRootPath = qq[/home/xah/web];
-my $inDirPath = qq[/home/xah/web];
+my $inDirPath = qq[/home/xah/web/];
+
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
 
@@ -69,6 +70,7 @@ sub process_file {
       && $File::Find::dir !~ m(xahlee_info/REC-SVG11-20110816)
       && $File::Find::dir !~ m(xahlee_info/php-doc)
       && $File::Find::dir !~ m(xahlee_info/html5_whatwg)
+      && $File::Find::dir !~ m(xahlee_info/ocaml_doc/htmlman)
      ) {
     my @myLinks = get_links($File::Find::name);
 

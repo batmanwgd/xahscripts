@@ -38,8 +38,6 @@ dir_ignore = [
 input_dir = sys.argv[1]
 print(input_dir)
 
-# input_dir = "/home/xah/web/xahlee_org/diklo/xx_xah_emacs_tutorial/"
-
 input_dir = os.path.normpath(input_dir)
 
 min_level = 1 # files and dirs inside input_dir are level 1.
@@ -274,7 +272,7 @@ def replace_string_in_file(file_path):
 
     if num_replaced > 0:
         print("◆ ", num_replaced, " ", file_path.replace(os.sep, "/"))
-        shutil.copy2(file_path, backup_fname)
+        # shutil.copy2(file_path, backup_fname)
         output_file = open(file_path, "w")
         output_file.write(file_content)
         output_file.close()
