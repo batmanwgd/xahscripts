@@ -20,7 +20,7 @@ use File::Basename;
 # "/home/xah/web/"
 
 my $webRootPath = qq[/home/xah/web];
-my $inDirPath = qq[/home/xah/web/];
+my $inDirPath = qq[/home/xah/web];
 
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.

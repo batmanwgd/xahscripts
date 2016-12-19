@@ -65,6 +65,9 @@ ga('send', 'pageview');
 ('''• <a class="buyxahemacs36183" href="http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html">Buy Xah Emacs Tutorial</a>''',
 ''),
 
+('''<p>or, buy something from my <a class="sorc" href="http://astore.amazon.com/xahhome-20" data-accessed="2016-06-30">keyboard store</a>.</p>''',
+''),
+
 ('''<iframe src="http://astore.amazon.com/xahhome-20" width="90%" height="900" frameborder="0" scrolling="no"></iframe>''',
 ''),
 
@@ -185,7 +188,7 @@ Download xahlee.info.
 ),
 
 (
-'''<div class="buy-js-33416">Like what you read? <a href="buy_xah_js_tutorial.html">Buy JavaScript in Depth</a>.
+'''<div class="buy-js-33416">Like what you read? <a href="buy_xah_js_tutorial.html">Buy JavaScript in Depth</a>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick" />
 <input type="hidden" name="hosted_button_id" value="J3BC865C77JUC" />
@@ -193,8 +196,9 @@ Download xahlee.info.
 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 </form>
 <span style="font-size:4rem;color:red">♥</span>
-</div>''',
+or, buy a new keyboard, see <a href="http://xahlee.info/kbd/keyboard_review_gallery.html">Keyboard Reviews</a>.</div>''',
 ''
+
 ),
 
 (
@@ -229,8 +233,6 @@ Download xahlee.info.
 
 
 regex_pairs_list = [
-
-# (re.compile(r'''<div class="¤tla"><a href="[^"]+?">[^<]+?</a></div>''', re.U|re.M|re.DOTALL), r''),
 
 (re.compile(r'''<nav id="nav-top-04391">\n+</nav>''', re.U|re.M|re.DOTALL), ''),
 

@@ -234,16 +234,16 @@ if exist, it'll be overridden.
     (copy-file "~/web/xahlee_info/lmath.css" -destDir "OK-IF-ALREADY-EXISTS")
     (copy-directory "~/web/xahlee_info/ics/" (concat -destDir "ics/") "KEEP-TIME" "PARENTS" "COPY-CONTENTS")
 
-    ;; 2016-07-09 modify css so that there's no big right margin for ads
-    (let ((fpath (concat -destDir "lbasic.css" )))
-      (with-temp-buffer
-        (insert-file-contents fpath)
-        (goto-char (point-max))
-        (insert "
-body { margin-right:1em; }
-#aside-right-89129 {display:none;}
-" )
-        (write-region 1 (point-max) fpath)))
+;;     ;; 2016-07-09 modify css so that there's no big right margin for ads
+;;     (let ((fpath (concat -destDir "lbasic.css" )))
+;;       (with-temp-buffer
+;;         (insert-file-contents fpath)
+;;         (goto-char (point-max))
+;;         (insert "
+;; body { margin-right:1em; }
+;; #aside-right-89129 {display:none;}
+;; " )
+;;         (write-region 1 (point-max) fpath)))
 
   ;     (xah-delete-xahtemp-files -destDir)
     (princ

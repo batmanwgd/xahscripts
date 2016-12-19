@@ -1,4 +1,4 @@
-;-*- coding: utf-8 -*-
+ ;; -*- coding: utf-8; lexical-binding: t; -*-
 ;; emacs lisp. emacs 22.
 
 ;; started: 2008-01-03.
@@ -28,6 +28,7 @@
 
 (defvar γ-inputDir nil "The dir to process")
 (setq γ-inputDir (expand-file-name  "~/web/") )
+;; (setq γ-inputDir (expand-file-name  "/home/xah/web/xahlee_info/") )
 
 (defvar γ-outputFilename nil "The file name to save the generated report to.")
 (setq γ-outputFilename "wikipedia_links.html")
@@ -140,31 +141,57 @@ Example:
 http://en.wikipedia.org/wiki/Emacs
 becomes
 <a href=\"http://en.wikipedia.org/wiki/Emacs\">Emacs</a>"
-  (format "<a href=\"%s\">%s</a>" φurl (wikipedia-url-to-linktext φurl))
-)
+  (format "<a href=\"%s\">%s</a>" φurl (wikipedia-url-to-linktext φurl)))
+
+(defun xah-find-files-file-predicate-p (fname parentdir)
+  "return true if fname ends in .html and doesn't begin with xx."
+  (and
+   (string-match "\\.html$" fname)
+   (not (string-match "^xx" fname))))
+
+(defun xah-find-files-dir-predicate-p (fname parentdir)
+  "File name predicate. Returns true or false.
+Return true if FNAME is not one of the list item (see code) and doesn't begin with xx, and `find-lisp-default-directory-predicate' returns true."
+  (and
+   (not
+    (or
+     (string-match "/xx" parentdir)
+     (string-match "emacs_manual/elisp/" parentdir)
+     (string-match "emacs_manual/emacs/" parentdir)
+     (string-match "^xx" fname)
+     (string-equal "java8_doc" fname)
+     (string-equal "REC-SVG11-20110816" fname)
+     (string-equal "clojure-doc-1.8" fname)
+     (string-equal "css3_spec_bg" fname)
+     (string-equal "css_2.1_spec" fname)
+     (string-equal "css_3_color_spec" fname)
+     (string-equal "css_transitions" fname)
+     (string-equal "dom-whatwg" fname)
+     (string-equal "html5_whatwg" fname)
+     (string-equal "javascript_ecma-262_5.1_2011" fname)
+     (string-equal "javascript_ecma-262_6_2015" fname)
+     (string-equal "javascript_es6" fname)
+     (string-equal "jquery_doc" fname)
+     (string-equal "node_api" fname)
+     (string-equal "php-doc" fname)
+     (string-equal "python_doc_2.7.6" fname)
+     (string-equal "python_doc_3.3.3" fname)))
+   (find-lisp-default-directory-predicate fname parentdir)))
 
 
 ;;;; main
 
 ;; fill γ-wpdata-hash
 (let (ξfilePaths)
-  (setq ξfilePaths '()) ; all files to process
-  ;; get files ending in “.html” but not starting with “xx”.
-  (mapc
-   (lambda ( ξx) (when
-                     (and
-                      (not (string-match "/xx" ξx))
-                      (not (string-match "emacs_manual/emacs/" ξx))
-                      (not (string-match "emacs_manual/elisp/" ξx))
-                      )
-                   (setq ξfilePaths (cons ξx ξfilePaths) )
-                   ))
-   (find-lisp-find-files γ-inputDir "\\.html$"))
+  (setq ξfilePaths
+        (find-lisp-find-files-internal
+         γ-inputDir
+         'xah-find-files-file-predicate-p
+         'xah-find-files-dir-predicate-p))
 
   (mapc
    (lambda (ξx) (add-wplink-to-hash ξx γ-wpdata-hash ))
-   ξfilePaths)
-  )
+   ξfilePaths))
 
 ;; fill γ-wpdata-list
 (setq γ-wpdata-list (xah-hash-to-list γ-wpdata-hash))
