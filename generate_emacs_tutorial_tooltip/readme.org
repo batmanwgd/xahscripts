@@ -1,0 +1,118 @@
+# -*- coding: utf-8; mode: org -*-
+2017-01-13
+
+this is
+in a prestine emacs elisp manual, each symbol entry has a indicator on what “type” the symbol is.
+for example,
+
+-- Command: find-file filename &optional wildcards
+
+see
+
+• Meaning of Lisp List, Function Type, and Syntax Coloring
+http://ergoemacs.org/misc/elisp_list_function_type_syntax_coloring.html
+
+and see the html source of the manuals at
+
+• GNU Emacs Manual: Top
+http://ergoemacs.org/emacs_manual/emacs/index.html
+
+• GNU Emacs Lisp Reference Manual: Top
+http://ergoemacs.org/emacs_manual/elisp/index.html
+
+We grep those, and here's result
+
+• elisp_manual_all_symbols_2017-01-13.txt
+
+this result, we process it, clean it up, separate into categories, and we have:
+
+• elisp_special_form_2016-12-21
+• elisp_macro_2016-12-21
+• elisp_command_2016-12-21
+• elisp_function_2016-12-21
+
+• elisp_constant_2016-12-21
+• elisp_user_option_2016-12-21
+• elisp_var_2016-12-21
+
+We replace the <strong> markup in elisp manual by appropriate tags, using this script:
+
+• elisp_doc_markup_fix.el
+
+the result is that, elisp manual now has these markup:
+
+<code class="elisp-special-form">
+<code class="elisp-macro">
+<code class="elisp-command">
+<code class="elisp-prefix-command">
+<code class="elisp-function">
+<var class="elisp-user-option">
+<var class="elisp-variable">
+<var class="elisp-constant">
+
+--------------------------------------------------
+
+now in emacs manual, there's markup with “code” tag and “var” tag like these:
+
+<code>set-mark-command</code>
+<code>term-color-green</code>
+<code>C-M-a</code>
+<var>dir-or-pattern</var>
+<var>dirname</var>
+variable <var>scroll-margin</var>
+
+see
+• https://www.gnu.org/software/emacs/manual/html_node/emacs/Setting-Mark.html
+
+note: not all inner text are functions or variables.
+
+here's grep result of “code” tag markup in emacs manual:
+
+we use this script
+• process_emacs_manual_pages_2017-01-08.el
+to process the emacs manual pages, so that
+
+for any <code>‹word›</code>
+ if ‹word› is fboundp, replace it with <code class="elisp-ƒ">‹word›</code>,
+ if ‹word› is boundp, replace it with <var class="elisp">‹word›</var>
+
+so we have now this markup:
+
+<code class="elisp-ƒ">symbol</code>
+<var class="elisp">symbol</var>
+
+• emacs_manual_fboundp_2017-01-08
+
+here's a sample page of processed result:
+
+• GNU Emacs Manual: Setting Mark
+http://ergoemacs.org/emacs_manual/emacs/Setting-Mark.html
+
+--------------------------------------------------
+
+Generting tooltip content of elisp symbols doc string
+
+this is old, quickly hacked up code, no good
+• generate-elisp-function-doc-good_2016-12-21.el
+
+
+• generate-elisp-function-doc_good_2017-01-06.el
+
+emacs_tooltip-chose.js
+
+generate-elisp-function-doc.el
+
+-----------------------------------------
+
+redo_all_emacs_website_htmlize_2017-01-10.el
+
+
+
+now need to do:
+
+• add tooltips for variables to emacs tutorial
+
+• add all commands in emacs manual to xah elisp mode. after this, redo syntax coloring on xah site elisp code.
+
+•
+

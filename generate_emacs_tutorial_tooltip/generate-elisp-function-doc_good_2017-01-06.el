@@ -1,54 +1,37 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 ;; 2013-07-15
 
-(require 'dired-x)
-(provide 'dired-aux)
-(require 'grep)
-(provide 'ido)
-(provide 'simple)
-
 
+
+(setq
+ γmyfiles
+ '("elisp_command_2016-12-21"
+   ;; "elisp_constant_2016-12-21"
+   "elisp_function_2016-12-21"
+   "elisp_macro_2016-12-21"
+   "elisp_special_form_2016-12-21"
+   ;; "elisp_user_option_2016-12-21"
+   ;; "elisp_var_2016-12-21"
+   ))
 
 (defvar γallSymbols '() "all symbols in obarray")
 
-(mapatoms
- (lambda (x)
-   (push x γallSymbols))
- obarray
- )
+(setq γallSymbols '())
 
-;; the problem with generating doc from all symbols in obarray is that, most symbols there are not actually used. You get many obscure functions or symbols. But also, some function should be there but are not, eg , eval-last-sexp, ielm, describe-function.
-;; so, solution is to filter. but the problem is how.
-;; for example, needs to filter cl- , ... 
-;; ok, another solution, is to grep and get all symbols mentioned in both emacs manual and elisp manual
-;; then, filter based on those.
+(dolist (file γmyfiles )
+  (setq
+   γallSymbols
+   (append γallSymbols
+           (with-temp-buffer
+             (insert-file-contents file)
+             (split-string (buffer-string) "\n" t)))))
 
-;; example, from emacs manual
-;; variable <code>message-log-max</code>
+(setq γallSymbols (mapcar 'intern γallSymbols))
 
-(length γallSymbols )
-;; 46694. on gnu emacs sans init, about 15k
-
-;; (setq γallSymbols
-;;       '(
-;;         mouse-on-link-p
-;;         macrop
-;;         run-hooks
-;;         run-hook-with-args
-;;         run-hook-with-args-until-failure
-;;         run-hook-with-args-until-success
-;;         define-fringe-bitmap
-;;         destroy-fringe-bitmap
-;;         ))
-
-
-
-(with-temp-file "xx1.txt"
+(with-temp-file "xxx1.txt"
   (mapc
    (lambda (ff)
-     (message "%s" ff)
-     (when (and  (fboundp ff)
-                 (not (string-match "^cl-" (symbol-name ff))))
+     (when (fboundp ff)
        (let ((fdoc (documentation ff)))
          (insert (format
                   "〈〈%s〉〉:〈〈%s〉〉enditem49840"
@@ -56,11 +39,7 @@
                   fdoc)))))
    γallSymbols))
 
-;; (documentation 'cl-struct-js--pitem)
-;; (documentation 'eieio-class-tag--xref-bogus-location)
-;; progn: Invalid function: nil
-
-(find-file "xx2.txt")
+(find-file "tooltip_content_out.txt")
 
 ;; goal: generate a json format of elisp doc strings
 ;; of the form
@@ -115,11 +94,3 @@
 
   (goto-char (point-max))
 (insert "}")
-
-;; (setq fdoc (replace-regexp-in-string "\n" "•" fdoc "FIXEDCASE" "LITERAL") )
-;; (setq fdoc (replace-regexp-in-string "<" "&lt;" fdoc "FIXEDCASE" "LITERAL") )
-;; (setq fdoc (replace-regexp-in-string ">" "&gt;" fdoc "FIXEDCASE" "LITERAL") )
-;; (setq fdoc (replace-regexp-in-string "&" "&amp;;" fdoc "FIXEDCASE" "LITERAL") )
-
-;; < > & needs to be encoded as HTML entities
-;; " needs to be escaped
