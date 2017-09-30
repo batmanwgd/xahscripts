@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # perl
-# 2004-09-21, …, 2012-06-21
+# 2004-09-21, …, 2012-06-21, 2017-05-17
 
 # given a dir, check all local links and inline images in the html files there. Print a report.
 # XahLee.org
@@ -19,8 +19,10 @@ use File::Basename;
 # normal linux path
 # "/home/xah/web/"
 
-my $webRootPath = qq[/home/xah/web];
-my $inDirPath = qq[/home/xah/web];
+my $webRootPath = qq[/Users/xah/web];
+my $inDirPath = qq[/Users/xah/web];
+
+# my $inDirPath = qq[/Users/xah/web/xahlee_info/];
 
 
 $inDirPath = ($ARGV[0] ? $ARGV[0] : $inDirPath) ; # should give a full path; else the $File::Find::dir won't give full path.
@@ -61,16 +63,31 @@ sub get_links ($) {
 }
 
 sub process_file {
-  if (
+if (
       $File::Find::name =~ m[\.html$|\.xml$]
-      && $File::Find::dir !~ m(xahlee_info/clojure-doc-1.8)
-      && $File::Find::dir !~ m(xahlee_info/java8_doc)
-      && $File::Find::dir !~ m(xahlee_info/css_2.1_spec)
-      && $File::Find::dir !~ m(xahlee_info/dom3-core)
+
+      && $File::Find::dir !~ m(ergoemacs_org/emacs_manual)
+      && $File::Find::dir !~ m(wordyenglish_com/arabian_nights/xx_full_2017-05-13) 
       && $File::Find::dir !~ m(xahlee_info/REC-SVG11-20110816)
-      && $File::Find::dir !~ m(xahlee_info/php-doc)
+      && $File::Find::dir !~ m(xahlee_info/clojure-doc-1.8)
+      && $File::Find::dir !~ m(xahlee_info/css3_spec_bg)
+      && $File::Find::dir !~ m(xahlee_info/css_2.1_spec)
+      && $File::Find::dir !~ m(xahlee_info/css_3_color_spec)
+      && $File::Find::dir !~ m(xahlee_info/css_transitions)
+      && $File::Find::dir !~ m(xahlee_info/dom-whatwg)
       && $File::Find::dir !~ m(xahlee_info/html5_whatwg)
-      && $File::Find::dir !~ m(xahlee_info/ocaml_doc/htmlman)
+      && $File::Find::dir !~ m(xahlee_info/java8_doc)
+      && $File::Find::dir !~ m(xahlee_info/javascript_ecma-262_5.1_2011)
+      && $File::Find::dir !~ m(xahlee_info/javascript_ecma-262_6_2015)
+      && $File::Find::dir !~ m(xahlee_info/javascript_es2016)
+      && $File::Find::dir !~ m(xahlee_info/javascript_es6)
+      && $File::Find::dir !~ m(xahlee_info/jquery_doc)
+      && $File::Find::dir !~ m(xahlee_info/node_api)
+      && $File::Find::dir !~ m(xahlee_info/ocaml_doc)
+      && $File::Find::dir !~ m(xahlee_info/php-doc)
+      && $File::Find::dir !~ m(xahlee_info/python_doc_2.7.6)
+      && $File::Find::dir !~ m(xahlee_info/python_doc_3.3.3)
+
      ) {
     my @myLinks = get_links($File::Find::name);
 
@@ -122,7 +139,7 @@ sub process_file {
   } }
 
 my $mytime = localtime();
-print "$mytime, Broken links in 「$inDirPath」.\n\n";
+print "\n\n$mytime, Broken links in 「$inDirPath」.\n\n";
 
 find(\&process_file, $inDirPath);
 

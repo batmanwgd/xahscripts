@@ -1,24 +1,48 @@
 # -*- coding: utf-8; mode: org -*-
+2017-05-31
+
+in my tutorial pages 
+code.elisp-ƒ 
+var.elisp 
+<code class="elisp-ƒ">comment-dwim</code>
+
+.elisp-prefix-command,
+.elisp-command,
+.elisp-macro,
+.elisp-special-form,
+.elisp-function
+
+.elisp-constant,
+.elisp-user-option,
+.elisp-variable
+
+
+
+2017-05-16
+
+sample bad pages, pages where common commands has no popup
+file:///home/xah/web/ergoemacs_org/emacs/emacs_find_replace.html
+
+http://ergoemacs.org/emacs/emacs_keybinding_overview.html
+
+2017-05-31
+
+links to my emacs/elisp manual
+
+file:///home/xah/web/ergoemacs_org/emacs_manual/elisp/Character-Motion.html#Character-Motion
+
 2017-01-13
 
-this is
-in a prestine emacs elisp manual, each symbol entry has a indicator on what “type” the symbol is.
+in a prestine emacs elisp manual (as of 2017-05-30), each symbol entry has a indicator on what “type” the symbol is.
 for example,
 
 -- Command: find-file filename &optional wildcards
 
-see
+see https://www.gnu.org/software/emacs/manual/html_node/elisp/Visiting-Functions.html
 
+See also: 
 • Meaning of Lisp List, Function Type, and Syntax Coloring
 http://ergoemacs.org/misc/elisp_list_function_type_syntax_coloring.html
-
-and see the html source of the manuals at
-
-• GNU Emacs Manual: Top
-http://ergoemacs.org/emacs_manual/emacs/index.html
-
-• GNU Emacs Lisp Reference Manual: Top
-http://ergoemacs.org/emacs_manual/elisp/index.html
 
 We grep those, and here's result
 
@@ -61,7 +85,7 @@ now in emacs manual, there's markup with “code” tag and “var” tag like t
 <var>dirname</var>
 variable <var>scroll-margin</var>
 
-see
+e.g. 
 • https://www.gnu.org/software/emacs/manual/html_node/emacs/Setting-Mark.html
 
 note: not all inner text are functions or variables.
@@ -92,27 +116,18 @@ http://ergoemacs.org/emacs_manual/emacs/Setting-Mark.html
 
 Generting tooltip content of elisp symbols doc string
 
-this is old, quickly hacked up code, no good
 • generate-elisp-function-doc-good_2016-12-21.el
-
-
 • generate-elisp-function-doc_good_2017-01-06.el
+• generate-elisp-function-doc.el
 
 emacs_tooltip-chose.js
-
-generate-elisp-function-doc.el
 
 -----------------------------------------
 
 redo_all_emacs_website_htmlize_2017-01-10.el
-
-
 
 now need to do:
 
 • add tooltips for variables to emacs tutorial
 
 • add all commands in emacs manual to xah elisp mode. after this, redo syntax coloring on xah site elisp code.
-
-•
-

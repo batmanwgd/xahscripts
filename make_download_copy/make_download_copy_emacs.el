@@ -1,4 +1,4 @@
-;; -*- coding: utf-8 -*-
+;; -*- coding: utf-8; lexical-binding: t; -*-
 
 (setq outputPath "/home/xah/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
 

@@ -1,4 +1,4 @@
-;; -*- coding: utf-8 -*-
+;; -*- coding: utf-8; lexical-binding: t; -*-
 ;; first version 2008-06-12
 
 ;; make a downloadable copy of my website. See function “xah-make-downloadable-copy”
@@ -167,7 +167,7 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
 
         (when (xahsite-local-link-p -hrefValue)
           (setq default-directory (file-name-directory *-file-path))
-          (when (not (file-exists-p (elt (split-uri-hashmark -hrefValue) 0)))
+          (when (not (file-exists-p (elt (xah-html-split-uri-hashmark -hrefValue) 0)))
             (delete-region -p1 -p2)
             (insert
              ;; (xahsite-filepath-to-href-value (xahsite-href-value-to-filepath -hrefValue *-original-file-path) *-original-file-path)

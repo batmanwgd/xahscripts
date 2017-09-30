@@ -3,6 +3,9 @@
 
 
 
+(defvar γallSymbols '() "all symbols in obarray")
+(setq γallSymbols '())
+
 (setq
  γmyfiles
  '("elisp_command_2016-12-21"
@@ -14,21 +17,17 @@
    ;; "elisp_var_2016-12-21"
    ))
 
-(defvar γallSymbols '() "all symbols in obarray")
-
-(setq γallSymbols '())
-
 (dolist (file γmyfiles )
   (setq
    γallSymbols
    (append γallSymbols
            (with-temp-buffer
              (insert-file-contents file)
-             (split-string (buffer-string) "\n" t)))))
+             (split-string (buffer-string) "\n" t)) nil)))
 
 (setq γallSymbols (mapcar 'intern γallSymbols))
 
-(with-temp-file "xxx1.txt"
+(with-temp-file "doc_string_out.txt"
   (mapc
    (lambda (ff)
      (when (fboundp ff)
@@ -39,7 +38,7 @@
                   fdoc)))))
    γallSymbols))
 
-(find-file "tooltip_content_out.txt")
+(find-file "doc_string_out.txt")
 
 ;; goal: generate a json format of elisp doc strings
 ;; of the form

@@ -408,10 +408,10 @@
 
 (setq output "")
 
-(defun x-read-lines (φfile-path)
+(defun x-read-lines (@file-path)
   ""
   (with-temp-buffer
-    (insert-file-contents φfile-path)
+    (insert-file-contents @file-path)
     (buffer-string)))
 
 (mapc

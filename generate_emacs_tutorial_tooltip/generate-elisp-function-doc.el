@@ -1,125 +1,133 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 ;; 2013-07-15
+;; 2017-05-31
 
-(require 'dired-x)
-(provide 'dired-aux)
-(require 'grep)
-(provide 'ido)
-(provide 'simple)
+;; (require 'dired-x)
+;; (require 'dired-aux)
+;; (require 'grep)
+;; (provide 'ido)
+;; (provide 'simple)
 
 
 
-(defvar γallSymbols '() "all symbols in obarray")
+;; (defvar ξallSymbols '() "list of symbols we want to get doc string")
+;; (setq ξallSymbols '())
+;; (mapatoms (lambda (x) (push x ξallSymbols)) obarray )
 
-(mapatoms
- (lambda (x)
-   (push x γallSymbols))
- obarray
- )
+(defvar ξsymbol-hashtable nil "hash table of symbols we want to get doc string")
+(setq ξsymbol-hashtable (make-hash-table :test 'equal))
 
 ;; the problem with generating doc from all symbols in obarray is that, most symbols there are not actually used. You get many obscure functions or symbols. But also, some function should be there but are not, eg , eval-last-sexp, ielm, describe-function.
 ;; so, solution is to filter. but the problem is how.
-;; for example, needs to filter cl- , ... 
+;; for example, needs to filter cl- , ...
 ;; ok, another solution, is to grep and get all symbols mentioned in both emacs manual and elisp manual
 ;; then, filter based on those.
 
 ;; example, from emacs manual
 ;; variable <code>message-log-max</code>
 
-(length γallSymbols )
-;; 46694. on gnu emacs sans init, about 15k
+;; list of files to read in. each contain symbols
+(setq
+ ξmyfiles
+ '(
 
-;; (setq γallSymbols
-;;       '(
-;;         mouse-on-link-p
-;;         macrop
-;;         run-hooks
-;;         run-hook-with-args
-;;         run-hook-with-args-until-failure
-;;         run-hook-with-args-until-success
-;;         define-fringe-bitmap
-;;         destroy-fringe-bitmap
-;;         ))
+   "elisp_command_2016-12-21"
+   "elisp_function_2016-12-21"
+   "elisp_macro_2016-12-21"
+   "elisp_special_form_2016-12-21"
+   "emacs_manual_fboundp_2017-01-08"
 
-
+   ;; "elisp_constant_2016-12-21"
+   ;; "elisp_user_option_2016-12-21"
+   ;; "elisp_var_2016-12-21"
+   ))
 
-(with-temp-file "xx1.txt"
+(defvar ξoutfile nil "string. output file name")
+(setq ξoutfile "func_doc_string_out.txt")
+
+;; add them all to symbols hash
+(dolist (ξfile ξmyfiles )
   (mapc
-   (lambda (ff)
-     (message "%s" ff)
-     (when (and  (fboundp ff)
-                 (not (string-match "^cl-" (symbol-name ff))))
-       (let ((fdoc (documentation ff)))
-         (insert (format
-                  "〈〈%s〉〉:〈〈%s〉〉enditem49840"
-                  ff
-                  fdoc)))))
-   γallSymbols))
+   (lambda (x)
+     (puthash x 1 ξsymbol-hashtable ))
+   (with-temp-buffer
+     (insert-file-contents ξfile)
+     (split-string (buffer-string) "\n" t))))
 
-;; (documentation 'cl-struct-js--pitem)
-;; (documentation 'eieio-class-tag--xref-bogus-location)
-;; progn: Invalid function: nil
+(hash-table-count ξsymbol-hashtable)
 
-(find-file "xx2.txt")
+;; generate doc string
+(with-temp-file ξoutfile
+  (maphash
+   (lambda (x y)
+     (let ((s (intern x)))
+       (when (fboundp s)
+         (insert
+          (format
+           "〈〈%s〉〉:〈〈%s〉〉enditem49840"
+           s
+           (documentation s))))))
+   ξsymbol-hashtable))
 
-;; goal: generate a json format of elisp doc strings
-;; of the form
- ;; {
-;; "fname-1":"doc string 1",
-;; "fname-2":"doc string 2",
-;; ...
-;; "fname-n":"doc string n",
-;; }
+(progn
+  ;; process the doc string
 
-(let ((case-fold-search nil))
+  ;; goal: generate a json format of elisp doc strings
+  ;; of the form
+  ;; {
+  ;; "fname-1":"doc string 1",
+  ;; "fname-2":"doc string 2",
+  ;; ...
+  ;; "fname-n":"doc string n",
+  ;; }
 
-  ;; emacs doc string contains line breaks. js string does not allow. Solution: use a dummy char ¶, then in js, replace ¶¶ by </br></br> then replace ¶ by one space
-  (goto-char (point-min))
-  (while (search-forward "\n" nil t) (replace-match "¶"))
+  (find-file ξoutfile)
 
-  ;; escape html. e.g. emacs has “&option” often.
-  (goto-char (point-min))
-  (while (search-forward "&" nil t) (replace-match "&amp;"))
+  (let ((case-fold-search nil))
 
-  (goto-char (point-min))
-  (while (search-forward "<" nil t) (replace-match "&lt;"))
+    ;; emacs doc string contains line breaks. js string does not allow. Solution: use a dummy char ¶, then in js, replace ¶¶ by </br></br> then replace ¶ by one space
+    (goto-char (point-min))
+    (while (search-forward "\n" nil t) (replace-match "¶"))
 
-  (goto-char (point-min))
-  (while (search-forward ">" nil t) (replace-match "&gt;"))
+    ;; escape html. e.g. emacs has “&option” often.
+    (goto-char (point-min))
+    (while (search-forward "&" nil t) (replace-match "&amp;"))
 
-  ;; doc string contains " or \" or with multiple backslashes solution: replace them “&quot;”
-  ;; put back quote
-  (goto-char (point-min))
-  (while (search-forward "\"" nil t) (replace-match "&quot;"))
+    (goto-char (point-min))
+    (while (search-forward "<" nil t) (replace-match "&lt;"))
 
-  ;; emacs has lots backslash. but it also has meaning in js string. Replace it by a similar looking unicode char
-  ;; alternative is to double the backslash, but that gets really ugly
-  (goto-char (point-min))
-  (while (search-forward "\\" nil t) (replace-match "⧷"))
+    (goto-char (point-min))
+    (while (search-forward ">" nil t) (replace-match "&gt;"))
 
-  ;; emacs doc string contains literal tab. json does not allow.
-  (goto-char (point-min))
-  (while (search-forward "	" nil t) (replace-match "\\t" "FIXEDCASE" "LITERAL"))
+    ;; doc string contains " or \" or with multiple backslashes solution: replace them “&quot;”
+    ;; put back quote
+    (goto-char (point-min))
+    (while (search-forward "\"" nil t) (replace-match "&quot;"))
 
-  ;; add quote to the key name and value string
-  (goto-char (point-min))
-  (while (search-forward "〈〈" nil t) (replace-match "\""))
-  (goto-char (point-min))
-  (while (search-forward "〉〉" nil t) (replace-match "\""))
+    ;; emacs has lots backslash. but it also has meaning in js string. Replace it by a similar looking unicode char
+    ;; alternative is to double the backslash, but that gets really ugly
+    (goto-char (point-min))
+    (while (search-forward "\\" nil t) (replace-match "⧷"))
 
-  (goto-char (point-min))
-  (while (search-forward "enditem49840" nil t) (replace-match ",\n")))
+    ;; emacs doc string contains literal tab. json does not allow.
+    (goto-char (point-min))
+    (while (search-forward "	" nil t) (replace-match "\\t" "FIXEDCASE" "LITERAL"))
 
-  (goto-char (point-min))
-(insert "{")
+    ;; add quote to the key name and value string
+    (goto-char (point-min))
+    (while (search-forward "〈〈" nil t) (replace-match "\""))
+    (goto-char (point-min))
+    (while (search-forward "〉〉" nil t) (replace-match "\""))
 
-  (goto-char (point-max))
-(insert "}")
+    (goto-char (point-min))
+    (while (search-forward "enditem49840" nil t) (replace-match ",\n"))
 
-;; (setq fdoc (replace-regexp-in-string "\n" "•" fdoc "FIXEDCASE" "LITERAL") )
-;; (setq fdoc (replace-regexp-in-string "<" "&lt;" fdoc "FIXEDCASE" "LITERAL") )
-;; (setq fdoc (replace-regexp-in-string ">" "&gt;" fdoc "FIXEDCASE" "LITERAL") )
-;; (setq fdoc (replace-regexp-in-string "&" "&amp;;" fdoc "FIXEDCASE" "LITERAL") )
+    (goto-char (point-min))
+    (insert "{")
 
-;; < > & needs to be encoded as HTML entities
-;; " needs to be escaped
+    (goto-char (point-max))
+    (insert "}")
+    ;;
+
+    ))
+

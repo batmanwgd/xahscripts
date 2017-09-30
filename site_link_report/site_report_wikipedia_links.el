@@ -16,13 +16,13 @@
 
 ;;;; user level globle parameters
 
-;; command line args (inputs): ξinputDir
+;; command line args (inputs): $inputDir
 
 ;; webRootDir is the dir of web root.
 
 ;; Behavior:
 ;; generate all links of files in that dir.
-;; output these links in a file named “wikipedia_links.html” at the ξinputDir. (if the file exist, it is backup with “~” appended.) The URL base of these links will be web root.
+;; output these links in a file named “wikipedia_links.html” at the $inputDir. (if the file exist, it is backup with “~” appended.) The URL base of these links will be web root.
 
 ;; Does not assume the environment variable HOME is set. No other assumption made.
 
@@ -74,7 +74,7 @@ This number is not necessarily the length of γ-inputDir. It can be smaller for 
 
 (defun add-wplink-to-hash (filePath hashTableVar)
   "Get links in filePath and add it to hash table at the variable hashTableVar."
-  (let ( ξwp-url)
+  (let ( $wp-url)
     (with-temp-buffer
       (insert-file-contents filePath nil nil nil t)
       (goto-char 1)
@@ -82,31 +82,31 @@ This number is not necessarily the length of γ-inputDir. It can be smaller for 
           (re-search-forward
            "href=\"\\(http://..\\.wikipedia\\.org/[^\"]+\\)\">\\([^<]+\\)</a>"
            nil t)
-        (setq ξwp-url (match-string 1))
+        (setq $wp-url (match-string 1))
         (when (and
-               ξwp-url ; if url found
-               (not (string-match "=" ξwp-url )) ; do not includes links that are not Wikipedia articles. e.g. user profile pages, edit history pages, search result pages
-               (not (string-match "%..%.." ξwp-url )) ; do not include links that's lots of unicode
+               $wp-url ; if url found
+               (not (string-match "=" $wp-url )) ; do not includes links that are not Wikipedia articles. e.g. user profile pages, edit history pages, search result pages
+               (not (string-match "%..%.." $wp-url )) ; do not include links that's lots of unicode
                )
 
           ;; if exist in hash, prepend to existing entry, else just add
-          (if (gethash ξwp-url hashTableVar)
-              (puthash ξwp-url (cons filePath (gethash ξwp-url hashTableVar)) hashTableVar) ; not using add-to-list because each Wikipedia URL likely only appear once per file
-            (puthash ξwp-url (list filePath) hashTableVar)) )) ) ) )
+          (if (gethash $wp-url hashTableVar)
+              (puthash $wp-url (cons filePath (gethash $wp-url hashTableVar)) hashTableVar) ; not using add-to-list because each Wikipedia URL likely only appear once per file
+            (puthash $wp-url (list filePath) hashTableVar)) )) ) ) )
 
-(defun ξ-print-each (ele)
+(defun xah-print-each (ele)
   "Print each item. ELE is of the form (url (list filepath1 filepath2 …)).
 Print it like this:
 ‹link to url› : ‹link to file1›, ‹link to file2›, …"
-  (let (ξwplink ξfiles)
-    (setq ξwplink (car ele))
-    (setq ξfiles (cadr ele))
+  (let ($wplink $files)
+    (setq $wplink (car ele))
+    (setq $files (cadr ele))
 
     (insert "<li>")
-    (insert (wikipedia-url-to-linktext ξwplink))
+    (insert (wikipedia-url-to-linktext $wplink))
     (insert "—")
 
-    (dolist (xx ξfiles nil)
+    (dolist (xx $files nil)
       (insert
        (format "<a href=\"%s\">%s</a>•"
                (xahsite-filepath-to-href-value xx γ-outputFileFullpath )
@@ -117,7 +117,7 @@ Print it like this:
 
 
 
-(defun wikipedia-url-to-linktext (φurl)
+(defun wikipedia-url-to-linktext (@url)
   "Return the title of a Wikipedia link.
 Example:
 http://en.wikipedia.org/wiki/Emacs
@@ -133,15 +133,15 @@ Emacs"
       (car
        (last
         (split-string
-         φurl "/")))))) 'utf-8))
+         @url "/")))))) 'utf-8))
 
-(defun wikipedia-url-to-link (φurl)
-  "Return the φurl as html link string.\n
+(defun wikipedia-url-to-link (@url)
+  "Return the @url as html link string.\n
 Example:
 http://en.wikipedia.org/wiki/Emacs
 becomes
 <a href=\"http://en.wikipedia.org/wiki/Emacs\">Emacs</a>"
-  (format "<a href=\"%s\">%s</a>" φurl (wikipedia-url-to-linktext φurl)))
+  (format "<a href=\"%s\">%s</a>" @url (wikipedia-url-to-linktext @url)))
 
 (defun xah-find-files-file-predicate-p (fname parentdir)
   "return true if fname ends in .html and doesn't begin with xx."
@@ -182,16 +182,16 @@ Return true if FNAME is not one of the list item (see code) and doesn't begin wi
 ;;;; main
 
 ;; fill γ-wpdata-hash
-(let (ξfilePaths)
-  (setq ξfilePaths
+(let ($filePaths)
+  (setq $filePaths
         (find-lisp-find-files-internal
          γ-inputDir
          'xah-find-files-file-predicate-p
          'xah-find-files-dir-predicate-p))
 
   (mapc
-   (lambda (ξx) (add-wplink-to-hash ξx γ-wpdata-hash ))
-   ξfilePaths))
+   (lambda ($x) (add-wplink-to-hash $x γ-wpdata-hash ))
+   $filePaths))
 
 ;; fill γ-wpdata-list
 (setq γ-wpdata-list (xah-hash-to-list γ-wpdata-hash))
@@ -226,7 +226,7 @@ Return true if FNAME is not one of the list item (see code) and doesn't begin wi
 
   (insert "<ol>\n")
 
-  (mapc 'ξ-print-each γ-wpdata-list)
+  (mapc 'xah-print-each γ-wpdata-list)
 
   (insert "</ol>")
 

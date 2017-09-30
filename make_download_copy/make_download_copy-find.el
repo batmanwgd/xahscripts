@@ -1,4 +1,4 @@
-;; -*- coding: utf-8 -*-
+;; -*- coding: utf-8; lexical-binding: t; -*-
 ; 2008-06-12, 2009-08-10, 2009-08-24
 
 ;; make a downloadable copy of my website

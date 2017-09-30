@@ -1,4 +1,4 @@
-;; -*- coding: utf-8 -*-
+;; -*- coding: utf-8; lexical-binding: t; -*-
 
 (delete-directory "~/web/xahlee_org/diklo/xx_xah_java_tutorial/" t )
 

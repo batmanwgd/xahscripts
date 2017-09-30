@@ -1,4 +1,4 @@
-;; -*- coding: utf-8 -*-
+;; -*- coding: utf-8; lexical-binding: t; -*-
 ;; 2012-02-11
 
 ;; fix all links of a given dir of html files.
@@ -34,16 +34,16 @@
 (require 'find-lisp) ; in emacs
 (require 'hi-lock) ; in emacs
 
-(defvar εinputPath nil "Input dir. Must end with a slash")
-(setq εinputPath "/home/xah/web/xahlee_info/" )
+(defvar ε-inputPath nil "Input dir. Must end with a slash")
+(setq ε-inputPath "/home/xah/web/xahlee_info/" )
 
-(defvar εwriteToFile-p nil "whether to write to file.")
-(setq εwriteToFile-p nil)
+(defvar ε-writeToFile-p nil "whether to write to file.")
+(setq ε-writeToFile-p nil)
 
-(defvar εdebug-p nil "Boolean. Print debug info.")
-(setq εdebug-p nil )
+(defvar ε-debug-p nil "Boolean. Print debug info.")
+(setq ε-debug-p nil )
 
-(defun εcheck-this-link-p (linkString hostFilePath)
+(defun ε-check-this-link-p (linkString hostFilePath)
   "Return true or false.
 This function can change arbitrarily. Its meant to be modified on-the-fly according to requirement.
 
@@ -52,13 +52,13 @@ hostFilePath is the file full path that contains the link."
 t
   )
 
-(defvar εskip-list nil "list of dirs to skip")
-(setq εskip-list
+(defvar ε-skip-list nil "list of dirs to skip")
+(setq ε-skip-list
       (mapcar
        (lambda (x) (concat (xahsite-server-root-path) "xahlee_info/" x))
        (xahsite-xahlee-info-external-docs)))
 
-(defvar εmove-from-to-list nil "alist of dirs that are to be moved.
+(defvar ε-move-from-to-list nil "alist of dirs that are to be moved.
 Each entry is of the form (‹from› . ‹to›).
 • ‹from› and ‹to› must be full path.
 • The ‹from› can be a file or dir.
@@ -68,7 +68,7 @@ Each entry is of the form (‹from› . ‹to›).
 • No ‹from› should be a identical to a ‹to› dir.
 ")
 
-(setq εmove-from-to-list
+(setq ε-move-from-to-list
  '(
 
 ;; remove or regenerate ../wikipedia_links.html
@@ -111,136 +111,136 @@ Each entry is of the form (‹from› . ‹to›).
 
 
 
-(defvar εmoved-from-paths nil "The first elements of εmove-from-to-list.")
-(setq εmoved-from-paths (vconcat (mapcar (lambda (ξx) (car ξx) ) εmove-from-to-list )) )
+(defvar ε-moved-from-paths nil "The first elements of ε-move-from-to-list.")
+(setq ε-moved-from-paths (vconcat (mapcar (lambda ($x) (car $x) ) ε-move-from-to-list )) )
 
-(defvar εbackup-filename-suffix nil "")
-(setq εbackup-filename-suffix (concat "~s" (format-time-string "%Y%m%d_%H%M%S") "~"))
+(defvar ε-backup-filename-suffix nil "")
+(setq ε-backup-filename-suffix (concat "~s" (format-time-string "%Y%m%d_%H%M%S") "~"))
 
 
 
-(defun xahsite--79237-filter-list (φpredicate φlist)
-  "Return a new list such that φpredicate is true on all members of φlist.
-Note: φlist should not have a element equal to the string \"e3824ad41f2ec1ed\"."
-  (let ((ξresult (mapcar (lambda (ξx) (if (funcall φpredicate ξx) ξx "e3824ad41f2ec1ed" )) φlist)))
-    (setq ξresult (delete "e3824ad41f2ec1ed" ξresult))
-    ξresult
+(defun xahsite--79237-filter-list (@predicate @list)
+  "Return a new list such that @predicate is true on all members of @list.
+Note: @list should not have a element equal to the string \"e3824ad41f2ec1ed\"."
+  (let (($result (mapcar (lambda ($x) (if (funcall @predicate $x) $x "e3824ad41f2ec1ed" )) @list)))
+    (setq $result (delete "e3824ad41f2ec1ed" $result))
+    $result
     ))
 
-(defun get-new-fpath (φfPath φmoveFromToList)
-  "Return a new file full path for φfPath.
-φmoveFromToList is a alist."
-  (let ((ξfoundResult nil) (ξi 0) (ξlen (length φmoveFromToList)))
+(defun get-new-fpath (@fPath @moveFromToList)
+  "Return a new file full path for @fPath.
+@moveFromToList is a alist."
+  (let (($foundResult nil) ($i 0) ($len (length @moveFromToList)))
     ;; compare to each moved dir.
-    (while (and (not ξfoundResult) (< ξi ξlen))
-      (when (string-match (concat "\\`" (regexp-quote (car (elt φmoveFromToList ξi)))) φfPath )
+    (while (and (not $foundResult) (< $i $len))
+      (when (string-match (concat "\\`" (regexp-quote (car (elt @moveFromToList $i)))) @fPath )
         (let (
-              (fromDir (car (elt φmoveFromToList ξi)))
-              (toDir (cdr (elt φmoveFromToList ξi))))
-          (setq ξfoundResult (concat toDir (xah-substract-path φfPath fromDir)))))
-      (setq ξi (1+ ξi)))
-    (if ξfoundResult ξfoundResult φfPath )))
-;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs/th" εmove-from-to-list)
-;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs_manual/elisp/tt" εmove-from-to-list)
-;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs" εmove-from-to-list)
+              (fromDir (car (elt @moveFromToList $i)))
+              (toDir (cdr (elt @moveFromToList $i))))
+          (setq $foundResult (concat toDir (xah-substract-path @fPath fromDir)))))
+      (setq $i (1+ $i)))
+    (if $foundResult $foundResult @fPath )))
+;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs/th" ε-move-from-to-list)
+;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs_manual/elisp/tt" ε-move-from-to-list)
+;; (get-new-fpath "c:/Users/h3/web/xahlee_org/emacs" ε-move-from-to-list)
 
 
 
-(defun xahsite-fix-html-links (φhost-file-path φmove-from-to-list φmoved-from-paths &optional φwrite-to-file-p φdebug-p )
+(defun xahsite-fix-html-links (@host-file-path @move-from-to-list @moved-from-paths &optional @write-to-file-p @debug-p )
   "Process the file at xxxxxxx"
   (let (
 
-        ξp-match-b ξp-match-e ξp-hrefValue-b ξp-hrefValue-e
+        $p-match-b $p-match-e $p-hrefValue-b $p-hrefValue-e
 
-        ξp-beginTag-b ; begin tag begin. <
-        ξp-beginTag-e ; begin tag end. >
+        $p-beginTag-b ; begin tag begin. <
+        $p-beginTag-e ; begin tag end. >
 
-        ξhrefValue
-        ξlinkFileFullPath
-        (ξhostFileMoved-p nil)
-        (ξlinkedFileMoved-p nil)
-        ξlinkFragmentHead ;the part before “#”
-        ξlinkFragmentTail ;the part after “#” including #
-        ξnewHrefValue
-        (ξneed-to-update-link-p nil)
-        (ξchangeNecessary-p nil))
+        $hrefValue
+        $linkFileFullPath
+        ($hostFileMoved-p nil)
+        ($linkedFileMoved-p nil)
+        $linkFragmentHead ;the part before “#”
+        $linkFragmentTail ;the part after “#” including #
+        $newHrefValue
+        ($need-to-update-link-p nil)
+        ($changeNecessary-p nil))
 
     ;; open file, search for a “href=”
     (when
-        ;; (not (string-match-p "/xx" φhost-file-path)) ; skip file whose name starts with “xx”
+        ;; (not (string-match-p "/xx" @host-file-path)) ; skip file whose name starts with “xx”
         t
-      (when φdebug-p (princ (format "\n▸φhost-file-path 「%s」\n" φhost-file-path )))
+      (when @debug-p (princ (format "\n▸@host-file-path 「%s」\n" @host-file-path )))
       (with-temp-buffer
-        (insert-file-contents φhost-file-path)
+        (insert-file-contents @host-file-path)
         (while
             (search-forward-regexp "\\(href\\|src\\)=\"\\(?3:[^\"]+?\\)\"" nil t)
-          (setq ξp-match-b (match-beginning 0))
-          (setq ξp-match-e (match-end 0))
-          (setq ξp-hrefValue-b (match-beginning 3))
-          (setq ξp-hrefValue-e (match-end 3))
-          (setq ξhrefValue (match-string 3))
+          (setq $p-match-b (match-beginning 0))
+          (setq $p-match-e (match-end 0))
+          (setq $p-hrefValue-b (match-beginning 3))
+          (setq $p-hrefValue-e (match-end 3))
+          (setq $hrefValue (match-string 3))
           (save-excursion
             (search-backward "<" nil t)
-            (setq ξp-beginTag-b (point))
+            (setq $p-beginTag-b (point))
             (search-forward ">" nil t)
-            (setq ξp-beginTag-e (point)))
+            (setq $p-beginTag-e (point)))
 
           ;; check if 「href="…"」 is inside <…>, and <…> doesn't contain any < or > character. If so, consider it's a link.
-          (when (and (< ξp-beginTag-b ξp-match-b) (< ξp-match-e ξp-beginTag-e)
-                     (not (string-match "<\\|>" (buffer-substring-no-properties (+ ξp-beginTag-b 1) (- ξp-beginTag-e 1))))
-                     (not (string-match-p "\\`#" ξhrefValue )) ; skip links that's only http://en.wikipedia.org/wiki/Fragment_identifier
+          (when (and (< $p-beginTag-b $p-match-b) (< $p-match-e $p-beginTag-e)
+                     (not (string-match "<\\|>" (buffer-substring-no-properties (+ $p-beginTag-b 1) (- $p-beginTag-e 1))))
+                     (not (string-match-p "\\`#" $hrefValue )) ; skip links that's only http://en.wikipedia.org/wiki/Fragment_identifier
                      )
 
-            (when φdebug-p (princ (format "▸ξhrefValue 「%s」\n" ξhrefValue )))
+            (when @debug-p (princ (format "▸$hrefValue 「%s」\n" $hrefValue )))
 
-            (when  (xahsite-is-link-to-xahsite-p ξhrefValue)
+            (when  (xahsite-is-link-to-xahsite-p $hrefValue)
               (progn
-                (let ((x (split-uri-hashmark ξhrefValue)))
-                  (setq ξlinkFragmentHead (elt x 0))
-                  (setq ξlinkFragmentTail (elt x 1)))
+                (let ((x (split-uri-hashmark $hrefValue)))
+                  (setq $linkFragmentHead (elt x 0))
+                  (setq $linkFragmentTail (elt x 1)))
 
-                (setq ξlinkFileFullPath
-                      (if (xahsite-local-link-p ξhrefValue)
-                          (expand-file-name ξlinkFragmentHead (file-name-directory φhost-file-path))
-                        (xahsite-url-to-filepath ξlinkFragmentHead "addFileName")))
-                (when φdebug-p (princ (format "▸ξlinkFileFullPath 「%s」\n" ξlinkFileFullPath )))
+                (setq $linkFileFullPath
+                      (if (xahsite-local-link-p $hrefValue)
+                          (expand-file-name $linkFragmentHead (file-name-directory @host-file-path))
+                        (xahsite-url-to-filepath $linkFragmentHead "addFileName")))
+                (when @debug-p (princ (format "▸$linkFileFullPath 「%s」\n" $linkFileFullPath )))
 
-                (setq ξhostFileMoved-p (file-moved-p φhost-file-path φmoved-from-paths ))
-                (setq ξlinkedFileMoved-p (file-moved-p ξlinkFileFullPath φmoved-from-paths ))
-                (setq ξneed-to-update-link-p (or ξhostFileMoved-p ξlinkedFileMoved-p))
+                (setq $hostFileMoved-p (file-moved-p @host-file-path @moved-from-paths ))
+                (setq $linkedFileMoved-p (file-moved-p $linkFileFullPath @moved-from-paths ))
+                (setq $need-to-update-link-p (or $hostFileMoved-p $linkedFileMoved-p))
 
-                (when φdebug-p (princ (format "▸ξhostFileMoved-p: 「%s」\n" ξhostFileMoved-p )))
-                (when φdebug-p (princ (format "▸ξlinkedFileMoved-p: 「%s」\n" ξlinkedFileMoved-p )))
-                (when φdebug-p (princ (format "▸ξneed-to-update-link-p: 「%s」\n" ξneed-to-update-link-p )))
+                (when @debug-p (princ (format "▸$hostFileMoved-p: 「%s」\n" $hostFileMoved-p )))
+                (when @debug-p (princ (format "▸$linkedFileMoved-p: 「%s」\n" $linkedFileMoved-p )))
+                (when @debug-p (princ (format "▸$need-to-update-link-p: 「%s」\n" $need-to-update-link-p )))
 
-                (when t ; ξneed-to-update-link-p
-                  (setq ξnewHrefValue
+                (when t ; $need-to-update-link-p
+                  (setq $newHrefValue
                         (concat (xahsite-filepath-to-href-value
-                                 (if ξlinkedFileMoved-p
-                                     (get-new-fpath ξlinkFileFullPath φmove-from-to-list)
-                                   ξlinkFileFullPath
+                                 (if $linkedFileMoved-p
+                                     (get-new-fpath $linkFileFullPath @move-from-to-list)
+                                   $linkFileFullPath
                                    )
-                                 (if ξhostFileMoved-p
-                                     (get-new-fpath φhost-file-path φmove-from-to-list)
-                                   φhost-file-path
-                                   )) ξlinkFragmentTail))
-                  (when φdebug-p (princ (format "▸ξnewHrefValue 「%s」\n" ξnewHrefValue )))
+                                 (if $hostFileMoved-p
+                                     (get-new-fpath @host-file-path @move-from-to-list)
+                                   @host-file-path
+                                   )) $linkFragmentTail))
+                  (when @debug-p (princ (format "▸$newHrefValue 「%s」\n" $newHrefValue )))
 
-                  (when (not (string= ξhrefValue ξnewHrefValue))
-                    (setq ξchangeNecessary-p t )
+                  (when (not (string= $hrefValue $newHrefValue))
+                    (setq $changeNecessary-p t )
                     (progn
-                      (princ (format "  「%s」\n" ξhrefValue ))
-                      (princ (format "  『%s』\n" (replace-regexp-in-string "^c:/Users/h3/" "~/" ξnewHrefValue))))
-                    (when φwrite-to-file-p
-                      (delete-region ξp-hrefValue-b ξp-hrefValue-e )
-                      (goto-char ξp-hrefValue-b)
-                      (insert ξnewHrefValue))))))))
+                      (princ (format "  「%s」\n" $hrefValue ))
+                      (princ (format "  『%s』\n" (replace-regexp-in-string "^c:/Users/h3/" "~/" $newHrefValue))))
+                    (when @write-to-file-p
+                      (delete-region $p-hrefValue-b $p-hrefValue-e )
+                      (goto-char $p-hrefValue-b)
+                      (insert $newHrefValue))))))))
 
-        (when ξchangeNecessary-p
-          (princ (format "• %s\n" (replace-regexp-in-string "^c:/Users/h3/" "~/" φhost-file-path)))
-          (when φwrite-to-file-p
-            (copy-file φhost-file-path (concat φhost-file-path εbackup-filename-suffix) t) ; backup
-            (write-region (point-min) (point-max) φhost-file-path)))))))
+        (when $changeNecessary-p
+          (princ (format "• %s\n" (replace-regexp-in-string "^c:/Users/h3/" "~/" @host-file-path)))
+          (when @write-to-file-p
+            (copy-file @host-file-path (concat @host-file-path ε-backup-filename-suffix) t) ; backup
+            (write-region (point-min) (point-max) @host-file-path)))))))
 
 
 
@@ -249,20 +249,20 @@ Note: φlist should not have a element equal to the string \"e3824ad41f2ec1ed\".
   (with-output-to-temp-buffer outputBuffer
 
     (princ (format "-*- coding: utf-8 -*-
-%s, xah site move link change results. Input path: 〔%s〕 \n\n" (xah-current-date-time-string) εinputPath))
-    (if (file-regular-p εinputPath)
-        (xahsite-fix-html-links εinputPath εmove-from-to-list εmoved-from-paths εwriteToFile-p εdebug-p)
+%s, xah site move link change results. Input path: 〔%s〕 \n\n" (xah-current-date-time-string) ε-inputPath))
+    (if (file-regular-p ε-inputPath)
+        (xahsite-fix-html-links ε-inputPath ε-move-from-to-list ε-moved-from-paths ε-writeToFile-p ε-debug-p)
 
       (progn
-        (if (file-directory-p εinputPath)
+        (if (file-directory-p ε-inputPath)
             (mapc
-             (lambda (ξf)
-               (xahsite-fix-html-links ξf εmove-from-to-list εmoved-from-paths εwriteToFile-p εdebug-p))
+             (lambda ($f)
+               (xahsite-fix-html-links $f ε-move-from-to-list ε-moved-from-paths ε-writeToFile-p ε-debug-p))
 
              (xahsite--79237-filter-list
-              (lambda (ξh) (not (xah-string-match-in-list-p ξh εskip-list "match case" t)))
-              (find-lisp-find-files εinputPath "\\.html\\'\\|\\.xml\\'")))
-          (error "Input path 「%s」 isn't a regular file nor dir." εinputPath))))
+              (lambda ($h) (not (xah-string-match-in-list-p $h ε-skip-list "match case" t)))
+              (find-lisp-find-files ε-inputPath "\\.html\\'\\|\\.xml\\'")))
+          (error "Input path 「%s」 isn't a regular file nor dir." ε-inputPath))))
     (princ "Done")
     (switch-to-buffer outputBuffer)
     (html-mode)

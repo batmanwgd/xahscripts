@@ -50,6 +50,17 @@ print_filename_when_no_change = False
 
 find_replace_list = [
 
+('''<script defer src="http://xahlee.info/sitewide_xl.js"></script>''',
+''),
+
+('''<div class="ad_ohayo">
+<a rel="nofollow" href="http://ohayo.computer/landing.html">ohayo — a new type of editor for a new type of Lisp</a>
+</div>''',
+''),
+
+('''<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-10884311-7','wordyenglish.com');ga('send','pageview');</script>''',
+''),
+
     # emacs site
 
 ('''<script>
@@ -62,21 +73,26 @@ ga('send', 'pageview');
 </script>''',
 ''),
 
-('''• <a class="buyxahemacs36183" href="http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html">Buy Xah Emacs Tutorial</a>''',
-''),
-
-('''<p>or, buy something from my <a class="sorc" href="http://astore.amazon.com/xahhome-20" data-accessed="2016-06-30">keyboard store</a>.</p>''',
-''),
-
-('''<iframe src="http://astore.amazon.com/xahhome-20" width="90%" height="900" frameborder="0" scrolling="no"></iframe>''',
-''),
-
-('''<div class="buyxahemacs97449">Like it? <a href="buy_xah_emacs_tutorial.html">Buy Xah Emacs Tutorial</a>. <span style="color:red;font-size:xx-large">♥</span> Thanks.</div>''',
-''),
-
-('''• <a href="https://twitter.com/ErgoEmacs">Follow me on Twitter</a>
-• <a href="https://plus.google.com/113859563190964307534/posts">Follow me on g+</a>
-• <a class="rss_feed_xl" href="blog.xml">Subscribe Feed</a>''',
+('''<div class="buyxahemacs97449">
+Liket it? Put $5 at
+<a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a>.
+Or <a href="buy_xah_emacs_tutorial.html">Buy Xah Emacs Tutorial</a>. Thanks.
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_xclick" />
+<input type="hidden" name="business" value="JPHAB7F7QZRPC" />
+<input type="hidden" name="lc" value="US" />
+<input type="hidden" name="item_name" value="xah emacs tutorial" />
+<input type="hidden" name="amount" value="29.00" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="hidden" name="button_subtype" value="services" />
+<input type="hidden" name="no_note" value="0" />
+<input type="hidden" name="cn" value="Add special instructions to the seller:" />
+<input type="hidden" name="no_shipping" value="1" />
+<input type="hidden" name="shipping" value="0.00" />
+<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal" />
+</form>
+</div>''',
 ''),
 
     # #####################################
@@ -84,8 +100,7 @@ ga('send', 'pageview');
 ('''<a href="http://xahlee.info/index.html"><span class="xsignet">∑</span><span class="xsignetxah">XAH</span></a>''',
 ''),
 
-('''<iframe src="http://astore.amazon.com/xahmath-20" width="90%" height="900" frameborder="0" scrolling="no"></iframe>''',
-''),
+
 
 ('''<script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -102,16 +117,35 @@ ga('send', 'pageview');
 ''
 ),
 
+
 (
-'''<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- side300x600 -->
+'''<div id="google_ad_20170504">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- side_20170504 -->
 <ins class="adsbygoogle"
-     style="display:inline-block;width:300px;height:600px"
+     style="display:block"
      data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="7031204381"></ins>
+     data-ad-slot="7405599580"
+     data-ad-format="auto"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
-</script>''',
+</script>
+</div>''',
+''
+),
+
+(
+'''<div class="ads_4717b912">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- wdyeng20170101_above_fold -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:320px;height:100px"
+     data-ad-client="ca-pub-5125343095650532"
+     data-ad-slot="3701516386"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>''',
 ''
 ),
 
@@ -135,7 +169,7 @@ Download xahlee.info.
 ''),
 
 (
-'''<div class="ad66704">
+'''<div class="ad_top_39054">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- autosize20160323 -->
 <ins class="adsbygoogle"
@@ -147,6 +181,18 @@ Download xahlee.info.
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 </div>''',
+''
+),
+
+('''<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="autorelaxed"
+     data-ad-client="ca-pub-5125343095650532"
+     data-ad-slot="6356170789"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>''',
 ''
 ),
 
@@ -190,13 +236,22 @@ Download xahlee.info.
 (
 '''<div class="buy-js-33416">Like what you read? <a href="buy_xah_js_tutorial.html">Buy JavaScript in Depth</a>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick" />
-<input type="hidden" name="hosted_button_id" value="J3BC865C77JUC" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" />
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+<input type="hidden" name="cmd" value="_xclick" />
+<input type="hidden" name="business" value="JPHAB7F7QZRPC" />
+<input type="hidden" name="lc" value="US" />
+<input type="hidden" name="item_name" value="xah JavaScript in Depth" />
+<input type="hidden" name="amount" value="29.00" />
+<input type="hidden" name="currency_code" value="USD" />
+<input type="hidden" name="button_subtype" value="services" />
+<input type="hidden" name="no_note" value="0" />
+<input type="hidden" name="cn" value="Add special instructions to the seller:" />
+<input type="hidden" name="no_shipping" value="1" />
+<input type="hidden" name="shipping" value="0.00" />
+<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal" />
 </form>
 <span style="font-size:4rem;color:red">♥</span>
-or, buy a new keyboard, see <a href="http://xahlee.info/kbd/keyboard_review_gallery.html">Keyboard Reviews</a>.</div>''',
+</div>''',
 ''
 
 ),
@@ -230,7 +285,6 @@ or, buy a new keyboard, see <a href="http://xahlee.info/kbd/keyboard_review_gall
 ),
 
 ]
-
 
 regex_pairs_list = [
 
