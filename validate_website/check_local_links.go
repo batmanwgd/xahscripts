@@ -1,5 +1,6 @@
 // given a dir, check all local links and inline image links in the html files. Print a report.
 // http://xahlee.info/golang/golang_validate_links.html
+// In emacs, you can M-x xah-find-output from xah-find.el to make it pretty and jump to links
 // Version 2018-11-24
 
 package main
