@@ -1,6 +1,6 @@
 // given a dir, check all local links and inline image links in the html files. Print a report.
 // http://xahlee.info/golang/golang_validate_links.html
-// Version 2018-08-30
+// Version 2018-11-24
 
 package main
 
@@ -12,13 +12,14 @@ import (
 	"regexp"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
 
 // inDir is dir to start. must be full path. if it's a file, the parent dir is used
 
-var inDir = "/Users/xah/web/xahlee_info/comp/blog.html"
+var inDir = "/Users/xah/web/"
 
-const fnameRegex = `\.html$`
+const fnameRegex = `\.xml$`
 
 var dirsToSkip = []string{
 	".git",
@@ -41,11 +42,16 @@ var dirsToSkip = []string{
 	"xx_arabian_nights_full_2017-05-13",
 }
 
+const fileSep = "ff━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+
 const posBracketL = '❪'
 const posBracketR = '❫'
 
 const fileBracketL = '〘'
 const fileBracketR = '〙'
+
+const occurBracketL = '〖'
+const occurBracketR = '〗'
 
 // ------------------------------------------------------------
 
@@ -70,7 +76,6 @@ func isFileExist(fpath string) bool {
 // removeFrac removes fractional part of url. eg remove #...
 // version 2018-11-12
 func removeFrac(url string) string {
-	// fmt.Printf("now: %v\n", url)
 	var x = strings.LastIndex(url, "#")
 	if x != -1 {
 		return url[0:x]
@@ -78,11 +83,11 @@ func removeFrac(url string) string {
 	return url
 }
 
-// getLinks return all links from a html file
+// getLinks return all links from a html file in the format [startPos linkValue endPos]
 // return value looks like this
-// [[ `href="cat.html"` `cat.html`] ...]
-// version 2018-11-12
-func getLinks(ss string) [][]string {
+// [[ `100` `cat.html` `108`] ...]
+// version 2018-11-24
+func getLinks(textB []byte) [][]string {
 	// 2018-11-12 todo. in video tag, there's poster= attribute like this
 	// <video src="i/cat.mp4" poster="cat.jpg"></video>
 	// both src=val1 and poster=val2 should be in result. however, poster is not now, because we used regex to begin with the tag delimiter <. actually, we can make it work by href|src|poster but then we can't check the starting tag delimiter < to make sure it inside a html tag. If we do not regex regex match of < , then there'll be lots false links returned, due to when the html content is about html.
@@ -90,31 +95,26 @@ func getLinks(ss string) [][]string {
 	// var re = regexp.MustCompile(`<[-_=a-z0-9" ]+(?:href|src|poster)+="([^"]+)"`)
 	// var re = regexp.MustCompile(` (?:href|src|poster)="([^"]+)"`)
 	var re = regexp.MustCompile(`<[-_=a-z0-9" ]+(?:href|src)="([^"]+)"`)
-	// var lnks = re.FindAllStringSubmatch(ss, -1)
+	// var lnks = re.FindAllStringSubmatch(textB, -1)
 	// return lnks
 
-	var xlinks = re.FindAllStringSubmatchIndex(ss, -1)
-
-	// var result [][]string
-	// for _, v := range xlinks {
-	// 	var x = []string{fmt.Sprintf("%d", (v[2])), ss[v[2]:v[3]], fmt.Sprintf("%d", (v[3]))}
-	// 	result = append(result, x)
-	// }
+	var xlinks = re.FindAllSubmatchIndex(textB, -1)
 
 	var result = make([][]string, len(xlinks))
 	for i, v := range xlinks {
-		var x = []string{fmt.Sprintf("%d", (v[2])), ss[v[2]:v[3]], fmt.Sprintf("%d", (v[3]))}
+		var x = []string{fmt.Sprintf("%d", utf8.RuneCount(textB[0:v[2]])), string(textB[v[2]:v[3]]), fmt.Sprintf("%d", utf8.RuneCount(textB[0:v[3]]))}
 		result[i] = x
+
 	}
 
 	return result
 }
 
-// transformLink change a xah http link to file full path
+// xahSiteUrlToFilePath change a xah http link to file full path
 // eg http://ergoemacs.org/index.html becomes /Users/xah/web/ergoemacs_org/index.html
 // if it's not exah site link, return no change
 // version 2018-11-12
-func transformLink(ss string) string {
+func xahSiteUrlToFilePath(ss string) string {
 	var xx = ss
 	xx = strings.Replace(xx, "http://ergoemacs.org/", "/Users/xah/web/ergoemacs_org/", 1)
 	xx = strings.Replace(xx, "http://wordyenglish.com/", "/Users/xah/web/wordyenglish_com/", 1)
@@ -127,37 +127,42 @@ func transformLink(ss string) string {
 	return xx
 }
 
+func handleFileExist(fPath string, linkPath string, linkVal string, startPos string) error {
+	if !isFileExist(linkPath) {
+		fmt.Println(fileSep)
+		fmt.Printf("%c%v%c %c%s%c %c%s%c\n", fileBracketL, fPath, fileBracketR, posBracketL, startPos, posBracketR, occurBracketL, linkVal, occurBracketR)
+	}
+	return nil
+}
+
 // checkFile, takes a html file path, extract all links, if local link and file does not exist, print it
 func checkFile(path string) error {
 	contentBytes, er := ioutil.ReadFile(path)
 	if er != nil {
 		panic(er)
 	}
-	var lnks = getLinks(string(contentBytes))
+	var allLinks = getLinks(contentBytes)
 
-	for _, v := range lnks {
+	for _, v := range allLinks {
 		var linkVal = v[1]
+		var startPos = v[0]
+		var linkValNoFrag = removeFrac(linkVal)
+		var linkPath string
 		var isXahSite, errxs = regexp.MatchString(`^http://ergoemacs.org|^http://wordyenglish.com|^http://xaharts.org|^http://xahlee.info|^http://xahlee.org|^http://xahmusic.org|^http://xahporn.org|^http://xahsl.org/`, linkVal)
 		if errxs != nil {
 			panic(errxs)
 		}
 		if isXahSite {
-			var lnkPath = removeFrac(transformLink(linkVal))
-			if !isFileExist(lnkPath) {
-				fmt.Printf("%c%v%c %c%v%c %#v\n", fileBracketL, path, fileBracketR, posBracketL, v[2], posBracketR, linkVal)
-			}
+			linkPath = xahSiteUrlToFilePath(linkValNoFrag)
+			handleFileExist(path, linkPath, linkVal, startPos)
 		} else {
 			var isNoWant, errM = regexp.MatchString(`//|^http://|^https://|^mailto:|^irc:|^ftp:|^javascript:`, linkVal)
 			if errM != nil {
 				panic(errM)
 			}
 			if !isNoWant {
-				var noFrag = removeFrac(linkVal)
-				var linkedPath = filepath.Dir(path) + "/" + noFrag
-				linkedPath = filepath.Clean(linkedPath)
-				if !isFileExist(linkedPath) {
-					fmt.Printf("%c%v%c %c%v%c %#v\n", fileBracketL, path, fileBracketR, posBracketL, v[1], posBracketR, noFrag)
-				}
+				linkPath = filepath.Clean(filepath.Dir(path) + "/" + linkValNoFrag)
+				handleFileExist(path, linkPath, linkVal, startPos)
 			}
 		}
 
