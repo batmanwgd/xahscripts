@@ -50,57 +50,22 @@ print_filename_when_no_change = False
 
 find_replace_list = [
 
-('''<script defer src="http://xahlee.info/sitewide_xl.js"></script>''',
-''),
+##################################################
+    # all sites
 
-('''<div class="ad_ohayo">
-<a rel="nofollow" href="http://ohayo.computer/landing.html">ohayo — a new type of editor for a new type of Lisp</a>
-</div>''',
-''),
+##################################################
+    # xahlee.info
 
-('''<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-10884311-7','wordyenglish.com');ga('send','pageview');</script>''',
-''),
 
-    # emacs site
-
-('''<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-10884311-3', 'auto');
-ga('send', 'pageview');
+    # 2018-08-10
+('''<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-5125343095650532",
+          enable_page_level_ads: true
+     });
 </script>''',
 ''),
-
-('''<div class="buyxahemacs97449">
-Liket it? Put $5 at
-<a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a>.
-Or <a href="buy_xah_emacs_tutorial.html">Buy Xah Emacs Tutorial</a>. Thanks.
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_xclick" />
-<input type="hidden" name="business" value="JPHAB7F7QZRPC" />
-<input type="hidden" name="lc" value="US" />
-<input type="hidden" name="item_name" value="xah emacs tutorial" />
-<input type="hidden" name="amount" value="29.00" />
-<input type="hidden" name="currency_code" value="USD" />
-<input type="hidden" name="button_subtype" value="services" />
-<input type="hidden" name="no_note" value="0" />
-<input type="hidden" name="cn" value="Add special instructions to the seller:" />
-<input type="hidden" name="no_shipping" value="1" />
-<input type="hidden" name="shipping" value="0.00" />
-<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal" />
-</form>
-</div>''',
-''),
-
-    # #####################################
-
-('''<a href="http://xahlee.info/index.html"><span class="xsignet">∑</span><span class="xsignetxah">XAH</span></a>''',
-''),
-
-
 
 ('''<script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -112,129 +77,58 @@ ga('send', 'pageview');
 </script>''',
 ''),
 
-(
-'''<div class="xgcse"><script>(function(){var cx='partner-pub-5125343095650532:1853288892';var gcse=document.createElement('script');gcse.async=true;gcse.src='//www.google.com/cse/cse.js?cx='+cx;var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(gcse,s);})();</script><gcse:searchbox-only></gcse:searchbox-only></div>''',
-''
-),
-
-
-(
-'''<div id="google_ad_20170504">
+('''<div class="google_ad_right_30226">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- side_20170504 -->
+<!-- xlinfo_right_autosize_20171107 -->
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="7405599580"
+     data-ad-slot="9711764997"
      data-ad-format="auto"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 </div>''',
-''
-),
+''),
 
-(
-'''<div class="ads_4717b912">
+('''<div class="ad_top_39054">
+<div class="google_ad_top_29890">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- wdyeng20170101_above_fold -->
+<!-- xlinfo_top_autosize_20171107 -->
 <ins class="adsbygoogle"
-     style="display:inline-block;width:320px;height:100px"
+     style="display:block"
      data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="3701516386"></ins>
+     data-ad-slot="2984018199"
+     data-ad-format="auto"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+</div>
 </div>''',
-''
-),
+''),
 
-('''<div class="buy_xahleeinfo_37204">
-Download xahlee.info.
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_xclick">
-<input type="hidden" name="business" value="JPHAB7F7QZRPC">
-<input type="hidden" name="lc" value="US">
-<input type="hidden" name="item_name" value="xahlee.info content">
-<input type="hidden" name="amount" value="49.00">
-<input type="hidden" name="currency_code" value="USD">
-<input type="hidden" name="button_subtype" value="services">
-<input type="hidden" name="no_note" value="0">
-<input type="hidden" name="cn" value="Add special instructions to the seller:">
-<input type="hidden" name="no_shipping" value="1">
-<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-</form>
+('''<div class="ads-bottom-65900">
+<div class="google_ad_bottom_e7e59">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- xlinfo_ad_bottom_20171117 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5125343095650532"
+     data-ad-slot="4412368092"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
 </div>''',
 ''),
 
 (
-'''<div class="ad_top_39054">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- autosize20160323 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="5724977989"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>''',
-''
-),
-
-('''<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-format="autorelaxed"
-     data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="6356170789"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>''',
-''
-),
-
-(
-'''<div class="google-recommend-content-64663">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- google recommended content -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="6356170789"
-     data-ad-format="autorelaxed"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>''',
-''
-),
-
-(
-'''<div class="ads-bottom-65900">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- autosize20160323 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="5724977989"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>''',
-''
-),
-
-(
-'''<div id="disqus_thread"></div><script>(function(){var dsq=document.createElement('script');dsq.async=true;dsq.src='//xahlee.disqus.com/embed.js';(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);})();</script>''',
-''
-),
-
-(
-'''<div class="buy-js-33416">Like what you read? <a href="buy_xah_js_tutorial.html">Buy JavaScript in Depth</a>
+'''<div class="buy-js-33416">
+Liket it? Put $5 at
+<a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a>.<br />
+<br />
+Or, <a href="buy_xah_js_tutorial.html">Buy JavaScript in Depth</a>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_xclick" />
 <input type="hidden" name="business" value="JPHAB7F7QZRPC" />
@@ -250,36 +144,99 @@ Download xahlee.info.
 <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted" />
 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal" />
 </form>
-<span style="font-size:4rem;color:red">♥</span>
 </div>''',
 ''
-
 ),
 
-(
-    # 2016-05-22 new. page level ads
-'''<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-5125343095650532",
-    enable_page_level_ads: true
-  });
+##################################################
+    # emacs site
+
+('''<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-10884311-3', 'auto');
+ga('send', 'pageview');
 </script>''',
-''
-),
+''),
 
-    # 2016-07-09 new. just 1 page auto resize ad test at /js/html_index.html
-('''<div class="ads-05316">
+
+('''<div class="ggl_ads_1wybm">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- autosize20160628 -->
+<!-- google_ads_emacs_right_n6fhr -->
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="5936138388"
+     data-ad-slot="2962698824"
      data-ad-format="auto"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+</div>''',''),
+
+('''<div class="ad_top_39054">
+<div class="ggl_ad_xfgrj">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- emacs_ad_top_86b9e -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5125343095650532"
+     data-ad-slot="4897106337"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+</div>''',''),
+
+('''<div class="ads-bottom-65900">
+<div class="google_ads_emacs_bottom_98ade">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- xah_emacs_bottom_f82a5 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5125343095650532"
+     data-ad-slot="4157217227"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+</div>''',''),
+
+(
+'''<div class="buyxahemacs97449">
+Patreon me $5
+<a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a>
+<br /><br />
+Or <a href="http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html">Buy Xah Emacs Tutorial</a>
+<br /><br />
+Or buy a nice keyboard:
+<a href="http://ergoemacs.org/emacs/emacs_best_keyboard.html">Best Keyboard for Emacs</a>
+</div>''',
+''
+),
+
+('''<div class="ask_68256"><p>If you have a question, put $5 at <a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a> and message me.</p></div>''',''),
+
+    # #####################################
+
+(
+'''<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://xahlee.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>''',
+''
+),
+
+('''<div class="ask_68256">
+<p>Ask me question on <a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a></p>
 </div>''',
 ''
 ),
@@ -313,7 +270,11 @@ def replace_string_in_file(file_path):
 
     print ("reading:", file_path)
     input_file = open(file_path, "r", encoding="utf-8")
-    file_content = input_file.read()
+    try:
+        file_content = input_file.read()
+    except UnicodeDecodeError:
+        # print("UnicodeDecodeError:{:s}".format(input_file))
+        return
     input_file.close()
 
     num_replaced = 0
