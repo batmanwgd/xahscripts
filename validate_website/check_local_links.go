@@ -17,9 +17,9 @@ import (
 
 // inDir is dir to start. must be full path. if it's a file, the parent dir is used
 
-var inDir = "/Users/xah/web/"
+var inDir = "/Users/xah/web/xahlee_info/comp/blog.html"
 
-const fnameRegex = `\.xml$`
+const fnameRegex = `\.html$`
 
 var dirsToSkip = []string{
 	".git",
@@ -129,8 +129,8 @@ func xahSiteUrlToFilePath(ss string) string {
 
 func handleFileExist(fPath string, linkPath string, linkVal string, startPos string) error {
 	if !isFileExist(linkPath) {
-		fmt.Println(fileSep)
 		fmt.Printf("%c%v%c %c%s%c %c%s%c\n", fileBracketL, fPath, fileBracketR, posBracketL, startPos, posBracketR, occurBracketL, linkVal, occurBracketR)
+		fmt.Println(fileSep)
 	}
 	return nil
 }
@@ -184,6 +184,7 @@ func main() {
 	fmt.Printf("In dir: %v\n", inDir)
 	fmt.Printf("File regex filter: %v\n", fnameRegex)
 	fmt.Println()
+	fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
 	var pWalker = func(pathX string, infoX os.FileInfo, errX error) error {
 		if errX != nil {
