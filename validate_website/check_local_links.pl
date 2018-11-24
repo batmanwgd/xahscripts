@@ -1,23 +1,15 @@
 # -*- coding: utf-8 -*-
 # perl
-# 2004-09-21, …, 2012-06-21, 2018-08-30
+# 2004-09-21, 2018-08-30
 
 # given a dir, check all local links and inline images in the html files there. Print a report.
-# XahLee.org
+
+# http://xahlee.info/perl/perl_validate_local_links.html
 
 use strict;
 use Data::Dumper;
 use File::Find;
 use File::Basename;
-
-# normal Microsoft Windows style path
-# "c:/Users/h3/web/"
-# Cygwin style path
-# "/cygdrive/c/Users/h3/web"
-# NTFS on linux path
-# "/media/OS/Users/h3/web/"
-# normal linux path
-# "/home/xah/web/"
 
 my $webRootPath = qq[/Users/xah/web];
 my $inDirPath = qq[/Users/xah/web/xahlee_info/];
@@ -100,7 +92,7 @@ if (
           or $pathToCheck =~ m{/xahporn_org/}
           or $pathToCheck =~ m{/xahsl_org/}
           ) {
-          print qq[• $File::Find::name $orig_link_value\n];
+          print qq[〈$File::Find::name〉 「$orig_link_value」];
       }
 
       # change xah inter domain links to file path
@@ -124,7 +116,7 @@ if (
           }
 
           if (not -e $pathToCheck) {
-              print qq[• $File::Find::name $orig_link_value\n];
+              print qq[〈$File::Find::name〉 「$orig_link_value」\n];
           }
 
       }
@@ -133,7 +125,11 @@ if (
   } }
 
 my $mytime = localtime();
-print "\n\n$mytime, Broken links in 「$inDirPath」.\n\n";
+
+print qq[-*- coding: utf-8; mode: xah-find-output -*-\n];
+print qq[$mytime\n];
+print qq[Broken links in “$inDirPath”\n];
+print qq[\n];
 
 find(\&process_file, $inDirPath);
 
