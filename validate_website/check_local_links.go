@@ -3,6 +3,10 @@
 // In emacs, you can M-x xah-find-output from xah-find.el to make it pretty and jump to links
 // Version 2018-11-24
 
+// 2019-02-09 bug todo.
+// links like this did not got reported
+// <img src="../../xaharts_org/funny/i/Fredryk_Phox_Treadmill_gbbfv.jpg" alt="Fredryk Phox Treadmill gbbfv" width="330" height="251" /><br />
+
 package main
 
 import (
@@ -18,9 +22,13 @@ import (
 
 // inDir is dir to start. must be full path. if it's a file, the parent dir is used
 
-var inDir = "/Users/xah/web/xahlee_info/comp/blog.html"
+var inDir = "/Users/xah/web/"
 
-const fnameRegex = `\.html$`
+
+// var inDir = "/Users/xah/web/xahlee_org/diklo/x_xah_js_tutorial/"
+// var inDir = "/Users/xah/web/xahlee_org/diklo/xah_emacs_tutorial_2020-02-19_4f278"
+
+const fnameRegex = `\.xml$|\.html$`
 
 var dirsToSkip = []string{
 	".git",
@@ -30,15 +38,14 @@ var dirsToSkip = []string{
 	"clojure-doc-1.8",
 	"css_2.1_spec",
 	"css_transitions",
-	"javascript_ecma-262_5.1_2011",
-	"javascript_ecma-262_6_2015",
-	"javascript_es2016",
-	"javascript_es6",
+	"js_es2011",
+	"js_es2015",
+	"js_es2015_orig",
+	"js_es2016",
+	"js_es2018",
 	"jquery_doc",
 	"node_api",
 	"ocaml_doc",
-	"python_doc_2.7.6",
-	"python_doc_3.3.3",
 	"w3c_ui_events",
 	"xx_arabian_nights_full_2017-05-13",
 }
@@ -95,7 +102,7 @@ func getLinks(textB []byte) [][]string {
 	// solution is to do a split of all <...>, then regex check each
 	// var re = regexp.MustCompile(`<[-_=a-z0-9" ]+(?:href|src|poster)+="([^"]+)"`)
 	// var re = regexp.MustCompile(` (?:href|src|poster)="([^"]+)"`)
-	var re = regexp.MustCompile(`<[-_=a-z0-9" ]+(?:href|src)="([^"]+)"`)
+	var re = regexp.MustCompile(`<[-_=a-z0-9" ]+(?:href|src|og:image" content)="([^"]+)"`)
 	// var lnks = re.FindAllStringSubmatch(textB, -1)
 	// return lnks
 

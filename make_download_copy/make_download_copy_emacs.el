@@ -1,6 +1,8 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
-(setq outputPath "~/web/xahlee_org/diklo/xx_xah_emacs_tutorial/")
+(setq outputPath "~/web/xahlee_org/diklo/z_xah_emacs_tutorial/")
+
+;; (setq outputPath "/Users/xah/web/xahlee_info/xdl07106/xah_emacs_tutorial")
 
 (when (file-exists-p outputPath)
   (delete-directory outputPath "RECURSIVE" ) )

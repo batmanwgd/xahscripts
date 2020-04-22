@@ -6,10 +6,10 @@
 ;; for a web root dir, some subdir or files in it are moved.  This script takes the moved files/dirs as input, go thru all html files in web root dir, and correct all links.
 
 ;; • if the link is relative, the new path should also be relative
-;; • if the link contain fragment id (e.g. hash char 「…#…」), the new path should also contain it
+;; • if the link contain fragment id (e.g. hash char 「some.html#xyz」), the new path should also contain it
 
 ;; inputs:
-;; • a root dir. e.g. 〔c:/Users/h3/web/〕
+;; • a root dir. e.g. /Users/xah/web/
 ;; • a list of (from, to) dirs.
 ;; for each pair, the 1st element is the “from” node, the second is the destination node (the node itself, not the parent to move to under)
 
@@ -31,11 +31,14 @@
 ;; may be relative link. e.g. 〔qi_logo.html〕, 〔../i/qi_logo.html〕
 
 
-(require 'find-lisp) ; in emacs
+;; (require 'find-lisp) ; in emacs
 (require 'hi-lock) ; in emacs
 
+(require 'seq)
+
+
 (defvar ε-inputPath nil "Input dir. Must end with a slash")
-(setq ε-inputPath "/home/xah/web/xahlee_info/" )
+(setq ε-inputPath "/Users/xah/web/xahlee_info/" )
 
 (defvar ε-writeToFile-p nil "whether to write to file.")
 (setq ε-writeToFile-p nil)
@@ -56,7 +59,7 @@ t
 (setq ε-skip-list
       (mapcar
        (lambda (x) (concat (xahsite-server-root-path) "xahlee_info/" x))
-       (xahsite-xahlee-info-external-docs)))
+       xahsite-external-docs))
 
 (defvar ε-move-from-to-list nil "alist of dirs that are to be moved.
 Each entry is of the form (‹from› . ‹to›).
@@ -73,7 +76,7 @@ Each entry is of the form (‹from› . ‹to›).
 
 ;; remove or regenerate ../wikipedia_links.html
 
-;("/home/xah/web/xaharts_org/movie/stories_from_the_editorial_board_smart_robot.html" . "/home/xah/web/wordyenglish_com/chinese/stories_from_the_editorial_board_smart_robot.html")
+("/Users/xah/web/xahlee_info/js/css2.html" . "/Users/xah/web/xahlee_info/css/css2.html")
 
 ;; ("c:/Users/h3/web/xahlee_org/sex/is_YouTube_porn_fodder.html" . "c:/Users/h3/web/xahlee_org/Periodic_dosage_dir/is_YouTube_porn_fodder.html")
 
@@ -118,14 +121,6 @@ Each entry is of the form (‹from› . ‹to›).
 (setq ε-backup-filename-suffix (concat "~s" (format-time-string "%Y%m%d_%H%M%S") "~"))
 
 
-
-(defun xahsite--79237-filter-list (@predicate @list)
-  "Return a new list such that @predicate is true on all members of @list.
-Note: @list should not have a element equal to the string \"e3824ad41f2ec1ed\"."
-  (let (($result (mapcar (lambda ($x) (if (funcall @predicate $x) $x "e3824ad41f2ec1ed" )) @list)))
-    (setq $result (delete "e3824ad41f2ec1ed" $result))
-    $result
-    ))
 
 (defun get-new-fpath (@fPath @moveFromToList)
   "Return a new file full path for @fPath.
@@ -195,7 +190,7 @@ Note: @list should not have a element equal to the string \"e3824ad41f2ec1ed\"."
 
             (when  (xahsite-is-link-to-xahsite-p $hrefValue)
               (progn
-                (let ((x (split-uri-hashmark $hrefValue)))
+                (let ((x (xah-html-split-uri-hashmark $hrefValue)))
                   (setq $linkFragmentHead (elt x 0))
                   (setq $linkFragmentTail (elt x 1)))
 
@@ -244,7 +239,6 @@ Note: @list should not have a element equal to the string \"e3824ad41f2ec1ed\"."
 
 
 
-
 (let ((outputBuffer "*xah sitemove output*" ))
   (with-output-to-temp-buffer outputBuffer
 
@@ -259,9 +253,14 @@ Note: @list should not have a element equal to the string \"e3824ad41f2ec1ed\"."
              (lambda ($f)
                (xahsite-fix-html-links $f ε-move-from-to-list ε-moved-from-paths ε-writeToFile-p ε-debug-p))
 
-             (xahsite--79237-filter-list
+             (seq-filter
               (lambda ($h) (not (xah-string-match-in-list-p $h ε-skip-list "match case" t)))
-              (find-lisp-find-files ε-inputPath "\\.html\\'\\|\\.xml\\'")))
+
+              (directory-files-recursively ε-inputPath "\\.html\\'\\|\\.xml\\'")
+
+              ;;
+
+              ))
           (error "Input path 「%s」 isn't a regular file nor dir." ε-inputPath))))
     (princ "Done")
     (switch-to-buffer outputBuffer)

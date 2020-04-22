@@ -2,7 +2,7 @@
 
 require 'fileutils'
 
-outpath ="~/web/xahlee_org/diklo/xx_xah_js_tutorial"
+outpath ="~/web/xahlee_org/diklo/x_xah_js_tutorial"
 
 # replace scripts and ads
 %x[python3 ../find_replace_ads.py3 #{outpath}]
@@ -15,4 +15,4 @@ end
 # remove xx files and temp files etc
 %x[python3 ~/git/xahscripts/make_download_copy/delete_temp_files.py3 #{outpath}]
 
-# p 'done'
+p 'ruby done'

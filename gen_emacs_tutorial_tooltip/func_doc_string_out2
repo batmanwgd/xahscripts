@@ -1,0 +1,3315 @@
+(debug-on-entry FUNCTION)
+Request FUNCTION to invoke debugger each time it is called.
+
+When called interactively, prompt for FUNCTION in the minibuffer.
+
+This works by modifying the definition of FUNCTION.  If you tell the
+debugger to continue, FUNCTION's execution proceeds.  If FUNCTION is a
+normal function or a macro written in Lisp, you can also step through
+its execution.  FUNCTION can also be a primitive that is not a special
+form, in which case stepping is not possible.  Break-on-entry for
+primitive functions only works when that function is called from Lisp.
+
+Use \[cancel-debug-on-entry] to cancel the effect of this command.
+Redefining FUNCTION also cancels it.
+
+15254-----(cancel-debug-on-entry &optional FUNCTION)
+Undo effect of \[debug-on-entry] on FUNCTION.
+If FUNCTION is nil, cancel debug-on-entry for all functions.
+When called interactively, prompt for FUNCTION in the minibuffer.
+To specify a nil argument interactively, exit with an empty minibuffer.
+
+15254-----(beginning-of-line &optional N)
+Move point to beginning of current line (in the logical order).
+With argument N not nil or 1, move forward N - 1 lines first.
+If point reaches the beginning or end of buffer, it stops there.
+
+This function constrains point to the current field unless this moves
+point to a different line than the original, unconstrained result.
+If N is nil or 1, and a front-sticky field starts at point, the point
+does not move.  To ignore field boundaries bind
+`inhibit-field-text-motion' to t, or use the `forward-line' function
+instead.  For instance, `(forward-line 0)' does the same thing as
+`(beginning-of-line)', except that it ignores field boundaries.
+
+15254-----(end-of-line &optional N)
+Move point to end of current line (in the logical order).
+With argument N not nil or 1, move forward N - 1 lines first.
+If point reaches the beginning or end of buffer, it stops there.
+To ignore intangibility, bind `inhibit-point-motion-hooks' to t.
+
+This function constrains point to the current field unless this moves
+point to a different line than the original, unconstrained result.  If
+N is nil or 1, and a rear-sticky field ends at point, the point does
+not move.  To ignore field boundaries bind `inhibit-field-text-motion'
+to t.
+
+15254-----(forward-line &optional N)
+Move N lines forward (backward if N is negative).
+Precisely, if point is on line I, move to the start of line I + N
+("start of line" in the logical order).
+If there isn't room, go as far as possible (no error).
+
+Returns the count of lines left to move.  If moving forward,
+that is N minus number of lines moved; if backward, N plus number
+moved.
+
+Exception: With positive N, a non-empty line at the end of the
+buffer, or of its accessible portion, counts as one line
+successfully moved (for the return value).  This means that the
+function will move point to the end of such a line and will count
+it as a line moved across, even though there is no next line to
+go to its beginning.
+
+15254-----(count-words START END)
+Count words between START and END.
+If called interactively, START and END are normally the start and
+end of the buffer; but if the region is active, START and END are
+the start and end of the region.  Print a message reporting the
+number of lines, words, and chars.
+
+If called from Lisp, return the number of words between START and
+END, without printing any message.
+
+15254-----(switch-to-buffer BUFFER-OR-NAME &optional NORECORD FORCE-SAME-WINDOW)
+Display buffer BUFFER-OR-NAME in the selected window.
+
+WARNING: This is NOT the way to work on another buffer temporarily
+within a Lisp program!  Use `set-buffer' instead.  That avoids
+messing with the window-buffer correspondences.
+
+If the selected window cannot display the specified buffer
+because it is a minibuffer window or strongly dedicated to
+another buffer, call `pop-to-buffer' to select the buffer in
+another window.  In interactive use, if the selected window is
+strongly dedicated to its buffer, the value of the option
+`switch-to-buffer-in-dedicated-window' specifies how to proceed.
+
+If called interactively, read the buffer name using `read-buffer'.
+The variable `confirm-nonexistent-file-or-buffer' determines
+whether to request confirmation before creating a new buffer.
+See `read-buffer' for features related to input and completion
+of buffer names.
+
+BUFFER-OR-NAME may be a buffer, a string (a buffer name), or nil.
+If BUFFER-OR-NAME is a string that does not identify an existing
+buffer, create a buffer with that name.  If BUFFER-OR-NAME is
+nil, switch to the buffer returned by `other-buffer'.
+
+If optional argument NORECORD is non-nil, do not put the buffer
+at the front of the buffer list, and do not make the window
+displaying it the most recently selected one.
+
+If optional argument FORCE-SAME-WINDOW is non-nil, the buffer
+must be displayed in the selected window when called
+non-interactively; if that is impossible, signal an error rather
+than calling `pop-to-buffer'.
+
+The option `switch-to-buffer-preserve-window-point' can be used
+to make the buffer appear at its last position in the selected
+window.
+
+Return the buffer switched to.
+
+15254-----(switch-to-buffer-other-window BUFFER-OR-NAME &optional NORECORD)
+Select the buffer specified by BUFFER-OR-NAME in another window.
+BUFFER-OR-NAME may be a buffer, a string (a buffer name), or
+nil.  Return the buffer switched to.
+
+If called interactively, read the buffer name using `read-buffer'.
+The variable `confirm-nonexistent-file-or-buffer' determines
+whether to request confirmation before creating a new buffer.
+See `read-buffer' for features related to input and completion
+of buffer names.
+
+If BUFFER-OR-NAME is a string and does not identify an existing
+buffer, create a new buffer with that name.  If BUFFER-OR-NAME is
+nil, switch to the buffer returned by `other-buffer'.
+
+Optional second argument NORECORD non-nil means do not put this
+buffer at the front of the list of recently selected ones.
+
+This uses the function `display-buffer' as a subroutine; see its
+documentation for additional customization information.
+
+15254-----(switch-to-buffer-other-frame BUFFER-OR-NAME &optional NORECORD)
+Switch to buffer BUFFER-OR-NAME in another frame.
+BUFFER-OR-NAME may be a buffer, a string (a buffer name), or
+nil.  Return the buffer switched to.
+
+If called interactively, read the buffer name using `read-buffer'.
+The variable `confirm-nonexistent-file-or-buffer' determines
+whether to request confirmation before creating a new buffer.
+See `read-buffer' for features related to input and completion
+of buffer names.
+
+If BUFFER-OR-NAME is a string and does not identify an existing
+buffer, create a new buffer with that name.  If BUFFER-OR-NAME is
+nil, switch to the buffer returned by `other-buffer'.
+
+Optional second arg NORECORD non-nil means do not put this
+buffer at the front of the list of recently selected ones.
+
+This uses the function `display-buffer' as a subroutine; see its
+documentation for additional customization information.
+
+15254-----(pop-to-buffer BUFFER-OR-NAME &optional ACTION NORECORD)
+Display buffer specified by BUFFER-OR-NAME and select its window.
+BUFFER-OR-NAME may be a buffer, a string (a buffer name), or nil.
+If it is a string not naming an existent buffer, create a buffer
+with that name.  If BUFFER-OR-NAME is nil, choose some other
+buffer.  In either case, make that buffer current and return it.
+
+This uses `display-buffer' as a subroutine.  The optional ACTION
+argument is passed to `display-buffer' as its ACTION argument.
+See `display-buffer' for more information.  ACTION is t if called
+interactively with a prefix argument, which means to pop to a
+window other than the selected one even if the buffer is already
+displayed in the selected window.
+
+If a suitable window is found, select that window.  If it is not
+on the selected frame, raise that window's frame and give it
+input focus.
+
+Optional third arg NORECORD non-nil means do not put this buffer
+at the front of the list of recently selected ones.
+
+15254-----(indent-relative &optional FIRST-ONLY UNINDENTED-OK)
+Space out to under next indent point in previous nonblank line.
+An indent point is a non-whitespace character following whitespace.
+The following line shows the indentation points in this line.
+    ^         ^    ^     ^   ^           ^      ^  ^    ^
+If FIRST-ONLY is non-nil, then only the first indent point is
+considered.
+
+If the previous nonblank line has no indent points beyond the
+column point starts at, then `tab-to-tab-stop' is done, if both
+FIRST-ONLY and UNINDENTED-OK are nil, otherwise nothing is done
+in this case.
+
+See also `indent-relative-first-indent-point'.
+
+15254-----indent-relative-maybe
+Indent the current line like the previous nonblank line.
+Indent to the first indentation position in the previous nonblank
+line if that position is greater than the current column.
+
+See also `indent-relative'.(run-at-time TIME REPEAT FUNCTION &rest ARGS)
+Perform an action at time TIME.
+Repeat the action every REPEAT seconds, if REPEAT is non-nil.
+REPEAT may be an integer or floating point number.
+TIME should be one of:
+- a string giving today's time like "11:23pm"
+  (the acceptable formats are HHMM, H:MM, HH:MM, HHam, HHAM,
+  HHpm, HHPM, HH:MMam, HH:MMAM, HH:MMpm, or HH:MMPM;
+  a period `.' can be used instead of a colon `:' to separate
+  the hour and minute parts);
+- a string giving a relative time like "90" or "2 hours 35 minutes"
+  (the acceptable forms are a number of seconds without units
+  or some combination of values using units in `timer-duration-words');
+- nil, meaning now;
+- a number of seconds from now;
+- a value from `encode-time';
+- or t (with non-nil REPEAT) meaning the next integral
+  multiple of REPEAT.
+
+The action is to call FUNCTION with arguments ARGS.
+
+This function returns a timer object which you can use in
+`cancel-timer'.
+
+15254-----(write-abbrev-file &optional FILE VERBOSE)
+Write all user-level abbrev definitions to a file of Lisp code.
+This does not include system abbrevs; it includes only the abbrev tables
+listed in listed in `abbrev-table-name-list'.
+The file written can be loaded in another session to define the same abbrevs.
+The argument FILE is the file name to write.  If omitted or nil, the file
+specified in `abbrev-file-name' is used.
+If VERBOSE is non-nil, display a message indicating where abbrevs
+have been saved.
+
+15254-----(indent-for-tab-command &optional ARG)
+Indent the current line or region, or insert a tab, as appropriate.
+This function either inserts a tab, or indents the current line,
+or performs symbol completion, depending on `tab-always-indent'.
+The function called to actually indent the line or insert a tab
+is given by the variable `indent-line-function'.
+
+If a prefix argument is given, after this function indents the
+current line or inserts a tab, it also rigidly indents the entire
+balanced expression which starts at the beginning of the current
+line, to reflect the current line's indentation.
+
+In most major modes, if point was in the current line's
+indentation, it is moved to the first non-whitespace character
+after indenting; otherwise it stays at the same position relative
+to the text.
+
+If `transient-mark-mode' is turned on and the region is active,
+this function instead calls `indent-region'.  In this case, any
+prefix argument is ignored.
+
+15254-----indent-according-to-mode
+Indent line in proper way for current major mode.
+Normally, this is done by calling the function specified by the
+variable `indent-line-function'.  However, if the value of that
+variable is `indent-relative' or `indent-relative-maybe', handle
+it specially (since those functions are used for tabbing); in
+that case, indent by aligning to the previous non-blank line.newline-and-indent
+Insert a newline, then indent according to major mode.
+Indentation is done using the value of `indent-line-function'.
+In programming language modes, this is the same as TAB.
+In some text modes, where TAB inserts a tab, this command indents to the
+column specified by the function `current-left-margin'.reindent-then-newline-and-indent
+Reindent current line, insert newline, then indent the new line.
+Indentation of both lines is done according to the current major mode,
+which means calling the current value of `indent-line-function'.
+In programming language modes, this is the same as TAB.
+In some text modes, where TAB inserts a tab, this indents to the
+column specified by the function `current-left-margin'.minibuffer-complete-word
+Complete the minibuffer contents at most a single word.
+After one word is completed as much as possible, a space or hyphen
+is added, provided that matches some possible completion.
+Return nil if there is no valid completion, else t.minibuffer-complete
+Complete the minibuffer contents as far as possible.
+Return nil if there is no valid completion, else t.
+If no characters can be completed, display a list of possible completions.
+If you repeat this command after it displayed such a list,
+scroll the window of possible completions.minibuffer-complete-and-exit
+Exit if the minibuffer contains a valid completion.
+Otherwise, try to complete the minibuffer contents.  If
+completion leads to a valid completion, a repetition of this
+command will exit.
+
+If `minibuffer-completion-confirm' is `confirm', do not try to
+ complete; instead, ask for confirmation and accept any input if
+ confirmed.
+If `minibuffer-completion-confirm' is `confirm-after-completion',
+ do not try to complete; instead, ask for confirmation if the
+ preceding minibuffer command was a member of
+ `minibuffer-confirm-exit-commands', and accept the input
+ otherwise.(minibuffer-completion-help &optional START END)
+Display a list of possible completions of the current minibuffer contents.
+
+15254-----fill-paragraph
+Fill paragraph at or after point.
+
+If JUSTIFY is non-nil (interactively, with prefix argument), justify as well.
+If `sentence-end-double-space' is non-nil, then period followed by one
+space does not end a sentence, so don't break a line there.
+The variable `fill-column' controls the width for filling.
+
+If `fill-paragraph-function' is non-nil, we call it (passing our
+argument to it), and if it returns non-nil, we simply return its value.
+
+If `fill-paragraph-function' is nil, return the `fill-prefix' used for filling.
+
+The REGION argument is non-nil if called interactively; in that
+case, if Transient Mark mode is enabled and the mark is active,
+call `fill-region' to fill each of the paragraphs in the active
+region, instead of just filling the current paragraph.fill-region
+Fill each of the paragraphs in the region.
+A prefix arg means justify as well.
+The `fill-column' variable controls the width.
+
+Noninteractively, the third argument JUSTIFY specifies which
+kind of justification to do: `full', `left', `right', `center',
+or `none' (equivalent to nil).  A value of t means handle each
+paragraph as specified by its text properties.
+
+The fourth arg NOSQUEEZE non-nil means to leave whitespace other
+than line breaks untouched, and fifth arg TO-EOP non-nil means
+to keep filling to the end of the paragraph (or next hard newline,
+if variable `use-hard-newlines' is on).
+
+Return the fill-prefix used for filling the last paragraph.
+
+If `sentence-end-double-space' is non-nil, then period followed by one
+space does not end a sentence, so don't break a line there.fill-individual-paragraphs
+Fill paragraphs of uniform indentation within the region.
+This command divides the region into "paragraphs",
+treating every change in indentation level or prefix as a paragraph boundary,
+then fills each paragraph using its indentation level as the fill prefix.
+
+There is one special case where a change in indentation does not start
+a new paragraph.  This is for text of this form:
+
+   foo>    This line with extra indentation starts
+   foo> a paragraph that continues on more lines.
+
+These lines are filled together.
+
+When calling from a program, pass the range to fill
+as the first two arguments.
+
+Optional third and fourth arguments JUSTIFY and CITATION-REGEXP:
+JUSTIFY to justify paragraphs (prefix arg).
+When filling a mail message, pass a regexp for CITATION-REGEXP
+which will match the prefix of a line which is a citation marker
+plus whitespace, but no other kind of prefix.
+Also, if CITATION-REGEXP is non-nil, don't fill header lines.fill-region-as-paragraph
+Fill the region as one paragraph.
+It removes any paragraph breaks in the region and extra newlines at the end,
+indents and fills lines between the margins given by the
+`current-left-margin' and `current-fill-column' functions.
+(In most cases, the variable `fill-column' controls the width.)
+It leaves point at the beginning of the line following the paragraph.
+
+Normally performs justification according to the `current-justification'
+function, but with a prefix arg, does full justification instead.
+
+From a program, optional third arg JUSTIFY can specify any type of
+justification.  Fourth arg NOSQUEEZE non-nil means not to make spaces
+between words canonical before filling.  Fifth arg SQUEEZE-AFTER, if non-nil,
+means don't canonicalize spaces before that position.
+
+Return the `fill-prefix' used for filling.
+
+If `sentence-end-double-space' is non-nil, then period followed by one
+space does not end a sentence, so don't break a line there.justify-current-line
+Do some kind of justification on this line.
+Normally does full justification: adds spaces to the line to make it end at
+the column given by `current-fill-column'.
+Optional first argument HOW specifies alternate type of justification:
+it can be `left', `right', `full', `center', or `none'.
+If HOW is t, will justify however the `current-justification' function says to.
+If HOW is nil or missing, full justification is done by default.
+Second arg EOP non-nil means that this is the last line of the paragraph, so
+it will not be stretched by full justification.
+Third arg NOSQUEEZE non-nil means to leave interior whitespace unchanged,
+otherwise it is made canonical.push-button
+Perform the action specified by a button at location POS.
+POS may be either a buffer position or a mouse-event.  If
+USE-MOUSE-ACTION is non-nil, invoke the button's `mouse-action'
+property instead of its `action' property; if the button has no
+`mouse-action', the value of `action' is used instead.
+
+The action in both cases may be either a function to call or a
+marker to display and is invoked using `button-activate' (which
+see).
+
+POS defaults to point, except when `push-button' is invoked
+interactively as the result of a mouse-event, in which case, the
+mouse event is used.
+If there's no button at POS, do nothing and return nil, otherwise
+return t.forward-button
+Move to the Nth next button, or Nth previous button if N is negative.
+If N is 0, move to the start of any button at point.
+If WRAP is non-nil, moving past either end of the buffer continues from the
+other end.
+If DISPLAY-MESSAGE is non-nil, the button's help-echo string is displayed.
+Any button with a non-nil `skip' property is skipped over.
+Returns the button found.backward-button
+Move to the Nth previous button, or Nth next button if N is negative.
+If N is 0, move to the start of any button at point.
+If WRAP is non-nil, moving past either end of the buffer continues from the
+other end.
+If DISPLAY-MESSAGE is non-nil, the button's help-echo string is displayed.
+Any button with a non-nil `skip' property is skipped over.
+Returns the button found.(append-to-file START END FILENAME)
+Append the contents of the region to the end of file FILENAME.
+When called from a function, expects three arguments,
+START, END and FILENAME.  START and END are normally buffer positions
+specifying the part of the buffer to write.
+If START is nil, that means to use the entire buffer contents.
+If START is a string, then output that string to the file
+instead of any buffer contents; END is ignored.
+
+This does character code conversion and applies annotations
+like `write-region' does.
+
+15254-----(write-region START END FILENAME &optional APPEND VISIT LOCKNAME MUSTBENEW)
+Write current region into specified file.
+When called from a program, requires three arguments:
+START, END and FILENAME.  START and END are normally buffer positions
+specifying the part of the buffer to write.
+If START is nil, that means to use the entire buffer contents; END is
+ignored.
+If START is a string, then output that string to the file
+instead of any buffer contents; END is ignored.
+
+Optional fourth argument APPEND if non-nil means
+  append to existing file contents (if any).  If it is a number,
+  seek to that offset in the file before writing.
+Optional fifth argument VISIT, if t or a string, means
+  set the last-save-file-modtime of buffer to this file's modtime
+  and mark buffer not modified.
+If VISIT is a string, it is a second file name;
+  the output goes to FILENAME, but the buffer is marked as visiting VISIT.
+  VISIT is also the file name to lock and unlock for clash detection.
+If VISIT is neither t nor nil nor a string, or if Emacs is in batch mode,
+  do not display the "Wrote file" message.
+The optional sixth arg LOCKNAME, if non-nil, specifies the name to
+  use for locking and unlocking, overriding FILENAME and VISIT.
+The optional seventh arg MUSTBENEW, if non-nil, insists on a check
+  for an existing file with the same name.  If MUSTBENEW is `excl',
+  that means to get an error if the file already exists; never overwrite.
+  If MUSTBENEW is neither nil nor `excl', that means ask for
+  confirmation before overwriting, but do go ahead and overwrite the file
+  if the user confirms.
+
+This does code conversion according to the value of
+`coding-system-for-write', `buffer-file-coding-system', or
+`file-coding-system-alist', and sets the variable
+`last-coding-system-used' to the coding system actually used.
+
+This calls `write-region-annotate-functions' at the start, and
+`write-region-post-annotation-function' at the end.
+
+15254-----universal-argument
+Begin a numeric argument for the following command.
+Digits or minus sign following \[universal-argument] make up the numeric argument.
+\[universal-argument] following the digits or minus sign ends the argument.
+\[universal-argument] without digits or minus sign provides 4 as argument.
+Repeating \[universal-argument] without digits or minus sign
+ multiplies the argument by 4 each time.
+For some commands, just \[universal-argument] by itself serves as a flag
+which is different in effect from any particular numeric argument.
+These commands include \[set-mark-command] and \[start-kbd-macro].(digit-argument ARG)
+Part of the numeric argument for the next command.
+\[universal-argument] following digits or minus sign ends the argument.
+
+15254-----(negative-argument ARG)
+Begin a negative numeric argument for the next command.
+\[universal-argument] following digits or minus sign ends the argument.
+
+15254-----(suspend-emacs &optional STUFFSTRING)
+Stop Emacs and return to superior process.  You can resume later.
+If `cannot-suspend' is non-nil, or if the system doesn't support job
+control, run a subshell instead.
+
+If optional arg STUFFSTRING is non-nil, its characters are stuffed
+to be read as terminal input by Emacs's parent, after suspension.
+
+Before suspending, run the normal hook `suspend-hook'.
+After resumption run the normal hook `suspend-resume-hook'.
+
+Some operating systems cannot stop the Emacs process and resume it later.
+On such systems, Emacs starts a subshell instead of suspending.
+
+15254-----suspend-frame
+Do whatever is right to suspend the current frame.
+Calls `suspend-emacs' if invoked from the controlling tty device,
+`suspend-tty' from a secondary tty device, and
+`iconify-or-deiconify-frame' from an X frame.(set-input-method INPUT-METHOD &optional INTERACTIVE)
+Select and activate input method INPUT-METHOD for the current buffer.
+This also sets the default input method to the one you specify.
+If INPUT-METHOD is nil, this function turns off the input method, and
+also causes you to be prompted for a name of an input method the next
+time you invoke \[toggle-input-method].
+When called interactively, the optional arg INTERACTIVE is non-nil,
+which marks the variable `default-input-method' as set for Custom buffers.
+
+To deactivate the input method interactively, use \[toggle-input-method].
+To deactivate it programmatically, use `deactivate-input-method'.
+
+15254-----(indent-to COLUMN &optional MINIMUM)
+Indent from point with tabs and spaces until COLUMN is reached.
+Optional second argument MINIMUM says always do at least MINIMUM spaces
+even if that goes past COLUMN; by default, MINIMUM is zero.
+
+The return value is the column where the insertion ends.
+
+15254-----describe-current-display-table
+Describe the display table in use in the selected window and buffer.(read-color &optional PROMPT CONVERT-TO-RGB ALLOW-EMPTY-NAME MSG)
+Read a color name or RGB triplet.
+Completion is available for color names, but not for RGB triplets.
+
+RGB triplets have the form "#RRGGBB".  Each of the R, G, and B
+components can have one to four digits, but all three components
+must have the same number of digits.  Each digit is a hex value
+between 0 and F; either upper case or lower case for A through F
+are acceptable.
+
+In addition to standard color names and RGB hex values, the
+following are available as color candidates.  In each case, the
+corresponding color is used.
+
+ * `foreground at point'   - foreground under the cursor
+ * `background at point'   - background under the cursor
+
+Optional arg PROMPT is the prompt; if nil, use a default prompt.
+
+Interactively, or with optional arg CONVERT-TO-RGB-P non-nil,
+convert an input color name to an RGB hex string.  Return the RGB
+hex string.
+
+If optional arg ALLOW-EMPTY-NAME is non-nil, the user is allowed
+to enter an empty color name (the empty string).
+
+Interactively, or with optional arg MSG non-nil, print the
+resulting color name in the echo area.
+
+15254-----(posix-search-forward REGEXP &optional BOUND NOERROR COUNT)
+Search forward from point for regular expression REGEXP.
+Find the longest match in accord with Posix regular expression rules.
+Set point to the end of the occurrence found, and return point.
+An optional second argument bounds the search; it is a buffer position.
+  The match found must not end after that position.  A value of nil
+  means search to the end of the accessible portion of the buffer.
+Optional third argument, if t, means if fail just return nil (no error).
+  If not nil and not t, move to limit of search and return nil.
+Optional fourth argument COUNT, if a positive number, means to search
+  for COUNT successive occurrences.  If COUNT is negative, search
+  backward, instead of forward, for -COUNT occurrences.  A value of
+  nil means the same as 1.
+With COUNT positive, the match found is the COUNTth one (or first,
+  if COUNT is 1 or nil) in the buffer located entirely after the
+  origin of the search; correspondingly with COUNT negative.
+
+Search case-sensitivity is determined by the value of the variable
+`case-fold-search', which see.
+
+See also the functions `match-beginning', `match-end', `match-string',
+and `replace-match'.
+
+15254-----(posix-search-backward REGEXP &optional BOUND NOERROR COUNT)
+Search backward from point for match for regular expression REGEXP.
+Find the longest match in accord with Posix regular expression rules.
+Set point to the beginning of the occurrence found, and return point.
+An optional second argument bounds the search; it is a buffer position.
+  The match found must not begin before that position.  A value of nil
+  means search to the beginning of the accessible portion of the buffer.
+Optional third argument, if t, means if fail just return nil (no error).
+  If not nil and not t, position at limit of search and return nil.
+Optional fourth argument COUNT, if a positive number, means to search
+  for COUNT successive occurrences.  If COUNT is negative, search
+  forward, instead of backward, for -COUNT occurrences.  A value of
+  nil means the same as 1.
+With COUNT positive, the match found is the COUNTth to last one (or
+  last, if COUNT is 1 or nil) in the buffer located entirely before
+  the origin of the search; correspondingly with COUNT negative.
+
+Search case-sensitivity is determined by the value of the variable
+`case-fold-search', which see.
+
+See also the functions `match-beginning', `match-end', `match-string',
+and `replace-match'.
+
+15254-----(save-buffer &optional ARG)
+Save current buffer in visited file if modified.
+Variations are described below.
+
+By default, makes the previous version into a backup file
+ if previously requested or if this is the first save.
+Prefixed with one \[universal-argument], marks this version
+ to become a backup when the next save is done.
+Prefixed with two \[universal-argument]'s,
+ makes the previous version into a backup file.
+Prefixed with three \[universal-argument]'s, marks this version
+ to become a backup when the next save is done,
+ and makes the previous version into a backup file.
+
+With a numeric prefix argument of 0, never make the previous version
+into a backup file.
+
+Note that the various variables that control backups, such
+as `version-control', `backup-enable-predicate', `vc-make-backup-files',
+and `backup-inhibited', to name just the more popular ones, still
+control whether a backup will actually be produced, even when you
+invoke this command prefixed with two or three \[universal-argument]'s.
+
+If a file's name is FOO, the names of its numbered backup versions are
+ FOO.~i~ for various integers i.  A non-numbered backup file is called FOO~.
+Numeric backups (rather than FOO~) will be made if value of
+ `version-control' is not the atom `never' and either there are already
+ numeric versions of the file being backed up, or `version-control' is
+ non-nil.
+We don't want excessive versions piling up, so there are variables
+ `kept-old-versions', which tells Emacs how many oldest versions to keep,
+ and `kept-new-versions', which tells how many newest versions to keep.
+ Defaults are 2 old versions and 2 new.
+`dired-kept-versions' controls dired's clean-directory (.) command.
+If `delete-old-versions' is nil, system will query user
+ before trimming versions.  Otherwise it does it silently.
+
+If `vc-make-backup-files' is nil, which is the default,
+ no backup files are made for files managed by version control.
+ (This is because the version control system itself records previous versions.)
+
+See the subroutine `basic-save-buffer' for more information.
+
+15254-----(save-some-buffers &optional ARG PRED)
+Save some modified file-visiting buffers.  Asks user about each one.
+You can answer `y' to save, `n' not to save, `C-r' to look at the
+buffer in question with `view-buffer' before deciding or `d' to
+view the differences using `diff-buffer-with-file'.
+
+This command first saves any buffers where `buffer-save-without-query' is
+non-nil, without asking.
+
+Optional argument ARG (interactively, prefix argument) non-nil means save
+all with no questions.
+Optional second argument PRED determines which buffers are considered:
+If PRED is nil, all the file-visiting buffers are considered.
+If PRED is t, then certain non-file buffers will also be considered.
+If PRED is a zero-argument function, it indicates for each buffer whether
+to consider it or not when called with that buffer current.
+PRED defaults to the value of `save-some-buffers-default-predicate'.
+
+See `save-some-buffers-action-alist' if you want to
+change the additional actions you can take on files.
+
+15254-----(write-file FILENAME &optional CONFIRM)
+Write current buffer into file FILENAME.
+This makes the buffer visit that file, and marks it as not modified.
+
+If you specify just a directory name as FILENAME, that means to use
+the default file name but in that directory.  You can also yank
+the default file name into the minibuffer to edit it, using \<minibuffer-local-map>\[next-history-element].
+
+If the buffer is not already visiting a file, the default file name
+for the output file is the buffer name.
+
+If optional second arg CONFIRM is non-nil, this function
+asks for confirmation before overwriting an existing file.
+Interactively, confirmation is required unless you supply a prefix argument.
+
+15254-----(signal-process PROCESS SIGCODE)
+Send PROCESS the signal with code SIGCODE.
+PROCESS may also be a number specifying the process id of the
+process to signal; in this case, the process need not be a child of
+this Emacs.
+SIGCODE may be an integer, or a symbol whose name is a signal name.
+
+15254-----exit-minibuffer
+Terminate this minibuffer argument.self-insert-and-exit
+Terminate minibuffer input.(previous-history-element N)
+Puts previous element of the minibuffer history in the minibuffer.
+With argument N, it uses the Nth previous element.
+
+15254-----(next-history-element N)
+Puts next element of the minibuffer history in the minibuffer.
+With argument N, it uses the Nth following element.
+
+15254-----(previous-matching-history-element REGEXP N)
+Find the previous history element that matches REGEXP.
+(Previous history elements refer to earlier actions.)
+With prefix argument N, search for Nth previous match.
+If N is negative, find the next or Nth next match.
+Normally, history elements are matched case-insensitively if
+`case-fold-search' is non-nil, but an uppercase letter in REGEXP
+makes the search case-sensitive.
+See also `minibuffer-history-case-insensitive-variables'.
+
+15254-----(next-matching-history-element REGEXP N)
+Find the next history element that matches REGEXP.
+(The next history element refers to a more recent action.)
+With prefix argument N, search for Nth next match.
+If N is negative, find the previous or Nth previous match.
+Normally, history elements are matched case-insensitively if
+`case-fold-search' is non-nil, but an uppercase letter in REGEXP
+makes the search case-sensitive.
+
+15254-----(previous-complete-history-element N)
+Get previous history element which completes the minibuffer before the point.
+The contents of the minibuffer after the point are deleted, and replaced
+by the new completion.
+
+15254-----(next-complete-history-element N)
+Get next history element which completes the minibuffer before the point.
+The contents of the minibuffer after the point are deleted, and replaced
+by the new completion.
+
+15254-----(load-file FILE)
+Load the Lisp file named FILE.
+
+15254-----(load-library LIBRARY)
+Load the Emacs Lisp library named LIBRARY.
+LIBRARY should be a string.
+This is an interface to the function `load'.  LIBRARY is searched
+for in `load-path', both with and without `load-suffixes' (as
+well as `load-file-rep-suffixes').
+
+See Info node `(emacs)Lisp Libraries' for more details.
+See `load-file' for a different interface to `load'.
+
+15254-----(read-only-mode &optional ARG)
+Change whether the current buffer is read-only.
+With prefix argument ARG, make the buffer read-only if ARG is
+positive, otherwise make it writable.  If buffer is read-only
+and `view-read-only' is non-nil, enter view mode.
+
+Do not call this from a Lisp program unless you really intend to
+do the same thing as the \[read-only-mode] command, including
+possibly enabling or disabling View mode.  Also, note that this
+command works by setting the variable `buffer-read-only', which
+does not affect read-only regions caused by text properties.  To
+ignore read-only status in a Lisp program (whether due to text
+properties or buffer state), bind `inhibit-read-only' temporarily
+to a non-nil value.
+
+15254-----(kill-emacs &optional ARG)
+Exit the Emacs job and kill it.
+If ARG is an integer, return ARG as the exit program code.
+If ARG is a string, stuff it as keyboard input.
+
+This function is called upon receipt of the signals SIGTERM
+or SIGHUP, and upon SIGINT in batch mode.
+
+The value of `kill-emacs-hook', if not void,
+is a list of functions (of no args),
+all of which are called before Emacs is actually killed.
+
+15254-----(indent-region START END &optional COLUMN)
+Indent each nonblank line in the region.
+A numeric prefix argument specifies a column: indent each line to that column.
+
+With no prefix argument, the command chooses one of these methods and
+indents all the lines with it:
+
+  1) If `fill-prefix' is non-nil, insert `fill-prefix' at the
+     beginning of each line in the region that does not already begin
+     with it.
+  2) If `indent-region-function' is non-nil, call that function
+     to indent the region.
+  3) Indent each line via `indent-according-to-mode'.
+
+Called from a program, START and END specify the region to indent.
+If the third argument COLUMN is an integer, it specifies the
+column to indent to; if it is nil, use one of the three methods above.
+
+15254-----(indent-rigidly START END ARG &optional INTERACTIVE)
+Indent all lines starting in the region.
+If called interactively with no prefix argument, activate a
+transient mode in which the indentation can be adjusted interactively
+by typing \<indent-rigidly-map>\[indent-rigidly-left], \[indent-rigidly-right], \[indent-rigidly-left-to-tab-stop], or \[indent-rigidly-right-to-tab-stop].
+Typing any other key deactivates the transient mode.
+
+If called from a program, or interactively with prefix ARG,
+indent all lines starting in the region forward by ARG columns.
+If called from a program, START and END specify the beginning and
+end of the text to act on, in place of the region.
+
+Negative values of ARG indent backward, so you can remove all
+indentation by specifying a large negative ARG.
+
+15254-----(indent-code-rigidly START END ARG &optional NOCHANGE-REGEXP)
+Indent all lines of code, starting in the region, sideways by ARG columns.
+Does not affect lines starting inside comments or strings, assuming that
+the start of the region is not inside them.
+
+Called from a program, takes args START, END, COLUMNS and NOCHANGE-REGEXP.
+The last is a regexp which, if matched at the beginning of a line,
+means don't indent that line.
+
+15254-----(play-sound-file FILE &optional VOLUME DEVICE)
+Play sound stored in FILE.
+VOLUME and DEVICE correspond to the keywords of the sound
+specification for `play-sound'.
+
+15254-----(forward-word &optional ARG)
+Move point forward ARG words (backward if ARG is negative).
+If ARG is omitted or nil, move point forward one word.
+Normally returns t.
+If an edge of the buffer or a field boundary is reached, point is
+left there and the function returns nil.  Field boundaries are not
+noticed if `inhibit-field-text-motion' is non-nil.
+
+The word boundaries are normally determined by the buffer's syntax
+table and character script (according to `char-script-table'), but
+`find-word-boundary-function-table', such as set up by `subword-mode',
+can change that.  If a Lisp program needs to move by words determined
+strictly by the syntax table, it should use `forward-word-strictly'
+instead.  See Info node `(elisp) Word Motion' for details.
+
+15254-----(backward-word &optional ARG)
+Move backward until encountering the beginning of a word.
+With argument ARG, do this that many times.
+If ARG is omitted or nil, move point backward one word.
+
+The word boundaries are normally determined by the buffer's
+syntax table and character script (according to
+`char-script-table'), but `find-word-boundary-function-table',
+such as set up by `subword-mode', can change that.  If a Lisp
+program needs to move by words determined strictly by the syntax
+table, it should use `backward-word-strictly' instead.  See Info
+node `(elisp) Word Motion' for details.
+
+15254-----(auto-save-mode &optional ARG)
+Toggle auto-saving in the current buffer (Auto Save mode).
+With a prefix argument ARG, enable Auto Save mode if ARG is
+positive, and disable it otherwise.
+
+If called from Lisp, enable the mode if ARG is omitted or nil.
+
+15254-----(do-auto-save &optional NO-MESSAGE CURRENT-ONLY)
+Auto-save all buffers that need it.
+This is all buffers that have auto-saving enabled
+and are changed since last auto-saved.
+Auto-saving writes the buffer into a file
+so that your editing is not lost if the system crashes.
+This file is not the file you visited; that changes only when you save.
+Normally, run the normal hook `auto-save-hook' before saving.
+
+A non-nil NO-MESSAGE argument means do not print any message if successful.
+A non-nil CURRENT-ONLY argument means save only current buffer.
+
+15254-----(other-window COUNT &optional ALL-FRAMES)
+Select another window in cyclic ordering of windows.
+COUNT specifies the number of windows to skip, starting with the
+selected window, before making the selection.  If COUNT is
+positive, skip COUNT windows forwards.  If COUNT is negative,
+skip -COUNT windows backwards.  COUNT zero means do not skip any
+window, so select the selected window.  In an interactive call,
+COUNT is the numeric prefix argument.  Return nil.
+
+If the `other-window' parameter of the selected window is a
+function and `ignore-window-parameters' is nil, call that
+function with the arguments COUNT and ALL-FRAMES.
+
+This function does not select a window whose `no-other-window'
+window parameter is non-nil.
+
+This function uses `next-window' for finding the window to
+select.  The argument ALL-FRAMES has the same meaning as in
+`next-window', but the MINIBUF argument of `next-window' is
+always effectively nil.
+
+15254-----(normal-mode &optional FIND-FILE)
+Choose the major mode for this buffer automatically.
+Also sets up any specified local variables of the file.
+Uses the visited file name, the -*- line, and the local variables spec.
+
+This function is called automatically from `find-file'.  In that case,
+we may set up the file-specified mode and local variables,
+depending on the value of `enable-local-variables'.
+In addition, if `local-enable-local-variables' is nil, we do
+not set local variables (though we do notice a mode specified with -*-.)
+
+`enable-local-variables' is ignored if you run `normal-mode' interactively,
+or from Lisp without specifying the optional argument FIND-FILE;
+in that case, this function acts as if `enable-local-variables' were t.
+
+15254-----fundamental-mode
+Major mode not specialized for anything in particular.
+Other major modes are defined by comparison with this one.(getenv VARIABLE &optional FRAME)
+Get the value of environment variable VARIABLE.
+VARIABLE should be a string.  Value is nil if VARIABLE is undefined in
+the environment.  Otherwise, value is a string.
+
+If optional parameter FRAME is non-nil, then it should be a
+frame.  This function will look up VARIABLE in its `environment'
+parameter.
+
+Otherwise, this function searches `process-environment' for
+VARIABLE.  If it is not found there, then it continues the search
+in the environment list of the selected frame.
+
+15254-----(setenv VARIABLE &optional VALUE SUBSTITUTE-ENV-VARS)
+Set the value of the environment variable named VARIABLE to VALUE.
+VARIABLE should be a string.  VALUE is optional; if not provided or
+nil, the environment variable VARIABLE will be removed.
+
+Interactively, a prefix argument means to unset the variable, and
+otherwise the current value (if any) of the variable appears at
+the front of the history list when you type in the new value.
+This function always replaces environment variables in the new
+value when called interactively.
+
+SUBSTITUTE-ENV-VARS, if non-nil, means to substitute environment
+variables in VALUE with `substitute-env-vars', which see.
+This is normally used only for interactive calls.
+
+The return value is the new value of VARIABLE, or nil if
+it was removed from the environment.
+
+This function works by modifying `process-environment'.
+
+As a special case, setting variable `TZ' calls `set-time-zone-rule' as
+a side-effect.
+
+15254-----(search-forward STRING &optional BOUND NOERROR COUNT)
+Search forward from point for STRING.
+Set point to the end of the occurrence found, and return point.
+An optional second argument bounds the search; it is a buffer position.
+  The match found must not end after that position.  A value of nil
+  means search to the end of the accessible portion of the buffer.
+Optional third argument, if t, means if fail just return nil (no error).
+  If not nil and not t, move to limit of search and return nil.
+Optional fourth argument COUNT, if a positive number, means to search
+  for COUNT successive occurrences.  If COUNT is negative, search
+  backward, instead of forward, for -COUNT occurrences.  A value of
+  nil means the same as 1.
+With COUNT positive, the match found is the COUNTth one (or first,
+  if COUNT is 1 or nil) in the buffer located entirely after the
+  origin of the search; correspondingly with COUNT negative.
+
+Search case-sensitivity is determined by the value of the variable
+`case-fold-search', which see.
+
+See also the functions `match-beginning', `match-end' and `replace-match'.
+
+15254-----(search-backward STRING &optional BOUND NOERROR COUNT)
+Search backward from point for STRING.
+Set point to the beginning of the occurrence found, and return point.
+An optional second argument bounds the search; it is a buffer position.
+  The match found must not begin before that position.  A value of nil
+  means search to the beginning of the accessible portion of the buffer.
+Optional third argument, if t, means if fail just return nil (no error).
+  If not nil and not t, position at limit of search and return nil.
+Optional fourth argument COUNT, if a positive number, means to search
+  for COUNT successive occurrences.  If COUNT is negative, search
+  forward, instead of backward, for -COUNT occurrences.  A value of
+  nil means the same as 1.
+With COUNT positive, the match found is the COUNTth to last one (or
+  last, if COUNT is 1 or nil) in the buffer located entirely before
+  the origin of the search; correspondingly with COUNT negative.
+
+Search case-sensitivity is determined by the value of the variable
+`case-fold-search', which see.
+
+See also the functions `match-beginning', `match-end' and `replace-match'.
+
+15254-----(word-search-forward STRING &optional BOUND NOERROR COUNT)
+Search forward from point for STRING, ignoring differences in punctuation.
+Set point to the end of the occurrence found, and return point.
+An optional second argument bounds the search; it is a buffer position.
+  The match found must not end after that position.  A value of nil
+  means search to the end of the accessible portion of the buffer.
+Optional third argument, if t, means if fail just return nil (no error).
+  If not nil and not t, move to limit of search and return nil.
+Optional fourth argument COUNT, if a positive number, means to search
+  for COUNT successive occurrences.  If COUNT is negative, search
+  backward, instead of forward, for -COUNT occurrences.  A value of
+  nil means the same as 1.
+With COUNT positive, the match found is the COUNTth one (or first,
+  if COUNT is 1 or nil) in the buffer located entirely after the
+  origin of the search; correspondingly with COUNT negative.
+
+Relies on the function `word-search-regexp' to convert a sequence
+of words in STRING to a regexp used to search words without regard
+to punctuation.
+This command does not support character folding, and lax space matching
+has no effect on it.
+
+15254-----(word-search-forward-lax STRING &optional BOUND NOERROR COUNT)
+Search forward from point for STRING, ignoring differences in punctuation.
+Set point to the end of the occurrence found, and return point.
+
+Unlike `word-search-forward', the end of STRING need not match a word
+boundary, unless STRING ends in whitespace.
+
+An optional second argument bounds the search; it is a buffer position.
+  The match found must not end after that position.  A value of nil
+  means search to the end of the accessible portion of the buffer.
+Optional third argument, if t, means if fail just return nil (no error).
+  If not nil and not t, move to limit of search and return nil.
+Optional fourth argument COUNT, if a positive number, means to search
+  for COUNT successive occurrences.  If COUNT is negative, search
+  backward, instead of forward, for -COUNT occurrences.  A value of
+  nil means the same as 1.
+With COUNT positive, the match found is the COUNTth one (or first,
+  if COUNT is 1 or nil) in the buffer located entirely after the
+  origin of the search; correspondingly with COUNT negative.
+
+Relies on the function `word-search-regexp' to convert a sequence
+of words in STRING to a regexp used to search words without regard
+to punctuation.
+This command does not support character folding, and lax space matching
+has no effect on it.
+
+15254-----(word-search-backward STRING &optional BOUND NOERROR COUNT)
+Search backward from point for STRING, ignoring differences in punctuation.
+Set point to the beginning of the occurrence found, and return point.
+An optional second argument bounds the search; it is a buffer position.
+  The match found must not begin before that position.  A value of nil
+  means search to the beginning of the accessible portion of the buffer.
+Optional third argument, if t, means if fail just return nil (no error).
+  If not nil and not t, position at limit of search and return nil.
+Optional fourth argument COUNT, if a positive number, means to search
+  for COUNT successive occurrences.  If COUNT is negative, search
+  forward, instead of backward, for -COUNT occurrences.  A value of
+  nil means the same as 1.
+With COUNT positive, the match found is the COUNTth to last one (or
+  last, if COUNT is 1 or nil) in the buffer located entirely before
+  the origin of the search; correspondingly with COUNT negative.
+
+Relies on the function `word-search-regexp' to convert a sequence
+of words in STRING to a regexp used to search words without regard
+to punctuation.
+This command does not support character folding, and lax space matching
+has no effect on it.
+
+15254-----(word-search-backward-lax STRING &optional BOUND NOERROR COUNT)
+Search backward from point for STRING, ignoring differences in punctuation.
+Set point to the beginning of the occurrence found, and return point.
+
+Unlike `word-search-backward', the end of STRING need not match a word
+boundary, unless STRING ends in whitespace.
+
+An optional second argument bounds the search; it is a buffer position.
+  The match found must not begin before that position.  A value of nil
+  means search to the beginning of the accessible portion of the buffer.
+Optional third argument, if t, means if fail just return nil (no error).
+  If not nil and not t, position at limit of search and return nil.
+Optional fourth argument COUNT, if a positive number, means to search
+  for COUNT successive occurrences.  If COUNT is negative, search
+  forward, instead of backward, for -COUNT occurrences.  A value of
+  nil means the same as 1.
+With COUNT positive, the match found is the COUNTth to last one (or
+  last, if COUNT is 1 or nil) in the buffer located entirely before
+  the origin of the search; correspondingly with COUNT negative.
+
+Relies on the function `word-search-regexp' to convert a sequence
+of words in STRING to a regexp used to search words without regard
+to punctuation.
+This command does not support character folding, and lax space matching
+has no effect on it.
+
+15254-----(base64-encode-region BEG END &optional NO-LINE-BREAK)
+Base64-encode the region between BEG and END.
+Return the length of the encoded text.
+Optional third argument NO-LINE-BREAK means do not break long lines
+into shorter lines.
+
+15254-----(base64-decode-region BEG END)
+Base64-decode the region between BEG and END.
+Return the length of the decoded text.
+If the region can't be decoded, signal an error and don't modify the buffer.
+
+15254-----(compile-defun &optional ARG)
+Compile and evaluate the current top-level form.
+Print the result in the echo area.
+With argument ARG, insert value in current buffer after the form.
+
+15254-----(byte-compile-file FILENAME &optional LOAD)
+Compile a file of Lisp code named FILENAME into a file of byte code.
+The output file's name is generated by passing FILENAME to the
+function `byte-compile-dest-file' (which see).
+With prefix arg (noninteractively: 2nd arg), LOAD the file after compiling.
+The value is non-nil if there were no errors, nil if errors.
+
+15254-----(byte-recompile-directory DIRECTORY &optional ARG FORCE)
+Recompile every `.el' file in DIRECTORY that needs recompilation.
+This happens when a `.elc' file exists but is older than the `.el' file.
+Files in subdirectories of DIRECTORY are processed also.
+
+If the `.elc' file does not exist, normally this function *does not*
+compile the corresponding `.el' file.  However, if the prefix argument
+ARG is 0, that means do compile all those files.  A nonzero
+ARG means ask the user, for each such `.el' file, whether to
+compile it.  A nonzero ARG also means ask about each subdirectory
+before scanning it.
+
+If the third argument FORCE is non-nil, recompile every `.el' file
+that already has a `.elc' file.
+
+15254-----(execute-extended-command PREFIXARG &optional COMMAND-NAME TYPED)
+Read a command name, then read the arguments and call the command.
+To pass a prefix argument to the command you are
+invoking, give a prefix argument to `execute-extended-command'.
+
+15254-----backtrace
+Print a trace of Lisp function calls currently active.
+Output stream used is value of `standard-output'.(make-frame-on-display DISPLAY &optional PARAMETERS)
+Make a frame on display DISPLAY.
+The optional argument PARAMETERS specifies additional frame parameters.
+
+15254-----(find-file FILENAME &optional WILDCARDS)
+Edit file FILENAME.
+Switch to a buffer visiting file FILENAME,
+creating one if none already exists.
+Interactively, the default if you just type RET is the current directory,
+but the visited file name is available through the minibuffer history:
+type \[next-history-element] to pull it into the minibuffer.
+
+The first time \[next-history-element] is used after Emacs prompts for
+the file name, the result is affected by `file-name-at-point-functions',
+which by default try to guess the file name by looking at point in the
+current buffer.  Customize the value of `file-name-at-point-functions'
+or set it to nil, if you want only the visited file name and the
+current directory to be available on first \[next-history-element]
+request.
+
+You can visit files on remote machines by specifying something
+like /ssh:SOME_REMOTE_MACHINE:FILE for the file name.  You can
+also visit local files as a different user by specifying
+/sudo::FILE for the file name.
+See the Info node `(tramp)File name Syntax' in the Tramp Info
+manual, for more about this.
+
+Interactively, or if WILDCARDS is non-nil in a call from Lisp,
+expand wildcards (if any) and visit multiple files.  You can
+suppress wildcard expansion by setting `find-file-wildcards' to nil.
+
+To visit a file without any kind of conversion and without
+automatically choosing a major mode, use \[find-file-literally].
+
+15254-----(find-file-literally FILENAME)
+Visit file FILENAME with no conversion of any kind.
+Format conversion and character code conversion are both disabled,
+and multibyte characters are disabled in the resulting buffer.
+The major mode used is Fundamental mode regardless of the file name,
+and local variable specifications in the file are ignored.
+Automatic uncompression and adding a newline at the end of the
+file due to `require-final-newline' is also disabled.
+
+If Emacs already has a buffer which is visiting the file,
+this command asks you whether to visit it literally instead.
+
+In non-interactive use, the value is the buffer where the file is
+visited literally.  If the file was visited in a buffer before
+this command was invoked, it will reuse the existing buffer,
+regardless of whether it was created literally or not; however,
+the contents of that buffer will be the literal text of the file
+without any conversions.
+
+In a Lisp program, if you want to be sure of accessing a file's
+contents literally, you should create a temporary buffer and then read
+the file contents into it using `insert-file-contents-literally'.
+
+15254-----(find-file-other-window FILENAME &optional WILDCARDS)
+Edit file FILENAME, in another window.
+
+Like \[find-file] (which see), but creates a new window or reuses
+an existing one.  See the function `display-buffer'.
+
+Interactively, the default if you just type RET is the current directory,
+but the visited file name is available through the minibuffer history:
+type \[next-history-element] to pull it into the minibuffer.
+
+The first time \[next-history-element] is used after Emacs prompts for
+the file name, the result is affected by `file-name-at-point-functions',
+which by default try to guess the file name by looking at point in the
+current buffer.  Customize the value of `file-name-at-point-functions'
+or set it to nil, if you want only the visited file name and the
+current directory to be available on first \[next-history-element]
+request.
+
+Interactively, or if WILDCARDS is non-nil in a call from Lisp,
+expand wildcards (if any) and visit multiple files.
+
+15254-----(find-file-read-only FILENAME &optional WILDCARDS)
+Edit file FILENAME but don't allow changes.
+Like \[find-file], but marks buffer as read-only.
+Use \[read-only-mode] to permit editing.
+
+15254-----format-write-file
+Write current buffer into FILENAME, using a format based on FORMAT.
+Constructs the actual format starting from FORMAT, then appending
+any elements from the value of `buffer-file-format' with a non-nil
+`preserve' flag (see the documentation of `format-alist'), if they
+are not already present in FORMAT.  It then updates `buffer-file-format'
+with this format, making it the default for future saves.
+
+If the buffer is already visiting a file, you can specify a
+directory name as FILENAME, to write a file of the same old name
+in that directory.
+
+If optional third arg CONFIRM is non-nil, asks for confirmation before
+overwriting an existing file.  Interactively, requires confirmation
+unless you supply a prefix argument.format-find-file
+Find the file FILENAME using data format FORMAT.
+If FORMAT is nil then do not do any format conversion.format-insert-file
+Insert the contents of file FILENAME using data format FORMAT.
+If FORMAT is nil then do not do any format conversion.
+The optional third and fourth arguments BEG and END specify
+the part (in bytes) of the file to read.
+
+The return value is like the value of `insert-file-contents':
+a list (ABSOLUTE-FILE-NAME SIZE).(enable-command COMMAND)
+Allow COMMAND to be executed without special confirmation from now on.
+COMMAND must be a symbol.
+This command alters the user's .emacs file so that this will apply
+to future sessions.
+
+15254-----(disable-command COMMAND)
+Require special confirmation to execute COMMAND from now on.
+COMMAND must be a symbol.
+This command alters your init file so that this choice applies to
+future sessions.
+
+15254-----(switch-to-prev-buffer &optional WINDOW BURY-OR-KILL)
+In WINDOW switch to previous buffer.
+WINDOW must be a live window and defaults to the selected one.
+Return the buffer switched to, nil if no suitable buffer could be
+found.
+
+Optional argument BURY-OR-KILL non-nil means the buffer currently
+shown in WINDOW is about to be buried or killed and consequently
+shall not be switched to in future invocations of this command.
+
+As a special case, if BURY-OR-KILL equals `append', this means to
+move the buffer to the end of WINDOW's previous buffers list so a
+future invocation of `switch-to-prev-buffer' less likely switches
+to it.
+
+15254-----(switch-to-next-buffer &optional WINDOW)
+In WINDOW switch to next buffer.
+WINDOW must be a live window and defaults to the selected one.
+Return the buffer switched to, nil if no suitable buffer could be
+found.
+
+15254-----describe-buffer-case-table
+Describe the case table of the current buffer.(recursive-edit)
+Invoke the editor command loop recursively.
+To get out of the recursive edit, a command can throw to `exit' -- for
+instance (throw \='exit nil).
+If you throw a value other than t, `recursive-edit' returns normally
+to the function that called it.  Throwing a t value causes
+`recursive-edit' to quit, so that control returns to the command loop
+one level up.
+
+This function is called by the editor initialization to begin editing.
+
+15254-----(exit-recursive-edit)
+Exit from the innermost recursive edit or minibuffer.
+
+15254-----(abort-recursive-edit)
+Abort the command that requested this recursive edit or minibuffer input.
+
+15254-----(top-level)
+Exit all recursive editing levels.
+This also exits all active minibuffers.
+
+15254-----(replace-buffer-in-windows &optional BUFFER-OR-NAME)
+Replace BUFFER-OR-NAME with some other buffer in all windows showing it.
+BUFFER-OR-NAME may be a buffer or the name of an existing buffer
+and defaults to the current buffer.
+
+When a window showing BUFFER-OR-NAME is dedicated, that window is
+deleted.  If that window is the only window on its frame, the
+frame is deleted too when there are other frames left.  If there
+are no other frames left, some other buffer is displayed in that
+window.
+
+This function removes the buffer denoted by BUFFER-OR-NAME from
+all window-local buffer lists.
+
+15254-----(goto-char POSITION)
+Set point to POSITION, a number or marker.
+Beginning of buffer is position (point-min), end is (point-max).
+
+The return value is POSITION.
+
+15254-----(forward-char &optional N)
+Move point N characters forward (backward if N is negative).
+On reaching end or beginning of buffer, stop and signal error.
+Interactively, N is the numeric prefix argument.
+If N is omitted or nil, move point 1 character forward.
+
+Depending on the bidirectional context, the movement may be to the
+right or to the left on the screen.  This is in contrast with
+\[right-char], which see.
+
+15254-----(backward-char &optional N)
+Move point N characters backward (forward if N is negative).
+On attempt to pass beginning or end of buffer, stop and signal error.
+Interactively, N is the numeric prefix argument.
+If N is omitted or nil, move point 1 character backward.
+
+Depending on the bidirectional context, the movement may be to the
+right or to the left on the screen.  This is in contrast with
+\[left-char], which see.
+
+15254-----(set-face-foreground FACE COLOR &optional FRAME)
+Change the foreground color of face FACE to COLOR (a string).
+FRAME nil or not specified means change face on all frames.
+COLOR can be a system-defined color name (see `list-colors-display')
+or a hex spec of the form #RRGGBB.
+When called interactively, prompts for the face and color.
+
+15254-----(set-face-background FACE COLOR &optional FRAME)
+Change the background color of face FACE to COLOR (a string).
+FRAME nil or not specified means change face on all frames.
+COLOR can be a system-defined color name (see `list-colors-display')
+or a hex spec of the form #RRGGBB.
+When called interactively, prompts for the face and color.
+
+15254-----(set-face-stipple FACE STIPPLE &optional FRAME)
+Change the stipple pixmap of face FACE to STIPPLE.
+FRAME nil or not specified means change face on all frames.
+STIPPLE should be a string, the name of a file of pixmap data.
+The directories listed in the `x-bitmap-file-path' variable are searched.
+
+Alternatively, STIPPLE may be a list of the form (WIDTH HEIGHT DATA)
+where WIDTH and HEIGHT are the size in pixels,
+and DATA is a string, containing the raw bits of the bitmap.
+
+15254-----(set-face-font FACE FONT &optional FRAME)
+Change font-related attributes of FACE to those of FONT (a string).
+FRAME nil or not specified means change face on all frames.
+This sets the attributes `:family', `:foundry', `:width',
+`:height', `:weight', and `:slant'.  When called interactively,
+prompt for the face and font.
+
+15254-----(invert-face FACE &optional FRAME)
+Swap the foreground and background colors of FACE.
+If FRAME is omitted or nil, it means change face on all frames.
+If FACE specifies neither foreground nor background color,
+set its foreground and background to the background and foreground
+of the default face.  Value is FACE.
+
+15254-----translate-region
+From START to END, translate characters according to TABLE.
+TABLE is a string or a char-table.
+If TABLE is a string, the Nth character in it is the mapping
+for the character with code N.
+If TABLE is a char-table, the element for character N is the mapping
+for the character with code N.
+It returns the number of characters changed.(run-with-idle-timer SECS REPEAT FUNCTION &rest ARGS)
+Perform an action the next time Emacs is idle for SECS seconds.
+The action is to call FUNCTION with arguments ARGS.
+SECS may be an integer, a floating point number, or the internal
+time format returned by, e.g., `current-idle-time'.
+If Emacs is currently idle, and has been idle for N seconds (N < SECS),
+then it will call FUNCTION in SECS - N seconds from now.  Using
+SECS <= N is not recommended if this function is invoked from an idle
+timer, because FUNCTION will then be called immediately.
+
+If REPEAT is non-nil, do the action each time Emacs has been idle for
+exactly SECS seconds (that is, only once for each time Emacs becomes idle).
+
+This function returns a timer object which you can use in `cancel-timer'.
+
+15254-----(delete-window &optional WINDOW)
+Delete WINDOW.
+WINDOW must be a valid window and defaults to the selected one.
+Return nil.
+
+If the variable `ignore-window-parameters' is non-nil or the
+`delete-window' parameter of WINDOW equals t, do not process any
+parameters of WINDOW.  Otherwise, if the `delete-window'
+parameter of WINDOW specifies a function, call that function with
+WINDOW as its sole argument and return the value returned by that
+function.
+
+Otherwise, if WINDOW is part of an atomic window, call
+`delete-window' with the root of the atomic window as its
+argument.  Signal an error if WINDOW is either the only window on
+its frame, the last non-side window, or part of an atomic window
+that is its frame's root window.
+
+15254-----(delete-other-windows &optional WINDOW)
+Make WINDOW fill its frame.
+WINDOW must be a valid window and defaults to the selected one.
+Return nil.
+
+If the variable `ignore-window-parameters' is non-nil or the
+`delete-other-windows' parameter of WINDOW equals t, do not pay
+attention to any other parameters of WINDOW.  Otherwise, if the
+`delete-other-windows' parameter of WINDOW specifies a function,
+call that function with WINDOW as its sole argument and return
+the value returned by that function.
+
+Else, if WINDOW is part of an atomic window, call this function
+with the root of the atomic window as its argument.  Signal an
+error if that root window is the root window of WINDOW's frame.
+Also signal an error if WINDOW is a side window.  Do not delete
+any window whose `no-delete-other-windows' parameter is non-nil.
+
+15254-----(delete-windows-on &optional BUFFER-OR-NAME FRAME)
+Delete all windows showing BUFFER-OR-NAME.
+BUFFER-OR-NAME may be a buffer or the name of an existing buffer
+and defaults to the current buffer.
+
+The following non-nil values of the optional argument FRAME
+have special meanings:
+
+- t means consider all windows on the selected frame only.
+
+- `visible' means consider all windows on all visible frames on
+  the current terminal.
+
+- 0 (the number zero) means consider all windows on all visible
+  and iconified frames on the current terminal.
+
+- A frame means consider all windows on that frame only.
+
+Any other value of FRAME means consider all windows on all
+frames.
+
+When a window showing BUFFER-OR-NAME is dedicated and the only
+window of its frame, that frame is deleted when there are other
+frames left.
+
+15254-----describe-mode
+Display documentation of current major mode and minor modes.
+A brief summary of the minor modes comes first, followed by the
+major mode description.  This is followed by detailed
+descriptions of the minor modes, each on a separate page.
+
+For this to work correctly for a minor mode, the mode's indicator
+variable (listed in `minor-mode-alist') must also be a function
+whose documentation describes the minor mode.
+
+If called from Lisp with a non-nil BUFFER argument, display
+documentation for the major and minor modes of that buffer.(select-frame FRAME &optional NORECORD)
+Select FRAME.
+Subsequent editing commands apply to its selected window.
+Optional argument NORECORD means to neither change the order of
+recently selected windows nor the buffer list.
+
+The selection of FRAME lasts until the next time the user does
+something to select a different frame, or until the next time
+this function is called.  If you are using a window system, the
+previously selected frame may be restored as the selected frame
+when returning to the command loop, because it still may have
+the window system's input focus.  On a text terminal, the next
+redisplay will display FRAME.
+
+This function returns FRAME, or nil if FRAME has been deleted.
+
+15254-----(handle-switch-frame EVENT)
+Handle a switch-frame event EVENT.
+Switch-frame events are usually bound to this function.
+A switch-frame event tells Emacs that the window manager has requested
+that the user's events be directed to the frame mentioned in the event.
+This function selects the selected window of the frame of EVENT.
+
+If EVENT is frame object, handle it as if it were a switch-frame event
+to that frame.
+
+15254-----(redraw-display)
+Clear and redisplay all visible frames.
+
+15254-----(apropos PATTERN &optional DO-ALL)
+Show all meaningful Lisp symbols whose names match PATTERN.
+Symbols are shown if they are defined as functions, variables, or
+faces, or if they have nonempty property lists.
+
+PATTERN can be a word, a list of words (separated by spaces),
+or a regexp (using some regexp special characters).  If it is a word,
+search for matches for that word as a substring.  If it is a list of words,
+search for matches for any two (or more) of those words.
+
+With \[universal-argument] prefix, or if `apropos-do-all' is non-nil,
+consider all symbols (if they match PATTERN).
+
+Returns list of symbols and documentation found.
+
+15254-----describe-prefix-bindings
+Describe the bindings of the prefix used to reach this command.
+The prefix described consists of all but the last event
+of the key sequence that ran this command.(Helper-describe-bindings)
+Describe local key bindings of current mode.
+
+15254-----(Helper-help)
+Provide help for current mode.
+
+15254-----(revert-buffer &optional IGNORE-AUTO NOCONFIRM PRESERVE-MODES)
+Replace current buffer text with the text of the visited file on disk.
+This undoes all changes since the file was visited or saved.
+With a prefix argument, offer to revert from latest auto-save file, if
+that is more recent than the visited file.
+
+This command also implements an interface for special buffers
+that contain text which doesn't come from a file, but reflects
+some other data instead (e.g. Dired buffers, `buffer-list'
+buffers).  This is done via the variable `revert-buffer-function'.
+In these cases, it should reconstruct the buffer contents from the
+appropriate data.
+
+When called from Lisp, the first argument is IGNORE-AUTO; only offer
+to revert from the auto-save file when this is nil.  Note that the
+sense of this argument is the reverse of the prefix argument, for the
+sake of backward compatibility.  IGNORE-AUTO is optional, defaulting
+to nil.
+
+Optional second argument NOCONFIRM means don't ask for confirmation
+at all.  (The variable `revert-without-query' offers another way to
+revert buffers without querying for confirmation.)
+
+Optional third argument PRESERVE-MODES non-nil means don't alter
+the files modes.  Normally we reinitialize them using `normal-mode'.
+
+This function binds `revert-buffer-in-progress-p' non-nil while it operates.
+
+This function calls the function that `revert-buffer-function' specifies
+to do the work, with arguments IGNORE-AUTO and NOCONFIRM.
+The default function runs the hooks `before-revert-hook' and
+`after-revert-hook'.
+
+15254-----(narrow-to-region START END)
+Restrict editing in this buffer to the current region.
+The rest of the text becomes temporarily invisible and untouchable
+but is not deleted; if you save the buffer in a file, the invisible
+text is included in the file.  \[widen] makes all visible again.
+See also `save-restriction'.
+
+When calling from a program, pass two arguments; positions (integers
+or markers) bounding the text that should remain visible.
+
+15254-----narrow-to-page
+Make text outside current page invisible.
+A numeric arg specifies to move forward or backward by that many pages,
+thus showing a page other than the one point was originally in.(widen)
+Remove restrictions (narrowing) from current buffer.
+This allows the buffer's full text to be seen and edited.
+
+15254-----(disassemble OBJECT &optional BUFFER INDENT INTERACTIVE-P)
+Print disassembled code for OBJECT in (optional) BUFFER.
+OBJECT can be a symbol defined as a function, or a function itself
+(a lambda expression or a compiled-function object).
+If OBJECT is not already compiled, we compile it, but do not
+redefine OBJECT if it is a symbol.
+
+15254-----(encode-coding-region START END CODING-SYSTEM &optional DESTINATION)
+Encode the current region by specified coding system.
+When called from a program, takes four arguments:
+        START, END, CODING-SYSTEM and DESTINATION.
+START and END are buffer positions.
+
+Optional 4th argument DESTINATION specifies where the encoded text goes.
+If nil, the region between START and END is replaced by the encoded text.
+If buffer, the encoded text is inserted in that buffer after point (point
+does not move).
+In those cases, the length of the encoded text is returned.
+If DESTINATION is t, the encoded text is returned.
+
+This function sets `last-coding-system-used' to the precise coding system
+used (which may be different from CODING-SYSTEM if CODING-SYSTEM is
+not fully specified.)
+
+15254-----(decode-coding-region START END CODING-SYSTEM &optional DESTINATION)
+Decode the current region from the specified coding system.
+When called from a program, takes four arguments:
+	START, END, CODING-SYSTEM, and DESTINATION.
+START and END are buffer positions.
+
+Optional 4th arguments DESTINATION specifies where the decoded text goes.
+If nil, the region between START and END is replaced by the decoded text.
+If buffer, the decoded text is inserted in that buffer after point (point
+does not move).
+In those cases, the length of the decoded text is returned.
+If DESTINATION is t, the decoded text is returned.
+
+This function sets `last-coding-system-used' to the precise coding system
+used (which may be different from CODING-SYSTEM if CODING-SYSTEM is
+not fully specified.)
+
+15254-----(imenu-add-to-menubar NAME)
+Add an `imenu' entry to the menu bar for the current buffer.
+NAME is a string used to name the menu bar item.
+See the command `imenu' for more information.
+
+15254-----set-keyboard-coding-system
+Set coding system for keyboard input on TERMINAL to CODING-SYSTEM.
+
+For a list of possible values of CODING-SYSTEM, use \[list-coding-systems].
+The default is determined by the selected language environment
+or by the previous use of this command.
+
+If CODING-SYSTEM is nil or the coding-type of CODING-SYSTEM is
+`raw-text', the decoding of keyboard input is disabled.
+
+TERMINAL may be a terminal object, a frame, or nil for the
+selected frame's terminal.  The setting has no effect on
+graphical terminals.set-terminal-coding-system
+Set coding system of terminal output to CODING-SYSTEM.
+All text output to TERMINAL will be encoded
+with the specified coding system.
+
+For a list of possible values of CODING-SYSTEM, use \[list-coding-systems].
+The default is determined by the selected language environment
+or by the previous use of this command.
+
+TERMINAL may be a terminal object, a frame, or nil for the
+selected frame's terminal.  The setting has no effect on
+graphical terminals.(move-to-window-line ARG)
+Position point relative to window.
+ARG nil means position point at center of window.
+Else, ARG specifies vertical position within the window;
+zero means top of window, negative means relative to bottom
+of window, -1 meaning the last fully visible display line
+of the window.
+
+Value is the screen line of the window point moved to, counting
+from the top of the window.
+
+15254-----(display-buffer BUFFER-OR-NAME &optional ACTION FRAME)
+Display BUFFER-OR-NAME in some window, without selecting it.
+BUFFER-OR-NAME must be a buffer or the name of an existing
+buffer.  Return the window chosen for displaying BUFFER-OR-NAME,
+or nil if no such window is found.
+
+Optional argument ACTION, if non-nil, should specify a display
+action.  Its form is described below.
+
+Optional argument FRAME, if non-nil, acts like an additional
+ALIST entry (reusable-frames . FRAME) to the action list of ACTION,
+specifying the frame(s) to search for a window that is already
+displaying the buffer.  See `display-buffer-reuse-window'.
+
+If ACTION is non-nil, it should have the form (FUNCTION . ALIST),
+where FUNCTION is either a function or a list of functions, and
+ALIST is an arbitrary association list (alist).
+
+Each such FUNCTION should accept two arguments: the buffer to
+display and an alist.  Based on those arguments, it should
+display the buffer and return the window.  If the caller is
+prepared to handle the case of not displaying the buffer
+and returning nil from `display-buffer' it should pass
+(allow-no-window . t) as an element of the ALIST.
+
+The `display-buffer' function builds a function list and an alist
+by combining the functions and alists specified in
+`display-buffer-overriding-action', `display-buffer-alist', the
+ACTION argument, `display-buffer-base-action', and
+`display-buffer-fallback-action' (in order).  Then it calls each
+function in the combined function list in turn, passing the
+buffer as the first argument and the combined alist as the second
+argument, until one of the functions returns non-nil.
+
+If ACTION is nil, the function list and the alist are built using
+only the other variables mentioned above.
+
+Available action functions include:
+ `display-buffer-same-window'
+ `display-buffer-reuse-window'
+ `display-buffer-pop-up-frame'
+ `display-buffer-in-child-frame'
+ `display-buffer-pop-up-window'
+ `display-buffer-in-previous-window'
+ `display-buffer-use-some-window'
+ `display-buffer-use-some-frame'
+
+Recognized alist entries include:
+
+ `inhibit-same-window' -- A non-nil value prevents the same
+                          window from being used for display.
+
+ `inhibit-switch-frame' -- A non-nil value prevents any other
+                           frame from being raised or selected,
+                           even if the window is displayed there.
+
+ `reusable-frames' -- Value specifies frame(s) to search for a
+                      window that already displays the buffer.
+                      See `display-buffer-reuse-window'.
+
+ `pop-up-frame-parameters' -- Value specifies an alist of frame
+                              parameters to give a new frame, if
+                              one is created.
+
+ `window-height' -- Value specifies either an integer (the number
+    of lines of a new window), a floating point number (the
+    fraction of a new window with respect to the height of the
+    frame's root window) or a function to be called with one
+    argument - a new window.  The function is supposed to adjust
+    the height of the window; its return value is ignored.
+    Suitable functions are `shrink-window-if-larger-than-buffer'
+    and `fit-window-to-buffer'.
+
+ `window-width' -- Value specifies either an integer (the number
+    of columns of a new window), a floating point number (the
+    fraction of a new window with respect to the width of the
+    frame's root window) or a function to be called with one
+    argument - a new window.  The function is supposed to adjust
+    the width of the window; its return value is ignored.
+
+ `allow-no-window' -- A non-nil value indicates readiness for the case
+    of not displaying the buffer and FUNCTION can safely return
+    a non-window value to suppress displaying.
+
+ `preserve-size' -- Value should be either (t . nil) to
+    preserve the width of the window, (nil . t) to preserve its
+    height or (t . t) to preserve both.
+
+ `window-parameters' -- Value specifies an alist of window
+                        parameters to give the chosen window.
+
+The ACTION argument to `display-buffer' can also have a non-nil
+and non-list value.  This means to display the buffer in a window
+other than the selected one, even if it is already displayed in
+the selected window.  If called interactively with a prefix
+argument, ACTION is t.
+
+15254-----keyboard-quit
+Signal a `quit' condition.
+During execution of Lisp code, this character causes a quit directly.
+At top-level, as an editor command, this simply beeps.(open-dribble-file FILE)
+Start writing all keyboard characters to a dribble file called FILE.
+If FILE is nil, close any open dribble file.
+The file will be closed when Emacs exits.
+
+Be aware that this records ALL characters you type!
+This may include sensitive information such as passwords.
+
+15254-----(make-local-variable VARIABLE)
+Make VARIABLE have a separate value in the current buffer.
+Other buffers will continue to share a common default value.
+(The buffer-local value of VARIABLE starts out as the same value
+VARIABLE previously had.  If VARIABLE was void, it remains void.)
+Return VARIABLE.
+
+If the variable is already arranged to become local when set,
+this function causes a local value to exist for this buffer,
+just as setting the variable would do.
+
+This function returns VARIABLE, and therefore
+  (set (make-local-variable \='VARIABLE) VALUE-EXP)
+works.
+
+See also `make-variable-buffer-local'.
+
+Do not use `make-local-variable' to make a hook variable buffer-local.
+Instead, use `add-hook' and specify t for the LOCAL argument.
+
+15254-----(make-variable-buffer-local VARIABLE)
+Make VARIABLE become buffer-local whenever it is set.
+At any time, the value for the current buffer is in effect,
+unless the variable has never been set in this buffer,
+in which case the default value is in effect.
+Note that binding the variable with `let', or setting it while
+a `let'-style binding made in this buffer is in effect,
+does not make the variable buffer-local.  Return VARIABLE.
+
+This globally affects all uses of this variable, so it belongs together with
+the variable declaration, rather than with its uses (if you just want to make
+a variable local to the current buffer for one particular use, use
+`make-local-variable').  Buffer-local bindings are normally cleared
+while setting up a new major mode, unless they have a `permanent-local'
+property.
+
+The function `default-value' gets the default value and `set-default' sets it.
+
+15254-----(kill-local-variable VARIABLE)
+Make VARIABLE no longer have a separate value in the current buffer.
+From now on the default value will apply in this buffer.  Return VARIABLE.
+
+15254-----(rename-buffer NEWNAME &optional UNIQUE)
+:around advice: ‘uniquify--rename-buffer-advice’
+
+Change current buffer's name to NEWNAME (a string).
+If second arg UNIQUE is nil or omitted, it is an error if a
+buffer named NEWNAME already exists.
+If UNIQUE is non-nil, come up with a new name using
+`generate-new-buffer-name'.
+Interactively, you can set UNIQUE with a prefix argument.
+We return the name we actually gave the buffer.
+This does not change the name of the visited file (if any).
+
+15254-----describe-bindings
+Display a buffer showing a list of all defined keys, and their definitions.
+The keys are displayed in order of precedence.
+
+The optional argument PREFIX, if non-nil, should be a key sequence;
+then we display only bindings that start with that prefix.
+The optional argument BUFFER specifies which buffer's bindings
+to display (default, the current buffer).  BUFFER can be a buffer
+or a buffer name.(move-to-column COLUMN &optional FORCE)
+Move point to column COLUMN in the current line.
+Interactively, COLUMN is the value of prefix numeric argument.
+The column of a character is calculated by adding together the widths
+as displayed of the previous characters in the line.
+This function ignores line-continuation;
+there is no upper limit on the column number a character can have
+and horizontal scrolling has no effect.
+
+If specified column is within a character, point goes after that character.
+If it's past end of line, point goes to end of line.
+
+Optional second argument FORCE non-nil means if COLUMN is in the
+middle of a tab character, change it to spaces.
+In addition, if FORCE is t, and the line is too short to reach
+COLUMN, add spaces/tabs to get there.
+
+The return value is the current column.
+
+15254-----(eval-region START END &optional PRINTFLAG READ-FUNCTION)
+Execute the region as Lisp code.
+When called from programs, expects two arguments,
+giving starting and ending indices in the current buffer
+of the text to be executed.
+Programs can pass third argument PRINTFLAG which controls output:
+ a value of nil means discard it; anything else is stream for printing it.
+ See Info node `(elisp)Output Streams' for details on streams.
+Also the fourth argument READ-FUNCTION, if non-nil, is used
+instead of `read' to read each expression.  It gets one argument
+which is the input stream for reading characters.
+
+This function does not move point.
+
+15254-----(eval-buffer &optional BUFFER PRINTFLAG FILENAME UNIBYTE DO-ALLOW-PRINT)
+Execute the accessible portion of current buffer as Lisp code.
+You can use \[narrow-to-region] to limit the part of buffer to be evaluated.
+When called from a Lisp program (i.e., not interactively), this
+function accepts up to five optional arguments:
+BUFFER is the buffer to evaluate (nil means use current buffer),
+ or a name of a buffer (a string).
+PRINTFLAG controls printing of output by any output functions in the
+ evaluated code, such as `print', `princ', and `prin1':
+  a value of nil means discard it; anything else is the stream to print to.
+  See Info node `(elisp)Output Streams' for details on streams.
+FILENAME specifies the file name to use for `load-history'.
+UNIBYTE, if non-nil, specifies `load-convert-to-unibyte' for this
+ invocation.
+DO-ALLOW-PRINT, if non-nil, specifies that output functions in the
+ evaluated code should work normally even if PRINTFLAG is nil, in
+ which case the output is displayed in the echo area.
+
+This function preserves the position of point.
+
+15254-----(package-initialize &optional NO-ACTIVATE)
+Load Emacs Lisp packages, and activate them.
+The variable `package-load-list' controls which packages to load.
+If optional arg NO-ACTIVATE is non-nil, don't activate packages.
+If `user-init-file' does not mention `(package-initialize)', add
+it to the file.
+If called as part of loading `user-init-file', set
+`package-enable-at-startup' to nil, to prevent accidentally
+loading packages twice.
+It is not necessary to adjust `load-path' or `require' the
+individual packages after calling `package-initialize' -- this is
+taken care of by `package-initialize'.
+
+15254-----(insert-buffer BUFFER)
+Insert after point the contents of BUFFER.
+Puts mark after the inserted text.
+BUFFER may be a buffer or a buffer name.
+
+15254-----(self-insert-command N)
+Insert the character you type.
+Whichever character you type to run this command is inserted.
+The numeric prefix argument N says how many times to repeat the insertion.
+Before insertion, `expand-abbrev' is executed if the inserted character does
+not have word syntax and the previous character in the buffer does.
+After insertion, `internal-auto-fill' is called if
+`auto-fill-function' is non-nil and if the `auto-fill-chars' table has
+a non-nil value for the inserted character.  At the end, it runs
+`post-self-insert-hook'.
+
+15254-----(newline &optional ARG INTERACTIVE)
+Insert a newline, and move to left margin of the new line if it's blank.
+If option `use-hard-newlines' is non-nil, the newline is marked with the
+text-property `hard'.
+With ARG, insert that many newlines.
+
+If `electric-indent-mode' is enabled, this indents the final new line
+that it adds, and reindents the preceding line.  To just insert
+a newline, use \[electric-indent-just-newline].
+
+Calls `auto-fill-function' if the current column number is greater
+than the value of `fill-column' and ARG is nil.
+A non-nil INTERACTIVE argument means to run the `post-self-insert-hook'.
+
+15254-----(list-processes &optional QUERY-ONLY BUFFER)
+Display a list of all processes that are Emacs sub-processes.
+If optional argument QUERY-ONLY is non-nil, only processes with
+the query-on-exit flag set are listed.
+Any process listed as exited or signaled is actually eliminated
+after the listing is made.
+Optional argument BUFFER specifies a buffer to use, instead of
+"*Process List*".
+The return value is always nil.
+
+This function lists only processes that were launched by Emacs.  To
+see other processes running on the system, use `list-system-processes'.
+
+15254-----(quit-window &optional KILL WINDOW)
+Quit WINDOW and bury its buffer.
+WINDOW must be a live window and defaults to the selected one.
+With prefix argument KILL non-nil, kill the buffer instead of
+burying it.
+
+According to information stored in WINDOW's `quit-restore' window
+parameter either (1) delete WINDOW and its frame, (2) delete
+WINDOW, (3) restore the buffer previously displayed in WINDOW,
+or (4) make WINDOW display some other buffer than the present
+one.  If non-nil, reset `quit-restore' parameter to nil.
+
+15254-----(sort-regexp-fields REVERSE RECORD-REGEXP KEY-REGEXP BEG END)
+Sort the text in the region lexicographically.
+If called interactively, prompt for two regular expressions,
+RECORD-REGEXP and KEY-REGEXP.
+
+RECORD-REGEXP specifies the textual units to be sorted.
+  For example, to sort lines, RECORD-REGEXP would be "^.*$".
+
+KEY-REGEXP specifies the part of each record (i.e. each match for
+  RECORD-REGEXP) to be used for sorting.
+  If it is "\\digit", use the digit'th "\\(...\\)"
+  match field specified by RECORD-REGEXP.
+  If it is "\\&", use the whole record.
+  Otherwise, KEY-REGEXP should be a regular expression with which
+  to search within the record.  If a match for KEY-REGEXP is not
+  found within a record, that record is ignored.
+
+With a negative prefix arg, sort in reverse order.
+
+The variable `sort-fold-case' determines whether alphabetic case affects
+the sort order.
+
+For example: to sort lines in the region by the first word on each line
+ starting with the letter "f",
+ RECORD-REGEXP would be "^.*$" and KEY would be "\\=\<f\\w*\\>"
+
+15254-----(sort-lines REVERSE BEG END)
+Sort lines in region alphabetically; argument means descending order.
+Called from a program, there are three arguments:
+REVERSE (non-nil means reverse order), BEG and END (region to sort).
+The variable `sort-fold-case' determines whether alphabetic case affects
+the sort order.
+
+15254-----(sort-paragraphs REVERSE BEG END)
+Sort paragraphs in region alphabetically; argument means descending order.
+Called from a program, there are three arguments:
+REVERSE (non-nil means reverse order), BEG and END (region to sort).
+The variable `sort-fold-case' determines whether alphabetic case affects
+the sort order.
+
+15254-----(sort-pages REVERSE BEG END)
+Sort pages in region alphabetically; argument means descending order.
+Called from a program, there are three arguments:
+REVERSE (non-nil means reverse order), BEG and END (region to sort).
+The variable `sort-fold-case' determines whether alphabetic case affects
+the sort order.
+
+15254-----(sort-fields FIELD BEG END)
+Sort lines in region lexicographically by the ARGth field of each line.
+Fields are separated by whitespace and numbered from 1 up.
+With a negative arg, sorts by the ARGth field counted from the right.
+Called from a program, there are three arguments:
+FIELD, BEG and END.  BEG and END specify region to sort.
+The variable `sort-fold-case' determines whether alphabetic case affects
+the sort order.
+
+15254-----(sort-numeric-fields FIELD BEG END)
+Sort lines in region numerically by the ARGth field of each line.
+Fields are separated by whitespace and numbered from 1 up.
+Specified field must contain a number in each line of the region,
+which may begin with "0x" or "0" for hexadecimal and octal values.
+Otherwise, the number is interpreted according to sort-numeric-base.
+With a negative arg, sorts by the ARGth field counted from the right.
+Called from a program, there are three arguments:
+FIELD, BEG and END.  BEG and END specify region to sort.
+
+15254-----(sort-columns REVERSE &optional BEG END)
+Sort lines in region alphabetically by a certain range of columns.
+For the purpose of this command, the region BEG...END includes
+the entire line that point is in and the entire line the mark is in.
+The column positions of point and mark bound the range of columns to sort on.
+A prefix argument means sort into REVERSE order.
+The variable `sort-fold-case' determines whether alphabetic case affects
+the sort order.
+
+Note that `sort-columns' rejects text that contains tabs,
+because tabs could be split across the specified columns
+and it doesn't know how to handle that.  Also, when possible,
+it uses the `sort' utility program, which doesn't understand tabs.
+Use \[untabify] to convert tabs to spaces before sorting.
+
+15254-----(set-left-margin FROM TO WIDTH)
+Set the left margin of the region to WIDTH.
+If `auto-fill-mode' is active, re-fill the region to fit the new margin.
+
+Interactively, WIDTH is the prefix argument, if specified.
+Without prefix argument, the command prompts for WIDTH.
+
+15254-----(set-right-margin FROM TO WIDTH)
+Set the right margin of the region to WIDTH.
+If `auto-fill-mode' is active, re-fill the region to fit the new margin.
+
+Interactively, WIDTH is the prefix argument, if specified.
+Without prefix argument, the command prompts for WIDTH.
+
+15254-----(move-to-left-margin &optional N FORCE)
+Move to the left margin of the current line.
+With optional argument, move forward N-1 lines first.
+The column moved to is the one given by the `current-left-margin' function.
+If the line's indentation appears to be wrong, and this command is called
+interactively or with optional argument FORCE, it will be fixed.
+
+15254-----(add-name-to-file FILE NEWNAME &optional OK-IF-ALREADY-EXISTS)
+Give FILE additional name NEWNAME.  Both args must be strings.
+If NEWNAME is a directory name, give FILE a like-named new name under
+NEWNAME.
+
+Signal a `file-already-exists' error if a file NEWNAME already exists
+unless optional third argument OK-IF-ALREADY-EXISTS is non-nil.
+An integer third arg means request confirmation if NEWNAME already exists.
+This is what happens in interactive use with M-x.
+
+15254-----(rename-file FILE NEWNAME &optional OK-IF-ALREADY-EXISTS)
+Rename FILE as NEWNAME.  Both args must be strings.
+If file has names other than FILE, it continues to have those names.
+If NEWNAME is a directory name, rename FILE to a like-named file under
+NEWNAME.  For NEWNAME to be recognized as a directory name, it should
+end in a slash.
+
+Signal a `file-already-exists' error if a file NEWNAME already exists
+unless optional third argument OK-IF-ALREADY-EXISTS is non-nil.
+An integer third arg means request confirmation if NEWNAME already exists.
+This is what happens in interactive use with M-x.
+
+15254-----(copy-file FILE NEWNAME &optional OK-IF-ALREADY-EXISTS KEEP-TIME PRESERVE-UID-GID PRESERVE-PERMISSIONS)
+Copy FILE to NEWNAME.  Both args must be strings.
+If NEWNAME is a directory name, copy FILE to a like-named file under
+NEWNAME.  For NEWNAME to be recognized as a directory name, it should
+end in a slash.
+
+This function always sets the file modes of the output file to match
+the input file.
+
+The optional third argument OK-IF-ALREADY-EXISTS specifies what to do
+if file NEWNAME already exists.  If OK-IF-ALREADY-EXISTS is nil,
+signal a `file-already-exists' error without overwriting.  If
+OK-IF-ALREADY-EXISTS is an integer, request confirmation from the user
+about overwriting; this is what happens in interactive use with M-x.
+Any other value for OK-IF-ALREADY-EXISTS means to overwrite the
+existing file.
+
+Fourth arg KEEP-TIME non-nil means give the output file the same
+last-modified time as the old one.  (This works on only some systems.)
+
+A prefix arg makes KEEP-TIME non-nil.
+
+If PRESERVE-UID-GID is non-nil, try to transfer the uid and gid of
+FILE to NEWNAME.
+
+If PRESERVE-PERMISSIONS is non-nil, copy permissions of FILE to NEWNAME;
+this includes the file modes, along with ACL entries and SELinux
+context if present.  Otherwise, if NEWNAME is created its file
+permission bits are those of FILE, masked by the default file
+permissions.
+
+15254-----(make-symbolic-link TARGET LINKNAME &optional OK-IF-ALREADY-EXISTS)
+Make a symbolic link to TARGET, named NEWNAME.
+If NEWNAME is a directory name, make a like-named symbolic link under
+NEWNAME.
+
+Signal a `file-already-exists' error if a file NEWNAME already exists
+unless optional third argument OK-IF-ALREADY-EXISTS is non-nil.
+An integer third arg means request confirmation if NEWNAME already
+exists, and expand leading "~" or strip leading "/:" in TARGET.
+This happens for interactive use with M-x.
+
+15254-----(delete-file FILENAME &optional TRASH)
+Delete file named FILENAME.  If it is a symlink, remove the symlink.
+If file has multiple names, it continues to exist with the other names.
+TRASH non-nil means to trash the file instead of deleting, provided
+`delete-by-moving-to-trash' is non-nil.
+
+When called interactively, TRASH is t if no prefix argument is given.
+With a prefix argument, TRASH is nil.
+
+15254-----(set-file-modes FILENAME MODE)
+Set mode bits of file named FILENAME to MODE (an integer).
+Only the 12 low bits of MODE are used.
+
+Interactively, mode bits are read by `read-file-modes', which accepts
+symbolic notation, like the `chmod' command from GNU Coreutils.
+
+15254-----(insert-char CHARACTER &optional COUNT INHERIT)
+Insert COUNT copies of CHARACTER.
+Interactively, prompt for CHARACTER.  You can specify CHARACTER in one
+of these ways:
+
+ - As its Unicode character name, e.g. "LATIN SMALL LETTER A".
+   Completion is available; if you type a substring of the name
+   preceded by an asterisk `*', Emacs shows all names which include
+   that substring, not necessarily at the beginning of the name.
+
+ - As a hexadecimal code point, e.g. 263A.  Note that code points in
+   Emacs are equivalent to Unicode up to 10FFFF (which is the limit of
+   the Unicode code space).
+
+ - As a code point with a radix specified with #, e.g. #o21430
+   (octal), #x2318 (hex), or #10r8984 (decimal).
+
+If called interactively, COUNT is given by the prefix argument.  If
+omitted or nil, it defaults to 1.
+
+Inserting the character(s) relocates point and before-insertion
+markers in the same ways as the function `insert'.
+
+The optional third argument INHERIT, if non-nil, says to inherit text
+properties from adjoining text, if those properties are sticky.  If
+called interactively, INHERIT is t.
+
+15254-----emacs-version
+Return string describing the version of Emacs that is running.
+If optional argument HERE is non-nil, insert string at point.
+Don't use this function in programs to choose actions according
+to the system configuration; look at `system-configuration' instead.(iconify-frame &optional FRAME)
+Make the frame FRAME into an icon.
+If omitted, FRAME defaults to the currently selected frame.
+
+If FRAME is a child frame, consult the variable `iconify-child-frame'
+for how to proceed.
+
+15254-----(make-frame-visible &optional FRAME)
+Make the frame FRAME visible (assuming it is an X window).
+If omitted, FRAME defaults to the currently selected frame.
+
+15254-----(make-frame-invisible &optional FRAME FORCE)
+Make the frame FRAME invisible.
+If omitted, FRAME defaults to the currently selected frame.
+On graphical displays, invisible frames are not updated and are
+usually not displayed at all, even in a window system's "taskbar".
+
+Normally you may not make FRAME invisible if all other frames are invisible,
+but if the second optional argument FORCE is non-nil, you may do so.
+
+This function has no effect on text terminal frames.  Such frames are
+always considered visible, whether or not they are currently being
+displayed in the terminal.
+
+15254-----minibuffer-inactive-mode
+Major-mode.
+Uses keymap `minibuffer-inactive-mode-map' and syntax-table `minibuffer-inactive-mode-syntax-table'.
+
+This mode runs the hook `minibuffer-inactive-mode-hook', as the final or penultimate step
+during initialization.
+
+\{minibuffer-inactive-mode-map}(scroll-up &optional ARG)
+Scroll text of selected window upward ARG lines.
+If ARG is omitted or nil, scroll upward by a near full screen.
+A near full screen is `next-screen-context-lines' less than a full screen.
+Negative ARG means scroll downward.
+If ARG is the atom `-', scroll downward by nearly full screen.
+When calling from a program, supply as argument a number, nil, or `-'.
+
+15254-----(scroll-down &optional ARG)
+Scroll text of selected window down ARG lines.
+If ARG is omitted or nil, scroll down by a near full screen.
+A near full screen is `next-screen-context-lines' less than a full screen.
+Negative ARG means scroll upward.
+If ARG is the atom `-', scroll upward by nearly full screen.
+When calling from a program, supply as argument a number, nil, or `-'.
+
+15254-----(scroll-up-command &optional ARG)
+Scroll text of selected window upward ARG lines; or near full screen if no ARG.
+If `scroll-error-top-bottom' is non-nil and `scroll-up' cannot
+scroll window further, move cursor to the bottom line.
+When point is already on that position, then signal an error.
+A near full screen is `next-screen-context-lines' less than a full screen.
+Negative ARG means scroll downward.
+If ARG is the atom `-', scroll downward by nearly full screen.
+
+15254-----(scroll-down-command &optional ARG)
+Scroll text of selected window down ARG lines; or near full screen if no ARG.
+If `scroll-error-top-bottom' is non-nil and `scroll-down' cannot
+scroll window further, move cursor to the top line.
+When point is already on that position, then signal an error.
+A near full screen is `next-screen-context-lines' less than a full screen.
+Negative ARG means scroll upward.
+If ARG is the atom `-', scroll upward by nearly full screen.
+
+15254-----(scroll-other-window &optional ARG)
+Scroll next window upward ARG lines; or near full screen if no ARG.
+A near full screen is `next-screen-context-lines' less than a full screen.
+The next window is the one below the current one; or the one at the top
+if the current one is at the bottom.  Negative ARG means scroll downward.
+If ARG is the atom `-', scroll downward by nearly full screen.
+When calling from a program, supply as argument a number, nil, or `-'.
+
+If `other-window-scroll-buffer' is non-nil, scroll the window
+showing that buffer, popping the buffer up if necessary.
+If in the minibuffer, `minibuffer-scroll-window' if non-nil
+specifies the window to scroll.  This takes precedence over
+`other-window-scroll-buffer'.
+
+15254-----(recenter &optional ARG)
+Center point in selected window and maybe redisplay frame.
+With a numeric prefix argument ARG, recenter putting point on screen line ARG
+relative to the selected window.  If ARG is negative, it counts up from the
+bottom of the window.  (ARG should be less than the height of the window.)
+
+If ARG is omitted or nil, then recenter with point on the middle line of
+the selected window; if the variable `recenter-redisplay' is non-nil,
+also erase the entire frame and redraw it (when `auto-resize-tool-bars'
+is set to `grow-only', this resets the tool-bar's height to the minimum
+height needed); if `recenter-redisplay' has the special value `tty',
+then only tty frames are redrawn.
+
+Just C-u as prefix means put point in the center of the window
+and redisplay normally--don't erase and redraw the frame.
+
+15254-----(recenter-top-bottom &optional ARG)
+Move current buffer line to the specified window line.
+With no prefix argument, successive calls place point according
+to the cycling order defined by `recenter-positions'.
+
+A prefix argument is handled like `recenter':
+ With numeric prefix ARG, move current line to window-line ARG.
+ With plain `C-u', move current line to window center.
+
+15254-----(modify-syntax-entry CHAR NEWENTRY &optional SYNTAX-TABLE)
+Set syntax for character CHAR according to string NEWENTRY.
+The syntax is changed only for table SYNTAX-TABLE, which defaults to
+ the current buffer's syntax table.
+CHAR may be a cons (MIN . MAX), in which case, syntaxes of all characters
+in the range MIN to MAX are changed.
+The first character of NEWENTRY should be one of the following:
+  Space or -  whitespace syntax.    w   word constituent.
+  _           symbol constituent.   .   punctuation.
+  (           open-parenthesis.     )   close-parenthesis.
+  "           string quote.         \   escape.
+  $           paired delimiter.     \='   expression quote or prefix operator.
+  <           comment starter.      >   comment ender.
+  /           character-quote.      @   inherit from parent table.
+  |           generic string fence. !   generic comment fence.
+
+Only single-character comment start and end sequences are represented thus.
+Two-character sequences are represented as described below.
+The second character of NEWENTRY is the matching parenthesis,
+ used only if the first character is `(' or `)'.
+Any additional characters are flags.
+Defined flags are the characters 1, 2, 3, 4, b, p, and n.
+ 1 means CHAR is the start of a two-char comment start sequence.
+ 2 means CHAR is the second character of such a sequence.
+ 3 means CHAR is the start of a two-char comment end sequence.
+ 4 means CHAR is the second character of such a sequence.
+
+There can be several orthogonal comment sequences.  This is to support
+language modes such as C++.  By default, all comment sequences are of style
+a, but you can set the comment sequence style to b (on the second character
+of a comment-start, and the first character of a comment-end sequence) and/or
+c (on any of its chars) using this flag:
+ b means CHAR is part of comment sequence b.
+ c means CHAR is part of comment sequence c.
+ n means CHAR is part of a nestable comment sequence.
+
+ p means CHAR is a prefix character for `backward-prefix-chars';
+   such characters are treated as whitespace when they occur
+   between expressions.
+
+15254-----(describe-syntax &optional BUFFER)
+Describe the syntax specifications in the syntax table of BUFFER.
+The descriptions are inserted in a help buffer, which is then displayed.
+BUFFER defaults to the current buffer.
+
+15254-----(re-search-forward REGEXP &optional BOUND NOERROR COUNT)
+Search forward from point for regular expression REGEXP.
+Set point to the end of the occurrence found, and return point.
+The optional second argument BOUND is a buffer position that bounds
+  the search.  The match found must not end after that position.  A
+  value of nil means search to the end of the accessible portion of
+  the buffer.
+The optional third argument NOERROR indicates how errors are handled
+  when the search fails.  If it is nil or omitted, emit an error; if
+  it is t, simply return nil and do nothing; if it is neither nil nor
+  t, move to the limit of search and return nil.
+The optional fourth argument COUNT is a number that indicates the
+  search direction and the number of occurrences to search for.  If it
+  is positive, search forward for COUNT successive occurrences; if it
+  is negative, search backward, instead of forward, for -COUNT
+  occurrences.  A value of nil means the same as 1.
+With COUNT positive/negative, the match found is the COUNTth/-COUNTth
+  one in the buffer located entirely after/before the origin of the
+  search.
+
+Search case-sensitivity is determined by the value of the variable
+`case-fold-search', which see.
+
+See also the functions `match-beginning', `match-end', `match-string',
+and `replace-match'.
+
+15254-----(re-search-backward REGEXP &optional BOUND NOERROR COUNT)
+Search backward from point for regular expression REGEXP.
+This function is almost identical to `re-search-forward', except that
+by default it searches backward instead of forward, and the sign of
+COUNT also indicates exactly the opposite searching direction.
+See `re-search-forward' for details.
+
+Note that searching backwards may give a shorter match than expected,
+because REGEXP is still matched in the forward direction.  See Info
+anchor `(elisp) re-search-backward' for details.
+
+15254-----(emacs-uptime &optional FORMAT)
+Return a string giving the uptime of this instance of Emacs.
+FORMAT is a string to format the result, using `format-seconds'.
+For example, the Unix uptime command format is "%D, %z%2h:%.2m".
+
+15254-----(emacs-init-time)
+Return a string giving the duration of the Emacs initialization.
+
+15254-----(delete-horizontal-space &optional BACKWARD-ONLY)
+Delete all spaces and tabs around point.
+If BACKWARD-ONLY is non-nil, only delete them before point.
+
+15254-----(delete-indentation &optional ARG)
+Join this line to previous and fix up whitespace at join.
+If there is a fill prefix, delete it from the beginning of this line.
+With argument, join this line to following line.
+
+15254-----fixup-whitespace
+Fixup white space between objects around point.
+Leave one space or none, according to the context.(just-one-space &optional N)
+Delete all spaces and tabs around point, leaving one space (or N spaces).
+If N is negative, delete newlines as well, leaving -N spaces.
+See also `cycle-spacing'.
+
+15254-----delete-blank-lines
+On blank line, delete all surrounding blank lines, leaving just one.
+On isolated blank line, delete that one.
+On nonblank line, delete any immediately following blank lines.(delete-trailing-whitespace &optional START END)
+Delete trailing whitespace between START and END.
+If called interactively, START and END are the start/end of the
+region if the mark is active, or of the buffer's accessible
+portion if the mark is inactive.
+
+This command deletes whitespace characters after the last
+non-whitespace character in each line between START and END.  It
+does not consider formfeed characters to be whitespace.
+
+If this command acts on the entire buffer (i.e. if called
+interactively with the mark inactive, or called from Lisp with
+END nil), it also deletes all trailing lines at the end of the
+buffer if the variable `delete-trailing-lines' is non-nil.
+
+15254-----(debug &rest ARGS)
+Enter debugger.  \<debugger-mode-map>`\[debugger-continue]' returns from the debugger.
+Arguments are mainly for use when this is called from the internals
+of the evaluator.
+
+You may call with no args, or you may pass nil as the first arg and
+any other args you like.  In that case, the list of args after the
+first will be printed into the backtrace buffer.
+
+15254-----(scroll-left &optional ARG SET-MINIMUM)
+Scroll selected window display ARG columns left.
+Default for ARG is window width minus 2.
+Value is the total amount of leftward horizontal scrolling in
+effect after the change.
+If SET-MINIMUM is non-nil, the new scroll amount becomes the
+lower bound for automatic scrolling, i.e. automatic scrolling
+will not scroll a window to a column less than the value returned
+by this function.  This happens in an interactive call.
+
+15254-----(scroll-right &optional ARG SET-MINIMUM)
+Scroll selected window display ARG columns right.
+Default for ARG is window width minus 2.
+Value is the total amount of leftward horizontal scrolling in
+effect after the change.
+If SET-MINIMUM is non-nil, the new scroll amount becomes the
+lower bound for automatic scrolling, i.e. automatic scrolling
+will not scroll a window to a column less than the value returned
+by this function.  This happens in an interactive call.
+
+15254-----blink-matching-open
+Momentarily highlight the beginning of the sexp before point.(global-set-key KEY COMMAND)
+Give KEY a global binding as COMMAND.
+COMMAND is the command definition to use; usually it is
+a symbol naming an interactively-callable function.
+KEY is a key sequence; noninteractively, it is a string or vector
+of characters or event types, and non-ASCII characters with codes
+above 127 (such as ISO Latin-1) can be included if you use a vector.
+
+Note that if KEY has a local binding in the current buffer,
+that local binding will continue to shadow any global binding
+that you make with this function.
+
+15254-----(global-unset-key KEY)
+Remove global binding of KEY.
+KEY is a string or vector representing a sequence of keystrokes.
+
+15254-----(local-set-key KEY COMMAND)
+Give KEY a local binding as COMMAND.
+COMMAND is the command definition to use; usually it is
+a symbol naming an interactively-callable function.
+KEY is a key sequence; noninteractively, it is a string or vector
+of characters or event types, and non-ASCII characters with codes
+above 127 (such as ISO Latin-1) can be included if you use a vector.
+
+The binding goes in the current buffer's local map, which in most
+cases is shared with all other buffers in the same major mode.
+
+15254-----(local-unset-key KEY)
+Remove local binding of KEY.
+KEY is a string or vector representing a sequence of keystrokes.
+
+15254-----(raise-frame &optional FRAME)
+Bring FRAME to the front, so it occludes any frames it overlaps.
+If FRAME is invisible or iconified, make it visible.
+If you don't specify a frame, the selected frame is used.
+If Emacs is displaying on an ordinary terminal or some other device which
+doesn't support multiple overlapping frames, this function selects FRAME.
+
+15254-----(lower-frame &optional FRAME)
+Send FRAME to the back, so it is occluded by any frames that overlap it.
+If you don't specify a frame, the selected frame is used.
+If Emacs is displaying on an ordinary terminal or some other device which
+doesn't support multiple overlapping frames, this function does nothing.
+
+15254-----(delete-frame &optional FRAME FORCE)
+Delete FRAME, permanently eliminating it from use.
+FRAME must be a live frame and defaults to the selected one.
+
+A frame may not be deleted if its minibuffer serves as surrogate
+minibuffer for another frame.  Normally, you may not delete a frame if
+all other frames are invisible, but if the second optional argument
+FORCE is non-nil, you may do so.
+
+This function runs `delete-frame-functions' before actually
+deleting the frame, unless the frame is a tooltip.
+The functions are run with one argument, the frame to be deleted.
+
+15254-----(fit-window-to-buffer &optional WINDOW MAX-HEIGHT MIN-HEIGHT MAX-WIDTH MIN-WIDTH PRESERVE-SIZE)
+Adjust size of WINDOW to display its buffer's contents exactly.
+WINDOW must be a live window and defaults to the selected one.
+
+If WINDOW is part of a vertical combination, adjust WINDOW's
+height.  The new height is calculated from the actual height of
+the accessible portion of its buffer.  The optional argument
+MAX-HEIGHT specifies a maximum height and defaults to the height
+of WINDOW's frame.  The optional argument MIN-HEIGHT specifies a
+minimum height and defaults to `window-min-height'.  Both
+MAX-HEIGHT and MIN-HEIGHT are specified in lines and include mode
+and header line and a bottom divider, if any.
+
+If WINDOW is part of a horizontal combination and the value of
+the option `fit-window-to-buffer-horizontally' is non-nil, adjust
+WINDOW's width.  The new width of WINDOW is calculated from the
+maximum length of its buffer's lines that follow the current
+start position of WINDOW.  The optional argument MAX-WIDTH
+specifies a maximum width and defaults to the width of WINDOW's
+frame.  The optional argument MIN-WIDTH specifies a minimum width
+and defaults to `window-min-width'.  Both MAX-WIDTH and MIN-WIDTH
+are specified in columns and include fringes, margins, a
+scrollbar and a vertical divider, if any.
+
+If the optional argument `preserve-size' is non-nil, preserve the
+size of WINDOW (see `window-preserve-size').
+
+Fit pixelwise if the option `window-resize-pixelwise' is non-nil.
+If WINDOW is its frame's root window and the option
+`fit-frame-to-buffer' is non-nil, call `fit-frame-to-buffer' to
+adjust the frame's size.
+
+Note that even if this function makes WINDOW large enough to show
+_all_ parts of its buffer you might not see the first part when
+WINDOW was scrolled.  If WINDOW is resized horizontally, you will
+not see the top of its buffer unless WINDOW starts at its minimum
+accessible position.
+
+15254-----(fit-frame-to-buffer &optional FRAME MAX-HEIGHT MIN-HEIGHT MAX-WIDTH MIN-WIDTH ONLY)
+Adjust size of FRAME to display the contents of its buffer exactly.
+FRAME can be any live frame and defaults to the selected one.
+Fit only if FRAME's root window is live.  MAX-HEIGHT, MIN-HEIGHT,
+MAX-WIDTH and MIN-WIDTH specify bounds on the new total size of
+FRAME's root window.  MIN-HEIGHT and MIN-WIDTH default to the values of
+`window-min-height' and `window-min-width' respectively.
+
+If the optional argument ONLY is `vertically', resize the frame
+vertically only.  If ONLY is `horizontally', resize the frame
+horizontally only.
+
+The new position and size of FRAME can be additionally determined
+by customizing the options `fit-frame-to-buffer-sizes' and
+`fit-frame-to-buffer-margins' or setting the corresponding
+parameters of FRAME.
+
+15254-----(shrink-window-if-larger-than-buffer &optional WINDOW)
+Shrink height of WINDOW if its buffer doesn't need so many lines.
+More precisely, shrink WINDOW vertically to be as small as
+possible, while still showing the full contents of its buffer.
+WINDOW must be a live window and defaults to the selected one.
+
+Do not shrink WINDOW to less than `window-min-height' lines.  Do
+nothing if the buffer contains more lines than the present window
+height, or if some of the window's contents are scrolled out of
+view, or if shrinking this window would also shrink another
+window, or if the window is the only window of its frame.
+
+Return non-nil if the window was shrunk, nil otherwise.
+
+15254-----(balance-windows &optional WINDOW-OR-FRAME)
+Balance the sizes of windows of WINDOW-OR-FRAME.
+WINDOW-OR-FRAME is optional and defaults to the selected frame.
+If WINDOW-OR-FRAME denotes a frame, balance the sizes of all
+windows of that frame.  If WINDOW-OR-FRAME denotes a window,
+recursively balance the sizes of all child windows of that
+window.
+
+15254-----balance-windows-area
+Make all visible windows the same area (approximately).
+See also `window-area-factor' to change the relative size of
+specific buffers.(maximize-window &optional WINDOW)
+Maximize WINDOW.
+Make WINDOW as large as possible without deleting any windows.
+WINDOW must be a valid window and defaults to the selected one.
+
+If the option `window-resize-pixelwise' is non-nil maximize
+WINDOW pixelwise.
+
+15254-----(minimize-window &optional WINDOW)
+Minimize WINDOW.
+Make WINDOW as small as possible without deleting any windows.
+WINDOW must be a valid window and defaults to the selected one.
+
+If the option `window-resize-pixelwise' is non-nil minimize
+WINDOW pixelwise.
+
+15254-----delete-minibuffer-contents
+Delete all user input in a minibuffer.
+If the current buffer is not a minibuffer, erase its entire contents.(open-termscript FILE)
+Start writing all terminal output to FILE as well as the terminal.
+FILE = nil means just close any termscript file currently open.
+
+15254-----(erase-buffer)
+Delete the entire contents of the current buffer.
+Any narrowing restriction in effect (see `narrow-to-region') is removed,
+so the buffer is truly empty after this.
+
+15254-----(delete-region START END)
+Delete the text between START and END.
+If called interactively, delete the region between point and mark.
+This command deletes buffer text without modifying the kill ring.
+
+15254-----(delete-char N &optional KILLFLAG)
+Delete the following N characters (previous if N is negative).
+Optional second arg KILLFLAG non-nil means kill instead (save in kill ring).
+Interactively, N is the prefix arg, and KILLFLAG is set if
+N was explicitly specified.
+
+The command `delete-forward-char' is preferable for interactive use, e.g.
+because it respects values of `delete-active-region' and `overwrite-mode'.
+
+15254-----(delete-backward-char N &optional KILLFLAG)
+Delete the previous N characters (following if N is negative).
+If Transient Mark mode is enabled, the mark is active, and N is 1,
+delete the text in the region and deactivate the mark instead.
+To disable this, set option `delete-active-region' to nil.
+
+Optional second arg KILLFLAG, if non-nil, means to kill (save in
+kill ring) instead of delete.  Interactively, N is the prefix
+arg, and KILLFLAG is set if N is explicitly specified.
+
+When killing, the killed text is filtered by
+`filter-buffer-substring' before it is saved in the kill ring, so
+the actual saved text might be different from what was killed.
+
+In Overwrite mode, single character backward deletion may replace
+tabs with spaces so as to back over columns, unless point is at
+the end of the line.
+
+15254-----(backward-delete-char-untabify ARG &optional KILLP)
+Delete characters backward, changing tabs into spaces.
+The exact behavior depends on `backward-delete-char-untabify-method'.
+Delete ARG chars, and kill (save in kill ring) if KILLP is non-nil.
+Interactively, ARG is the prefix arg (default 1)
+and KILLP is t if a prefix arg was specified.
+
+15254-----(capitalize-region BEG END)
+Convert the region to capitalized form.
+This means that each word's first character is converted to either
+title case or upper case, and the rest to lower case.
+In programs, give two arguments, the starting and ending
+character positions to operate on.
+
+15254-----(downcase-region BEG END &optional REGION-NONCONTIGUOUS-P)
+Convert the region to lower case.  In programs, wants two arguments.
+These arguments specify the starting and ending character numbers of
+the region to operate on.  When used as a command, the text between
+point and the mark is operated on.
+
+15254-----(upcase-region BEG END &optional REGION-NONCONTIGUOUS-P)
+Convert the region to upper case.  In programs, wants two arguments.
+These arguments specify the starting and ending character numbers of
+the region to operate on.  When used as a command, the text between
+point and the mark is operated on.
+See also `capitalize-region'.
+
+15254-----(capitalize-word ARG)
+Capitalize from point to the end of word, moving over.
+With numerical argument ARG, capitalize the next ARG-1 words as well.
+This gives the word(s) a first character in upper case
+and the rest lower case.
+
+If point is in the middle of a word, the part of that word before point
+is ignored when moving forward.
+
+With negative argument, capitalize previous words but do not move.
+
+15254-----(downcase-word ARG)
+Convert to lower case from point to end of word, moving over.
+
+If point is in the middle of a word, the part of that word before point
+is ignored when moving forward.
+
+With negative argument, convert previous words but do not move.
+
+15254-----(upcase-word ARG)
+Convert to upper case from point to end of word, moving over.
+
+If point is in the middle of a word, the part of that word before point
+is ignored when moving forward.
+
+With negative argument, convert previous words but do not move.
+See also `capitalize-word'.
+
+15254-----(bury-buffer &optional BUFFER-OR-NAME)
+Put BUFFER-OR-NAME at the end of the list of all buffers.
+There it is the least likely candidate for `other-buffer' to
+return; thus, the least likely buffer for \[switch-to-buffer] to
+select by default.
+
+You can specify a buffer name as BUFFER-OR-NAME, or an actual
+buffer object.  If BUFFER-OR-NAME is nil or omitted, bury the
+current buffer.  Also, if BUFFER-OR-NAME is nil or omitted,
+remove the current buffer from the selected window if it is
+displayed there.
+
+15254-----unbury-buffer
+Switch to the last buffer in the buffer list.(make-frame &optional PARAMETERS)
+Return a newly created frame displaying the current buffer.
+Optional argument PARAMETERS is an alist of frame parameters for
+the new frame.  Each element of PARAMETERS should have the
+form (NAME . VALUE), for example:
+
+ (name . STRING)	The frame should be named STRING.
+
+ (width . NUMBER)	The frame should be NUMBER characters in width.
+ (height . NUMBER)	The frame should be NUMBER text lines high.
+
+ (minibuffer . t)	The frame should have a minibuffer.
+ (minibuffer . nil)	The frame should have no minibuffer.
+ (minibuffer . only)	The frame should contain only a minibuffer.
+ (minibuffer . WINDOW)	The frame should use WINDOW as its minibuffer window.
+
+ (window-system . nil)	The frame should be displayed on a terminal device.
+ (window-system . x)	The frame should be displayed in an X window.
+
+ (display . ":0")     The frame should appear on display :0.
+
+ (terminal . TERMINAL)  The frame should use the terminal object TERMINAL.
+
+In addition, any parameter specified in `default-frame-alist',
+but not present in PARAMETERS, is applied.
+
+Before creating the frame (via `frame-creation-function'), this
+function runs the hook `before-make-frame-hook'.  After creating
+the frame, it runs the hook `after-make-frame-functions' with one
+argument, the newly created frame.
+
+If a display parameter is supplied and a window-system is not,
+guess the window-system from the display.
+
+On graphical displays, this function does not itself make the new
+frame the selected frame.  However, the window system may select
+the new frame according to its own rules.
+
+15254-----(view-register REGISTER)
+Display what is contained in register named REGISTER.
+The Lisp value REGISTER is a character.
+
+Interactively, reads the register using `register-read-with-preview'.
+
+15254-----(insert-register REGISTER &optional ARG)
+Insert contents of register REGISTER.  (REGISTER is a character.)
+Normally puts point before and mark after the inserted text.
+If optional second arg is non-nil, puts mark before and point after.
+Interactively, second arg is nil if prefix arg is supplied and t
+otherwise.
+
+Interactively, reads the register using `register-read-with-preview'.
+
+15254-----(kill-region BEG END &optional REGION)
+Kill ("cut") text between point and mark.
+This deletes the text from the buffer and saves it in the kill ring.
+The command \[yank] can retrieve it from there.
+(If you want to save the region without killing it, use \[kill-ring-save].)
+
+If you want to append the killed region to the last killed text,
+use \[append-next-kill] before \[kill-region].
+
+Any command that calls this function is a "kill command".
+If the previous command was also a kill command,
+the text killed this time appends to the text killed last time
+to make one entry in the kill ring.
+
+The killed text is filtered by `filter-buffer-substring' before it is
+saved in the kill ring, so the actual saved text might be different
+from what was killed.
+
+If the buffer is read-only, Emacs will beep and refrain from deleting
+the text, but put the text in the kill ring anyway.  This means that
+you can use the killing commands to copy text from a read-only buffer.
+
+Lisp programs should use this function for killing text.
+ (To delete text, use `delete-region'.)
+Supply two arguments, character positions BEG and END indicating the
+ stretch of text to be killed.  If the optional argument REGION is
+ non-nil, the function ignores BEG and END, and kills the current
+ region instead.
+
+15254-----(copy-region-as-kill BEG END &optional REGION)
+Save the region as if killed, but don't kill it.
+In Transient Mark mode, deactivate the mark.
+If `interprogram-cut-function' is non-nil, also save the text for a window
+system cut and paste.
+
+The copied text is filtered by `filter-buffer-substring' before it is
+saved in the kill ring, so the actual saved text might be different
+from what was in the buffer.
+
+When called from Lisp, save in the kill ring the stretch of text
+between BEG and END, unless the optional argument REGION is
+non-nil, in which case ignore BEG and END, and save the current
+region instead.
+
+This command's old key binding has been given to `kill-ring-save'.
+
+15254-----expand-abbrev
+Expand the abbrev before point, if there is an abbrev there.
+Effective when explicitly called even when `abbrev-mode' is nil.
+Before doing anything else, runs `pre-abbrev-expand-hook'.
+Calls the value of `abbrev-expand-function' with no argument to do
+the work, and returns whatever it does.  (That return value should
+be the abbrev symbol if expansion occurred, else nil.)(abbrev-prefix-mark &optional ARG)
+Mark current point as the beginning of an abbrev.
+Abbrev to be expanded starts here rather than at beginning of word.
+This way, you can expand an abbrev with a prefix: insert the prefix,
+use this command, then insert the abbrev.  This command inserts a
+temporary hyphen after the prefix (until the intended abbrev
+expansion occurs).
+If the prefix is itself an abbrev, this command expands it, unless
+ARG is non-nil.  Interactively, ARG is the prefix argument.
+
+15254-----(set-frame-font FONT &optional KEEP-SIZE FRAMES)
+Set the default font to FONT.
+When called interactively, prompt for the name of a font, and use
+that font on the selected frame.  When called from Lisp, FONT
+should be a font name (a string), a font object, font entity, or
+font spec.
+
+If KEEP-SIZE is nil, keep the number of frame lines and columns
+fixed.  If KEEP-SIZE is non-nil (or with a prefix argument), try
+to keep the current frame size fixed (in pixels) by adjusting the
+number of lines and columns.
+
+If FRAMES is nil, apply the font to the selected frame only.
+If FRAMES is non-nil, it should be a list of frames to act upon,
+or t meaning all existing graphical frames.
+Also, if FRAMES is non-nil, alter the user's Customization settings
+as though the font-related attributes of the `default' face had been
+"set in this session", so that the font is applied to future frames.
+
+15254-----(list-charset-chars CHARSET)
+Display a list of characters in character set CHARSET.
+
+15254-----(make-indirect-buffer BASE-BUFFER NAME &optional CLONE)
+Create and return an indirect buffer for buffer BASE-BUFFER, named NAME.
+BASE-BUFFER should be a live buffer, or the name of an existing buffer.
+NAME should be a string which is not the name of an existing buffer.
+Optional argument CLONE non-nil means preserve BASE-BUFFER's state,
+such as major and minor modes, in the indirect buffer.
+CLONE nil means the indirect buffer's state is reset to default values.
+
+15254-----(clone-indirect-buffer NEWNAME DISPLAY-FLAG &optional NORECORD)
+Create an indirect buffer that is a twin copy of the current buffer.
+
+Give the indirect buffer name NEWNAME.  Interactively, read NEWNAME
+from the minibuffer when invoked with a prefix arg.  If NEWNAME is nil
+or if not called with a prefix arg, NEWNAME defaults to the current
+buffer's name.  The name is modified by adding a `<N>' suffix to it
+or by incrementing the N in an existing suffix.  Trying to clone a
+buffer whose major mode symbol has a non-nil `no-clone-indirect'
+property results in an error.
+
+DISPLAY-FLAG non-nil means show the new buffer with `pop-to-buffer'.
+This is always done when called interactively.
+
+Optional third arg NORECORD non-nil means do not put this buffer at the
+front of the list of recently selected ones.
+
+Returns the newly created indirect buffer.
+
+15254-----(make-directory DIR &optional PARENTS)
+Create the directory DIR and optionally any nonexistent parent dirs.
+If DIR already exists as a directory, signal an error, unless
+PARENTS is non-nil.
+
+Interactively, the default choice of directory to create is the
+current buffer's default directory.  That is useful when you have
+visited a file in a nonexistent directory.
+
+Noninteractively, the second (optional) argument PARENTS, if
+non-nil, says whether to create parent directories that don't
+exist.  Interactively, this happens by default.
+
+If creating the directory or directories fail, an error will be
+raised.
+
+15254-----(copy-directory DIRECTORY NEWNAME &optional KEEP-TIME PARENTS COPY-CONTENTS)
+Copy DIRECTORY to NEWNAME.  Both args must be strings.
+This function always sets the file modes of the output files to match
+the corresponding input file.
+
+The third arg KEEP-TIME non-nil means give the output files the same
+last-modified time as the old ones.  (This works on only some systems.)
+
+A prefix arg makes KEEP-TIME non-nil.
+
+Noninteractively, the last argument PARENTS says whether to
+create parent directories if they don't exist.  Interactively,
+this happens by default.
+
+If NEWNAME is a directory name, copy DIRECTORY as a subdirectory
+there.  However, if called from Lisp with a non-nil optional
+argument COPY-CONTENTS, copy the contents of DIRECTORY directly
+into NEWNAME instead.
+
+15254-----(delete-directory DIRECTORY &optional RECURSIVE TRASH)
+Delete the directory named DIRECTORY.  Does not follow symlinks.
+If RECURSIVE is non-nil, delete files in DIRECTORY as well, with
+no error if something else is simultaneously deleting them.
+TRASH non-nil means to trash the directory instead, provided
+`delete-by-moving-to-trash' is non-nil.
+
+When called interactively, TRASH is nil if and only if a prefix
+argument is given, and a further prompt asks the user for
+RECURSIVE if DIRECTORY is nonempty.
+
+15254-----(locate-library LIBRARY &optional NOSUFFIX PATH INTERACTIVE-CALL)
+Show the precise file name of Emacs library LIBRARY.
+LIBRARY should be a relative file name of the library, a string.
+It can omit the suffix (a.k.a. file-name extension) if NOSUFFIX is
+nil (which is the default, see below).
+This command searches the directories in `load-path' like `\[load-library]'
+to find the file that `\[load-library] RET LIBRARY RET' would load.
+Optional second arg NOSUFFIX non-nil means don't add suffixes `load-suffixes'
+to the specified name LIBRARY.
+
+If the optional third arg PATH is specified, that list of directories
+is used instead of `load-path'.
+
+When called from a program, the file name is normally returned as a
+string.  When run interactively, the argument INTERACTIVE-CALL is t,
+and the file name is displayed in the echo area.
+
+15254-----(list-load-path-shadows &optional STRINGP)
+Display a list of Emacs Lisp files that shadow other files.
+
+If STRINGP is non-nil, returns any shadows as a string.
+Otherwise, if interactive shows any shadows in a `*Shadows*' buffer;
+else prints messages listing any shadows.
+
+This function lists potential load path problems.  Directories in
+the `load-path' variable are searched, in order, for Emacs Lisp
+files.  When a previously encountered file name is found again, a
+message is displayed indicating that the later file is "hidden" by
+the earlier.
+
+For example, suppose `load-path' is set to
+
+("/usr/share/emacs/site-lisp" "/usr/share/emacs/24.3/lisp")
+
+and that each of these directories contains a file called XXX.el.  Then
+XXX.el in the site-lisp directory is referred to by all of:
+(require \='XXX), (autoload .... "XXX"), (load-library "XXX") etc.
+
+The first XXX.el file prevents Emacs from seeing the second (unless
+the second is loaded explicitly via `load-file').
+
+When not intended, such shadowings can be the source of subtle
+problems.  For example, the above situation may have arisen because the
+XXX package was not distributed with versions of Emacs prior to
+24.3.  A system administrator downloaded XXX from elsewhere and installed
+it.  Later, XXX was updated and included in the Emacs distribution.
+Unless the system administrator checks for this, the new version of XXX
+will be hidden behind the old (which may no longer work with the new
+Emacs version).
+
+This function performs these checks and flags all possible
+shadowings.  Because a .el file may exist without a corresponding .elc
+(or vice-versa), these suffixes are essentially ignored.  A file
+XXX.elc in an early directory (that does not contain XXX.el) is
+considered to shadow a later file XXX.el, and vice-versa.
+
+Shadowings are located by calling the (non-interactive) companion
+function, `load-path-shadows-find'.
+
+15254-----tab-to-tab-stop
+Insert spaces or tabs to next defined tab-stop column.
+The variable `tab-stop-list' is a list of columns at which there are tab stops.
+Use \[edit-tab-stops] to edit them interactively.(kill-buffer &optional BUFFER-OR-NAME)
+Kill the buffer specified by BUFFER-OR-NAME.
+The argument may be a buffer or the name of an existing buffer.
+Argument nil or omitted means kill the current buffer.  Return t if the
+buffer is actually killed, nil otherwise.
+
+The functions in `kill-buffer-query-functions' are called with the
+buffer to be killed as the current buffer.  If any of them returns nil,
+the buffer is not killed.  The hook `kill-buffer-hook' is run before the
+buffer is actually killed.  The buffer being killed will be current
+while the hook is running.  Functions called by any of these hooks are
+supposed to not change the current buffer.
+
+Any processes that have this buffer as the `process-buffer' are killed
+with SIGHUP.  This function calls `replace-buffer-in-windows' for
+cleaning up all windows currently displaying the buffer to be killed.
+
+15254-----back-to-indentation
+Move point to the first non-whitespace character on this line.(backward-to-indentation &optional ARG)
+Move backward ARG lines and position at first nonblank character.
+
+15254-----(forward-to-indentation &optional ARG)
+Move forward ARG lines and position at first nonblank character.
+
+15254-----(unload-feature FEATURE &optional FORCE)
+Unload the library that provided FEATURE.
+If the feature is required by any other loaded code, and prefix arg FORCE
+is nil, raise an error.
+
+Standard unloading activities include restoring old autoloads for
+functions defined by the library, undoing any additions that the
+library has made to hook variables or to `auto-mode-alist', undoing
+ELP profiling of functions in that library, unproviding any features
+provided by the library, and canceling timers held in variables
+defined by the library.
+
+If a function `FEATURE-unload-function' is defined, this function
+calls it with no arguments, before doing anything else.  That function
+can do whatever is appropriate to undo the loading of the library.  If
+`FEATURE-unload-function' returns non-nil, that suppresses the
+standard unloading of the library.  Otherwise the standard unloading
+proceeds.
+
+`FEATURE-unload-function' has access to the package's list of
+definitions in the variable `unload-function-defs-list' and could
+remove symbols from it in the event that the package has done
+something strange, such as redefining an Emacs function.
+
+15254-----read-kbd-macro
+Read the region as a keyboard macro definition.
+The region is interpreted as spelled-out keystrokes, e.g., "M-x abc RET".
+See documentation for `edmacro-mode' for details.
+Leading/trailing "C-x (" and "C-x )" in the text are allowed and ignored.
+The resulting macro is installed as the "current" keyboard macro.
+
+In Lisp, may also be called with a single STRING argument in which case
+the result is returned rather than being installed as the current macro.
+The result will be a string if possible, otherwise an event vector.
+Second argument NEED-VECTOR means to return an event vector always.(serial-term PORT SPEED)
+Start a terminal-emulator for a serial port in a new buffer.
+PORT is the path or name of the serial port.  For example, this
+could be "/dev/ttyS0" on Unix.  On Windows, this could be
+"COM1" or "\\.\COM10".
+SPEED is the speed of the serial port in bits per second.  9600
+is a common value.  SPEED can be nil, see
+`serial-process-configure' for details.
+The buffer is in Term mode; see `term-mode' for the commands to
+use in that buffer.
+\<term-raw-map>Type \[switch-to-buffer] to switch to another buffer.
+
+15254-----(buffer-enable-undo &optional BUFFER)
+Start keeping undo information for buffer BUFFER.
+No argument or nil as argument means do this for the current buffer.
+
+15254-----(buffer-disable-undo &optional BUFFER)
+Make BUFFER stop keeping undo information.
+No argument or nil as argument means do this for the current buffer.
+
+15254-----text-mode
+Major mode for editing text written for humans to read.
+In this mode, paragraphs are delimited only by blank or white lines.
+You can thus get the full benefit of adaptive filling
+ (see the variable `adaptive-fill-mode').
+\{text-mode-map}
+Turning on Text mode runs the normal hook `text-mode-hook'.prog-mode
+Major mode for editing programming language source code.
+
+This mode runs the hook `prog-mode-hook', as the final or penultimate step
+during initialization.
+
+\{prog-mode-map}special-mode
+Parent major mode from which special major modes should inherit.
+
+This mode runs the hook `special-mode-hook', as the final or penultimate step
+during initialization.
+
+\{special-mode-map}(beginning-of-buffer &optional ARG)
+Move point to the beginning of the buffer.
+With numeric arg N, put point N/10 of the way from the beginning.
+If the buffer is narrowed, this command uses the beginning of the
+accessible part of the buffer.
+
+Push mark at previous position, unless either a \[universal-argument] prefix
+is supplied, or Transient Mark mode is enabled and the mark is active.
+
+15254-----(end-of-buffer &optional ARG)
+Move point to the end of the buffer.
+With numeric arg N, put point N/10 of the way from the end.
+If the buffer is narrowed, this command uses the end of the
+accessible part of the buffer.
+
+Push mark at previous position, unless either a \[universal-argument] prefix
+is supplied, or Transient Mark mode is enabled and the mark is active.
+
+15254-----(forward-list &optional ARG)
+Move forward across one balanced group of parentheses.
+This command will also work on other parentheses-like expressions
+defined by the current language mode.
+With ARG, do it that many times.
+Negative arg -N means move backward across N groups of parentheses.
+This command assumes point is not in a string or comment.
+
+15254-----(backward-list &optional ARG)
+Move backward across one balanced group of parentheses.
+This command will also work on other parentheses-like expressions
+defined by the current language mode.
+With ARG, do it that many times.
+Negative arg -N means move forward across N groups of parentheses.
+This command assumes point is not in a string or comment.
+
+15254-----(up-list &optional ARG ESCAPE-STRINGS NO-SYNTAX-CROSSING)
+Move forward out of one level of parentheses.
+This command will also work on other parentheses-like expressions
+defined by the current language mode.  With ARG, do this that
+many times.  A negative argument means move backward but still to
+a less deep spot.  If ESCAPE-STRINGS is non-nil (as it is
+interactively), move out of enclosing strings as well. If
+NO-SYNTAX-CROSSING is non-nil (as it is interactively), prefer to
+break out of any enclosing string instead of moving to the start
+of a list broken across multiple strings.  On error, location of
+point is unspecified.
+
+15254-----(backward-up-list &optional ARG ESCAPE-STRINGS NO-SYNTAX-CROSSING)
+Move backward out of one level of parentheses.
+This command will also work on other parentheses-like expressions
+defined by the current language mode.  With ARG, do this that
+many times.  A negative argument means move forward but still to
+a less deep spot.  If ESCAPE-STRINGS is non-nil (as it is
+interactively), move out of enclosing strings as well.  If
+NO-SYNTAX-CROSSING is non-nil (as it is interactively), prefer to
+break out of any enclosing string instead of moving to the start
+of a list broken across multiple strings.  On error, location of
+point is unspecified.
+
+15254-----(down-list &optional ARG)
+Move forward down one level of parentheses.
+This command will also work on other parentheses-like expressions
+defined by the current language mode.
+With ARG, do this that many times.
+A negative argument means move backward but still go down a level.
+This command assumes point is not in a string or comment.
+
+15254-----(forward-sexp &optional ARG)
+Move forward across one balanced expression (sexp).
+With ARG, do it that many times.  Negative arg -N means move
+backward across N balanced expressions.  This command assumes
+point is not in a string or comment.  Calls
+`forward-sexp-function' to do the work, if that is non-nil.  If
+unable to move over a sexp, signal `scan-error' with three
+arguments: a message, the start of the obstacle (usually a
+parenthesis or list marker of some kind), and end of the
+obstacle.
+
+15254-----(backward-sexp &optional ARG)
+Move backward across one balanced expression (sexp).
+With ARG, do it that many times.  Negative arg -N means
+move forward across N balanced expressions.
+This command assumes point is not in a string or comment.
+Uses `forward-sexp' to do the work.
+
+15254-----(beginning-of-defun &optional ARG)
+Move backward to the beginning of a defun.
+With ARG, do it that many times.  Negative ARG means move forward
+to the ARGth following beginning of defun.
+
+If search is successful, return t; point ends up at the beginning
+of the line where the search succeeded.  Otherwise, return nil.
+
+When `open-paren-in-column-0-is-defun-start' is non-nil, a defun
+is assumed to start where there is a char with open-parenthesis
+syntax at the beginning of a line.  If `defun-prompt-regexp' is
+non-nil, then a string which matches that regexp may also precede
+the open-parenthesis.  If `defun-prompt-regexp' and
+`open-paren-in-column-0-is-defun-start' are both nil, this
+function instead finds an open-paren at the outermost level.
+
+If the variable `beginning-of-defun-function' is non-nil, its
+value is called as a function, with argument ARG, to find the
+defun's beginning.
+
+Regardless of the values of `defun-prompt-regexp' and
+`beginning-of-defun-function', point always moves to the
+beginning of the line whenever the search is successful.
+
+15254-----(end-of-defun &optional ARG)
+Move forward to next end of defun.
+With argument, do it that many times.
+Negative argument -N means move back to Nth preceding end of defun.
+
+An end of a defun occurs right after the close-parenthesis that
+matches the open-parenthesis that starts a defun; see function
+`beginning-of-defun'.
+
+If variable `end-of-defun-function' is non-nil, its value
+is called as a function to find the defun's end.
+
+15254-----(gui-set-selection TYPE DATA)
+Make an X selection of type TYPE and value DATA.
+The argument TYPE (nil means `PRIMARY') says which selection, and
+DATA specifies the contents.  TYPE must be a symbol.  (It can also
+be a string, which stands for the symbol with that name, but this
+is considered obsolete.)  DATA may be a string, a symbol, an
+integer (or a cons of two integers or list of two integers).
+
+The selection may also be a cons of two markers pointing to the same buffer,
+or an overlay.  In these cases, the selection is considered to be the text
+between the markers *at whatever time the selection is examined*.
+Thus, editing done in the buffer after you specify the selection
+can alter the effective value of the selection.
+
+The data may also be a vector of valid non-vector selection values.
+
+The return value is DATA.
+
+Interactively, this command sets the primary selection.  Without
+prefix argument, it reads the selection in the minibuffer.  With
+prefix argument, it uses the text of the region as the selection value.
+
+Note that on MS-Windows, primary and secondary selections set by Emacs
+are not available to other programs.
+
+15254-----undefined
+Beep to tell the user this binding is undefined.(garbage-collect)
+Reclaim storage for Lisp objects no longer needed.
+Garbage collection happens automatically if you cons more than
+`gc-cons-threshold' bytes of Lisp data since previous garbage collection.
+`garbage-collect' normally returns a list with info on amount of space in use,
+where each entry has the form (NAME SIZE USED FREE), where:
+- NAME is a symbol describing the kind of objects this entry represents,
+- SIZE is the number of bytes used by each one,
+- USED is the number of those objects that were found live in the heap,
+- FREE is the number of those objects that are not live but that Emacs
+  keeps around for future allocations (maybe because it does not know how
+  to return them to the OS).
+However, if there was overflow in pure space, `garbage-collect'
+returns nil, because real GC can't be done.
+See Info node `(elisp)Garbage Collection'.
+
+15254-----(describe-categories &optional BUFFER)
+Describe the category specifications in the current category table.
+The descriptions are inserted in a buffer, which is then displayed.
+If BUFFER is non-nil, then describe BUFFER's category table instead.
+BUFFER should be a buffer or a buffer name.
+
+15254-----load-theme
+Load Custom theme named THEME from its file.
+The theme file is named THEME-theme.el, in one of the directories
+specified by `custom-theme-load-path'.
+
+If the theme is not considered safe by `custom-safe-themes',
+prompt the user for confirmation before loading it.  But if
+optional arg NO-CONFIRM is non-nil, load the theme without
+prompting.
+
+Normally, this function also enables THEME.  If optional arg
+NO-ENABLE is non-nil, load the theme but don't enable it, unless
+the theme was already enabled.
+
+This function is normally called through Customize when setting
+`custom-enabled-themes'.  If used directly in your init file, it
+should be called with a non-nil NO-CONFIRM argument, or after
+`custom-safe-themes' has been loaded.
+
+Return t if THEME was successfully loaded, nil otherwise.enable-theme
+Reenable all variable and face settings defined by THEME.
+THEME should be either `user', or a theme loaded via `load-theme'.
+After this function completes, THEME will have the highest
+precedence (after `user').disable-theme
+Disable all variable and face settings defined by THEME.
+See `custom-enabled-themes' for a list of enabled themes.(not-modified &optional ARG)
+Mark current buffer as unmodified, not needing to be saved.
+With prefix ARG, mark buffer as modified, so \[save-buffer] will save.
+
+It is not a good idea to use this function in Lisp programs, because it
+prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'.
+
+15254-----(yank &optional ARG)
+Reinsert ("paste") the last stretch of killed text.
+More precisely, reinsert the most recent kill, which is the
+stretch of killed text most recently killed OR yanked.  Put point
+at the end, and set mark at the beginning without activating it.
+With just \[universal-argument] as argument, put point at beginning, and mark at end.
+With argument N, reinsert the Nth most recent kill.
+
+This command honors the `yank-handled-properties' and
+`yank-excluded-properties' variables, and the `yank-handler' text
+property, as described below.
+
+Properties listed in `yank-handled-properties' are processed,
+then those listed in `yank-excluded-properties' are discarded.
+
+If STRING has a non-nil `yank-handler' property anywhere, the
+normal insert behavior is altered, and instead, for each contiguous
+segment of STRING that has a given value of the `yank-handler'
+property, that value is used as follows:
+
+The value of a `yank-handler' property must be a list of one to four
+elements, of the form (FUNCTION PARAM NOEXCLUDE UNDO).
+FUNCTION, if non-nil, should be a function of one argument (the
+ object to insert); FUNCTION is called instead of `insert'.
+PARAM, if present and non-nil, is passed to FUNCTION (to be handled
+ in whatever way is appropriate; e.g. if FUNCTION is `yank-rectangle',
+ PARAM may be a list of strings to insert as a rectangle).  If PARAM
+ is nil, then the current segment of STRING is used.
+If NOEXCLUDE is present and non-nil, the normal removal of
+ `yank-excluded-properties' is not performed; instead FUNCTION is
+ responsible for the removal.  This may be necessary if FUNCTION
+ adjusts point before or after inserting the object.
+UNDO, if present and non-nil, should be a function to be called
+ by `yank-pop' to undo the insertion of the current PARAM.  It is
+ given two arguments, the start and end of the region.  FUNCTION
+ may set `yank-undo-function' to override UNDO.
+
+See also the command `yank-pop' (\[yank-pop]).
+
+15254-----(yank-pop &optional ARG)
+Replace just-yanked stretch of killed text with a different stretch.
+This command is allowed only immediately after a `yank' or a `yank-pop'.
+At such a time, the region contains a stretch of reinserted
+previously-killed text.  `yank-pop' deletes that text and inserts in its
+place a different stretch of killed text.
+
+With no argument, the previous kill is inserted.
+With argument N, insert the Nth previous kill.
+If N is negative, this is a more recent kill.
+
+The sequence of kills wraps around, so that after the oldest one
+comes the newest one.
+
+This command honors the `yank-handled-properties' and
+`yank-excluded-properties' variables, and the `yank-handler' text
+property, in the way that `yank' does.
+
+15254-----(split-window-right &optional SIZE)
+Split the selected window into two side-by-side windows.
+The selected window is on the left.  The newly split-off window
+is on the right and displays the same buffer.  Return the new
+window.
+
+If optional argument SIZE is omitted or nil, both windows get the
+same width, or close to it.  If SIZE is positive, the left-hand
+(selected) window gets SIZE columns.  If SIZE is negative, the
+right-hand (new) window gets -SIZE columns.  Here, SIZE includes
+the width of the window's scroll bar; if there are no scroll
+bars, it includes the width of the divider column to the window's
+right, if any.
+
+15254-----(split-window-below &optional SIZE)
+Split the selected window into two windows, one above the other.
+The selected window is above.  The newly split-off window is
+below and displays the same buffer.  Return the new window.
+
+If optional argument SIZE is omitted or nil, both windows get the
+same height, or close to it.  If SIZE is positive, the upper
+(selected) window gets SIZE lines.  If SIZE is negative, the
+lower (new) window gets -SIZE lines.
+
+If the variable `split-window-keep-point' is non-nil, both
+windows get the same value of point as the selected window.
+Otherwise, the window starts are chosen so as to minimize the
+amount of redisplay; this is convenient on slow terminals.
+
+15254-----(set-visited-file-name FILENAME &optional NO-QUERY ALONG-WITH-FILE)
+Change name of file visited in current buffer to FILENAME.
+This also renames the buffer to correspond to the new file.
+The next time the buffer is saved it will go in the newly specified file.
+FILENAME nil or an empty string means mark buffer as not visiting any file.
+Remember to delete the initial contents of the minibuffer
+if you wish to pass an empty string as the argument.
+
+The optional second argument NO-QUERY, if non-nil, inhibits asking for
+confirmation in the case where another buffer is already visiting FILENAME.
+
+The optional third argument ALONG-WITH-FILE, if non-nil, means that
+the old visited file has been renamed to the new name FILENAME.
+
+15254-----

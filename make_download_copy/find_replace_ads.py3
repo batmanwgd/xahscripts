@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Python 3
 
 # find & replace strings in a dir
@@ -58,7 +57,7 @@ find_replace_list = [
 
 
     # 2018-08-10
-('''<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+('''<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({
           google_ad_client: "ca-pub-5125343095650532",
@@ -77,8 +76,9 @@ ga('send', 'pageview');
 </script>''',
 ''),
 
-('''<div class="google_ad_right_30226">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+('''<aside id="aside-right-89129">
+<div class="google_ad_right_30226">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- xlinfo_right_autosize_20171107 -->
 <ins class="adsbygoogle"
      style="display:block"
@@ -88,12 +88,13 @@ ga('send', 'pageview');
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-</div>''',
+</div>
+</aside>''',
 ''),
 
 ('''<div class="ad_top_39054">
 <div class="google_ad_top_29890">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- xlinfo_top_autosize_20171107 -->
 <ins class="adsbygoogle"
      style="display:block"
@@ -109,7 +110,7 @@ ga('send', 'pageview');
 
 ('''<div class="ads-bottom-65900">
 <div class="google_ad_bottom_e7e59">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- xlinfo_ad_bottom_20171117 -->
 <ins class="adsbygoogle"
      style="display:block"
@@ -125,7 +126,7 @@ ga('send', 'pageview');
 
 (
 '''<div class="buy-js-33416">
-Liket it? Put $5 at
+Like it? Help me by telling your friends. Or, Put $5 at
 <a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a>.<br />
 <br />
 Or, <a href="buy_xah_js_tutorial.html">Buy JavaScript in Depth</a>
@@ -161,59 +162,14 @@ ga('send', 'pageview');
 </script>''',
 ''),
 
-
-('''<div class="ggl_ads_1wybm">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- google_ads_emacs_right_n6fhr -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="2962698824"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>''',''),
-
-('''<div class="ad_top_39054">
-<div class="ggl_ad_xfgrj">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- emacs_ad_top_86b9e -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="4897106337"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
-</div>''',''),
-
-('''<div class="ads-bottom-65900">
-<div class="google_ads_emacs_bottom_98ade">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- xah_emacs_bottom_f82a5 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="4157217227"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
-</div>''',''),
-
 (
 '''<div class="buyxahemacs97449">
-Patreon me $5
-<a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a>
-<br /><br />
+<p>If you have a question, put $5 at <a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a> and message me.
+<br />
 Or <a href="http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html">Buy Xah Emacs Tutorial</a>
-<br /><br />
+<br />
 Or buy a nice keyboard:
-<a href="http://ergoemacs.org/emacs/emacs_best_keyboard.html">Best Keyboard for Emacs</a>
+<a href="http://ergoemacs.org/emacs/emacs_best_keyboard.html">Best Keyboards for Emacs</a></p>
 </div>''',
 ''
 ),
@@ -318,4 +274,4 @@ else:
                     replace_string_in_file(dirPath + os.sep + fName)
                     # print ("level %d,  %s" % (curFileLevel, os.path.join(dirPath, fName)))
 
-print("Done.")
+print("Done removing ads.")

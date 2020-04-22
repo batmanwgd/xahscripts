@@ -203,7 +203,8 @@ if exist, it'll be overridden.
      $sourceDirList)
 
     ;; copy the style sheets over, and icons dir
-    ;; (copy-file "~/web/xahlee_info/lbasic.css" $destDir "OK-IF-ALREADY-EXISTS")
+    (copy-file "~/web/xahlee_info/lbasic.css" $destDir "OK-IF-ALREADY-EXISTS")
+    (copy-file "~/web/xahlee_info/highlightlink24082.js" $destDir "OK-IF-ALREADY-EXISTS")
     ;; (copy-file "~/web/xahlee_info/lit.css" $destDir "OK-IF-ALREADY-EXISTS")
     ;; (copy-file "~/web/xahlee_info/lmath.css" $destDir "OK-IF-ALREADY-EXISTS")
     ;; (copy-directory "~/web/xahlee_info/ics/" (concat $destDir "ics/") "KEEP-TIME" "PARENTS" "COPY-CONTENTS")

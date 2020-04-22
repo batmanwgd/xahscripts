@@ -10,12 +10,13 @@
 
 
 
-;; (defvar ξallSymbols '() "list of symbols we want to get doc string")
-;; (setq ξallSymbols '())
-;; (mapatoms (lambda (x) (push x ξallSymbols)) obarray )
+(defvar ξallSymbols '() "list of symbols we want to get doc string")
+(setq ξallSymbols '())
 
 (defvar ξsymbol-hashtable nil "hash table of symbols we want to get doc string")
 (setq ξsymbol-hashtable (make-hash-table :test 'equal))
+
+;; (mapatoms (lambda (x) (push x ξallSymbols)) obarray )
 
 ;; the problem with generating doc from all symbols in obarray is that, most symbols there are not actually used. You get many obscure functions or symbols. But also, some function should be there but are not, eg , eval-last-sexp, ielm, describe-function.
 ;; so, solution is to filter. but the problem is how.
@@ -31,11 +32,12 @@
  ξmyfiles
  '(
 
-   "elisp_command_2016-12-21"
-   "elisp_function_2016-12-21"
-   "elisp_macro_2016-12-21"
-   "elisp_special_form_2016-12-21"
-   "emacs_manual_fboundp_2017-01-08"
+;; "elisp_command_2016-12-21"
+;;    "elisp_function_2016-12-21"
+;;    "elisp_macro_2016-12-21"
+;;    "elisp_special_form_2016-12-21"
+
+"emacs_manual_fboundp_2017-01-08"
 
    ;; "elisp_constant_2016-12-21"
    ;; "elisp_user_option_2016-12-21"
@@ -45,29 +47,29 @@
 (defvar ξoutfile nil "string. output file name")
 (setq ξoutfile "func_doc_string_out.txt")
 
-;; add them all to symbols hash
-(dolist (ξfile ξmyfiles )
-  (mapc
-   (lambda (x)
-     (puthash x 1 ξsymbol-hashtable ))
-   (with-temp-buffer
-     (insert-file-contents ξfile)
-     (split-string (buffer-string) "\n" t))))
+;; add them all to ξallSymbols
+(dolist (file ξmyfiles )
+  (setq
+   ξallSymbols
+   (append ξallSymbols
+           (with-temp-buffer
+             (insert-file-contents file)
+             (split-string (buffer-string) "\n" t)) nil)))
 
-(hash-table-count ξsymbol-hashtable)
+;; convert the list of string to list of symbols
+(setq ξallSymbols (mapcar 'intern ξallSymbols))
 
 ;; generate doc string
 (with-temp-file ξoutfile
-  (maphash
-   (lambda (x y)
-     (let ((s (intern x)))
-       (when (fboundp s)
-         (insert
-          (format
-           "〈〈%s〉〉:〈〈%s〉〉enditem49840"
-           s
-           (documentation s))))))
-   ξsymbol-hashtable))
+  (mapc
+   (lambda (ff)
+     (when (fboundp ff)
+       (let ((fdoc (documentation ff)))
+         (insert (format
+                  "〈〈%s〉〉:〈〈%s〉〉enditem49840"
+                  ff
+                  fdoc)))))
+   ξallSymbols))
 
 (progn
   ;; process the doc string
