@@ -19,5 +19,7 @@
   outputPath)
 
 (shell-command (concat "python3 find_replace_ads.py3 " outputPath))
+;; (shell-command (concat "python3 find_replace_ads.go " outputPath))
 
 (shell-command (concat "python3 delete_temp_files.py3 " outputPath))
+

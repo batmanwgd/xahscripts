@@ -60,8 +60,8 @@ ooooooooooo
 
 
 ;; remove property
-(remove-text-properties 1 (point-max) '(face nil))
-(remove-list-of-text-properties 1 (point-max) '(face))
+(remove-text-properties (point-min) (point-max) '(face nil))
+(remove-list-of-text-properties (point-min) (point-max) '(face))
 
 (make-text-button beg end '(action ))
 

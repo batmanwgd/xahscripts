@@ -1,10 +1,51 @@
 # -*- coding: utf-8; mode: org -*-
+
+2020-04-22
+
+the task is to generate a list of all elisp function names, command names,
+and variable names, and generate their doc string into a text file.
+
+the purpose of this task is so that on my emacs website, we can have a 
+popup tooltip when user hover the mouse over a function name to see its doc string.
+The JavaScript for this is already done. We just need to gen the doc string as data.
+
+The task is divided into 2 tasks.
+
+1, generate all builtin lisp symbols. (whether they are function, command,
+variable, or macro, or special forms, etc, we need to decide.)
+
+2, given a lisp symbol, how to get their doc string.
+
+For the task of listing all builtin symbols, there are few approaches,
+or a combination of the following.
+
+1, grep emacs and elisp manual.
+2, grep my emacs n elisp tutorial.
+3, use elisp code in emacs itself, list all available symbols.
+
+It seems, each of these by itself is inadequate. e.g. if you grep manual,
+some commonly used symbols do not show up. if you use elisp to list available
+symbols itself, you get tons of symbols that are irrelevant and internal,
+also, some common function or variable also do not show up, because they
+haven't been loaded yet.
+
+The problem of getting doc string is also a bit complex. If you simply
+call describe-function, you get lots extraneous info, such as keybinding
+user may have defined, or the docstring changes depends on what packages
+you have loaded. If you call describe-variable, some variable has big chunck
+value such as keymap that we don't want. The describe-function code is
+very complex. It is ideal to study the code and understand and extract
+essential functions to get the doc string we want.
+
+
+HH==================================================================== 
+
 2017-05-31
 
 in my tutorial pages 
 code.elisp-ƒ 
 var.elisp 
-<code class="elisp-ƒ">comment-dwim</code>
+<code class="elisp_f_3d841">dired-do-query-replace-regexp</code>
 
 .elisp-prefix-command,
 .elisp-command,
@@ -21,15 +62,22 @@ var.elisp
 2017-05-16
 
 sample bad pages, pages where common commands has no popup
-file:///home/xah/web/ergoemacs_org/emacs/emacs_find_replace.html
+dired-do-query-replace-regexp
+toggle-case-fold-search 
+at
+http://ergoemacs.org/emacs/emacs_find_replace.html
 
+list-bookmark
+org-time-stamp
+at
 http://ergoemacs.org/emacs/emacs_keybinding_overview.html
 
 2017-05-31
 
-links to my emacs/elisp manual
+link to my emacs/elisp manual
 
-file:///home/xah/web/ergoemacs_org/emacs_manual/elisp/Character-Motion.html#Character-Motion
+GNU Emacs Lisp Reference Manual: Character Motion
+http://ergoemacs.org/emacs_manual/elisp/Character-Motion.html#Character-Motio
 
 2017-01-13
 

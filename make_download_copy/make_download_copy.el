@@ -20,6 +20,7 @@
 
 ;; (require 'find-lisp)
 (require 'subr-x)
+(require 'xah-html-mode)
 
 
 ;;;; functions
@@ -139,7 +140,7 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
           ;; (message "$hrefValue is 「%s」" $hrefValue)
           )
 
-        (when (xahsite-local-link-p $hrefValue)
+        (when (xah-html-local-link-p $hrefValue)
           (setq default-directory (file-name-directory @file-path))
           (when (not (file-exists-p (elt (xah-html-split-uri-hashmark $hrefValue) 0)))
             (delete-region $p1 $p2)
@@ -159,7 +160,7 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
           ;; (message "$hrefValue is 「%s」" $hrefValue)
           )
 
-        (when (xahsite-local-link-p $hrefValue)
+        (when (xah-html-local-link-p $hrefValue)
           (setq default-directory (file-name-directory @file-path))
           (when (not (file-exists-p $hrefValue))
             (delete-region $p1 $p2)
@@ -218,7 +219,7 @@ if exist, it'll be overridden.
     ;; body { margin-right:1em; }
     ;; #aside-right-89129 {display:none;}
     ;; " )
-    ;;         (write-region 1 (point-max) fpath)))
+    ;;         (write-region (point-min) (point-max) fpath)))
 
   ;     (xah-delete-xahtemp-files $destDir)
 

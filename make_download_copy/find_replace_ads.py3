@@ -54,142 +54,78 @@ find_replace_list = [
 
 ##################################################
     # xahlee.info
+    # 2020-11-25
 
+('''<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-10884311-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    # 2018-08-10
+  gtag('config', 'UA-10884311-1');
+</script>''',
+''),
+
+('''<script data-ad-client="ca-pub-5125343095650532" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>''',
+''),
+
 ('''<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({
-          google_ad_client: "ca-pub-5125343095650532",
-          enable_page_level_ads: true
-     });
-</script>''',
-''),
-
-('''<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-10884311-1', 'auto');
-ga('send', 'pageview');
-</script>''',
-''),
-
-('''<aside id="aside-right-89129">
-<div class="google_ad_right_30226">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- xlinfo_right_autosize_20171107 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="9711764997"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
-</aside>''',
-''),
-
-('''<div class="ad_top_39054">
-<div class="google_ad_top_29890">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- xlinfo_top_autosize_20171107 -->
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-5125343095650532"
      data-ad-slot="2984018199"
-     data-ad-format="auto"></ins>
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
 <script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>''',
+''),
+
+
+('''<div>
+<a href="buy_xah_js_tutorial.html">
+<span style="color:red">
+<span style="font-family:'Times New Roman', serif;font-size:60px">∑</span>
+<span style="font-family:Arial;font-size:40px;font-weight:bold">JS</span>
+<span style="font-family:'Arial';font-size:20px; font-weight:bold"><sup>in Depth</sup></span><br />
+<span style="font-family:'Times New Roman', serif;font-size:20px;">XAH</span>
+</span>
+Buy Xah JavaScript Tutorial</a>
 </div>''',
 ''),
 
-('''<div class="ads-bottom-65900">
-<div class="google_ad_bottom_e7e59">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- xlinfo_ad_bottom_20171117 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5125343095650532"
-     data-ad-slot="4412368092"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
-</div>''',
-''),
-
-(
-'''<div class="buy-js-33416">
-Like it? Help me by telling your friends. Or, Put $5 at
-<a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a>.<br />
-<br />
-Or, <a href="buy_xah_js_tutorial.html">Buy JavaScript in Depth</a>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_xclick" />
-<input type="hidden" name="business" value="JPHAB7F7QZRPC" />
-<input type="hidden" name="lc" value="US" />
-<input type="hidden" name="item_name" value="xah JavaScript in Depth" />
-<input type="hidden" name="amount" value="29.00" />
-<input type="hidden" name="currency_code" value="USD" />
-<input type="hidden" name="button_subtype" value="services" />
-<input type="hidden" name="no_note" value="0" />
-<input type="hidden" name="cn" value="Add special instructions to the seller:" />
-<input type="hidden" name="no_shipping" value="1" />
-<input type="hidden" name="shipping" value="0.00" />
-<input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHosted" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal" />
-</form>
-</div>''',
-''
-),
 
 ##################################################
-    # emacs site
+    # emacs site, 
 
-('''<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-10884311-3', 'auto');
-ga('send', 'pageview');
-</script>''',
+('''<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-10884311-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-10884311-3');
+</script>
+''',
 ''),
 
 (
 '''<div class="buyxahemacs97449">
-<p>If you have a question, put $5 at <a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a> and message me.
+<p>If you have a question, put $5 at <a class="sorc" target="_blank" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a> and message me.
 <br />
 Or <a href="http://ergoemacs.org/emacs/buy_xah_emacs_tutorial.html">Buy Xah Emacs Tutorial</a>
 <br />
-Or buy a nice keyboard:
-<a href="http://ergoemacs.org/emacs/emacs_best_keyboard.html">Best Keyboards for Emacs</a></p>
+Or buy
+<a href="http://xahlee.info/js/js.html">JavaScript in Depth</a>
+</p>
 </div>''',
 ''
 ),
 
-('''<div class="ask_68256"><p>If you have a question, put $5 at <a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a> and message me.</p></div>''',''),
-
     # #####################################
-
-(
-'''<div id="disqus_thread"></div>
-<script>
-(function() {
-var d = document, s = d.createElement('script');
-s.src = 'https://xahlee.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>''',
-''
-),
 
 ('''<div class="ask_68256">
 <p>Ask me question on <a class="sorc" href="https://www.patreon.com/xahlee" data-accessed="2017-08-01">patreon</a></p>
@@ -224,7 +160,7 @@ def replace_string_in_file(file_path):
     "Replaces all findStr by repStr in file file_path"
     backup_fname = file_path + "~bk~"
 
-    print ("reading:", file_path)
+    # print ("reading:", file_path)
     input_file = open(file_path, "r", encoding="utf-8")
     try:
         file_content = input_file.read()

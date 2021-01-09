@@ -47,7 +47,7 @@
                     (print (format "%s var" $symbol))
                     (setq $fileChanged-p t))
                 nil)))))
-      (when $fileChanged-p (write-region 1 (point-max) @fpath)) ;
+      (when $fileChanged-p (write-region (point-min) (point-max) @fpath)) ;
       )))
 
 ;; traverse a dir

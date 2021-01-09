@@ -68,7 +68,7 @@ If you still wish to see this page, please go to: http://xahlee.org/bb/ox_horns.
       (setq kwds (buffer-substring-no-properties p1 p2) )
 
       ;; do standard ad replacement.
-      (progn (replace-pairs-region 1 (point-max) findReplacePairsList) )
+      (progn (replace-pairs-region (point-min) (point-max) findReplacePairsList) )
 
       ;; check if the keywords contain nsfw or porn. If so, replace content with a redirect.
       (when (or

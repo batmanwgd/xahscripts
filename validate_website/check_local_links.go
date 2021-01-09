@@ -25,9 +25,7 @@ import (
 var inDir = "/Users/xah/web/"
 
 
-// var inDir = "/Users/xah/web/xahlee_org/diklo/x_xah_js_tutorial/"
-// var inDir = "/Users/xah/web/xahlee_org/diklo/xah_emacs_tutorial_2020-02-19_4f278"
-
+// const fnameRegex = `\.xml$|\.html|\.htm$`
 const fnameRegex = `\.xml$|\.html$`
 
 var dirsToSkip = []string{
@@ -48,6 +46,7 @@ var dirsToSkip = []string{
 	"ocaml_doc",
 	"w3c_ui_events",
 	"xx_arabian_nights_full_2017-05-13",
+	"xx_aladdin_new_in_works",
 }
 
 const fileSep = "ff━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
