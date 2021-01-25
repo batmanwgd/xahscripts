@@ -18,21 +18,20 @@
 
 (load-file "~/git/xah_emacs_init/xah_emacs_xahsite_path_lisp_util.el")
 
-;; (require 'find-lisp)
 (require 'subr-x)
+(require 'xah-html-mode)
 
 
 ;;;; functions
 
-
 ;; (xah-get-full-url "~/web/xahlee_org/emacs/emacs.html" "../Periodic_dosage_dir/skami_prosa.html" "~/web/xahlee_org/" "xahlee.org")
 
-(defun xah-get-full-url (@file-path @linkpath @web-doc-root @host-name)
-  "Returns a “http://” based URL of a given @linkpath, based on its @file-path, and {@web-doc-root, @host-name}.
+(defun xah-get-full-url (@filePath @linkpath @web-doc-root @host-name)
+  "Returns a “http://” based URL of a given @linkpath, based on its @filePath, and {@web-doc-root, @host-name}.
 
-@file-path is the full path to a html file.
-@linkpath is a string that's relative path to @file-path. e.g. 「<a href=\"‹@linkpath›\">」.
-@web-doc-root is the path to a ancestor dir of @file-path (i.e. it should be part of start of @file-path).
+@filePath is the full path to a html file.
+@linkpath is a string that's relative path to @filePath. e.g. 「<a href=\"‹@linkpath›\">」.
+@web-doc-root is the path to a ancestor dir of @filePath (i.e. it should be part of start of @filePath).
 
 Returns a URL of the form “http://‹@host-name›/‹urlPath›” that points to the same file as @linkpath.
 
@@ -49,7 +48,7 @@ Returns
 Note that @web-doc-root may or may not end in a slash."
   (concat "http://" @host-name "/"
           (substring
-           (expand-file-name (concat (file-name-directory @file-path) @linkpath))
+           (expand-file-name (concat (file-name-directory @filePath) @linkpath))
            (length (file-name-as-directory (directory-file-name (expand-file-name @web-doc-root)))))))
 
 (defun xah-drop-last-slash (@path)
@@ -81,9 +80,9 @@ Note: no consideration is taken about links, alias, or file perms."
         (concat @sourcedir "/" x) @destdir)))
    (directory-files @sourcedir)))
 
-(defun xah-delete-xahtemp-files (@dir-path)
-   "Delete some files and dirs in dir @dir-path.
-@dir-path must be full path.
+(defun xah-delete-xahtemp-files (@dirPath)
+  "Delete some files and dirs in dir @dirPath.
+@dirPath must be full path.
 
 File/Dir deleted are file/dir names that:
 
@@ -91,37 +90,39 @@ File/Dir deleted are file/dir names that:
 • ends with ~
 • #…#
 • .DS_Store
-  etc."
-   (progn
-     ;; remove emacs backup files, temp files, mac os x files, etc.
-     (princ "Removing temp files…\n")
-     (xah-delete-files-by-regex @dir-path "\\`\\.htaccess\\'")
-     (xah-delete-files-by-regex @dir-path "\\`#.?+#\\'")
-     (xah-delete-files-by-regex @dir-path "\\`xx")
-     (xah-delete-files-by-regex @dir-path "\\`\\.DS_Store\\'")
-     (xah-delete-files-by-regex @dir-path "~\\'")
+  etc.
 
-     ;; (expand-file-name @dir-path)
+todo: need to delete dir whose name starts with xx
+"
+  (progn
+    ;; remove emacs backup files, temp files, mac os x files, etc.
+    (princ "Removing temp files…\n")
+    (xah-delete-files-by-regex @dirPath "\\`\\.htaccess\\'")
+    (xah-delete-files-by-regex @dirPath "\\`#.?+#\\'")
+    (xah-delete-files-by-regex @dirPath "\\`xx")
+    (xah-delete-files-by-regex @dirPath "\\`\\.DS_Store\\'")
+    (xah-delete-files-by-regex @dirPath "~\\'")
 
-     (shell-command "find . -depth -type d -name 'xx*' -exec rm {} ';'") ; TODO: stop calling shell command. use elisp instead
-     ))
+    ;; (expand-file-name @dirPath)
 
-(defun xah-process-file-for-download (@file-path @original-file-path @webRoot)
-  "Modify the HTML file at @file-path, to make it ready for download bundle.
+    ))
+
+(defun xah-process-file-for-download (@filePath @original-file-path @webRoot)
+  "Modify the HTML file at @filePath, to make it ready for download bundle.
 
 This function change local links to “http://” links, Delete the google javascript snippet, and other small changes, so that the file is nicer to be viewed off-line at some computer without the entire xahlee.org's web dir structure.
 
 The google javascript is the Google Analytics webbug that tracks web stat to xahlee.org.
 
-@file-path is the full path to the html file that will be processed.
+@filePath is the full path to the html file that will be processed.
 @original-file-path is full path to the “same” file in the original web structure.
 @original-file-path is used to construct new relative links."
   (let ( $p1 $p2 $hrefValue
              default-directory
              (case-fold-search nil))
 
-    (with-temp-file @file-path
-      (insert-file-contents @file-path)
+    (with-temp-file @filePath
+      (insert-file-contents @filePath)
       (goto-char 1)
 
       ;; (xahsite-remove-ads (point-min) (point-max))
@@ -139,8 +140,8 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
           ;; (message "$hrefValue is 「%s」" $hrefValue)
           )
 
-        (when (xahsite-local-link-p $hrefValue)
-          (setq default-directory (file-name-directory @file-path))
+        (when (xah-html-local-link-p $hrefValue)
+          (setq default-directory (file-name-directory @filePath))
           (when (not (file-exists-p (elt (xah-html-split-uri-hashmark $hrefValue) 0)))
             (delete-region $p1 $p2)
             (insert
@@ -159,8 +160,8 @@ The google javascript is the Google Analytics webbug that tracks web stat to xah
           ;; (message "$hrefValue is 「%s」" $hrefValue)
           )
 
-        (when (xahsite-local-link-p $hrefValue)
-          (setq default-directory (file-name-directory @file-path))
+        (when (xah-html-local-link-p $hrefValue)
+          (setq default-directory (file-name-directory @filePath))
           (when (not (file-exists-p $hrefValue))
             (delete-region $p1 $p2)
             (insert (xah-get-full-url @original-file-path $hrefValue @webRoot (xahsite-get-domain-of-local-file-path @original-file-path)))))))))
@@ -221,8 +222,6 @@ if exist, it'll be overridden.
     ;;         (write-region 1 (point-max) fpath)))
 
   ;     (xah-delete-xahtemp-files $destDir)
-
-    (princ (shell-command (format "python3 ~/git/xahscripts/make_download_copy/delete_temp_files.py3 %s" $destDir)))
 
     ;; change local links to “http://” links. Delete the google javascript snippet, and other small fixes.
     (princ "Removing javascript etc in files…\n")

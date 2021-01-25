@@ -22,11 +22,7 @@ import (
 
 // inDir is dir to start. must be full path. if it's a file, the parent dir is used
 
-var inDir = "/Users/xah/web/"
-
-
-// var inDir = "/Users/xah/web/xahlee_org/diklo/x_xah_js_tutorial/"
-// var inDir = "/Users/xah/web/xahlee_org/diklo/xah_emacs_tutorial_2020-02-19_4f278"
+var inDir = "c:/Users/xah/web/xahlee_org/diklo/x_xah_emacs_tutorial/"
 
 const fnameRegex = `\.xml$|\.html$`
 
@@ -48,12 +44,14 @@ var dirsToSkip = []string{
 	"ocaml_doc",
 	"w3c_ui_events",
 	"xx_arabian_nights_full_2017-05-13",
+	"xx_aladdin_new_in_works",
+
 }
 
 const fileSep = "ff━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
 
-const posBracketL = '❪'
-const posBracketR = '❫'
+const posBracketL = '⁅'
+const posBracketR = '⁆'
 
 const fileBracketL = '〘'
 const fileBracketR = '〙'
