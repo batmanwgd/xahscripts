@@ -202,7 +202,7 @@
         (setq foundAgain-p (search-forward "</body>" nil "NOERROR") )
         (when foundAgain-p (message "ppproblem %s" fPath))
 
-        (when found-p (write-region 1 (point-max) fPath) ) ) ) )
+        (when found-p (write-region (point-min) (point-max) fPath) ) ) ) )
        )
 
 (mapc 'my-process-file mylist)

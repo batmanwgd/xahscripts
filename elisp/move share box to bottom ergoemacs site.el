@@ -492,7 +492,7 @@
       (search-forward "<!-- share76406d11f13ce -->" )
       (delete-region (line-beginning-position) (line-end-position))
 
-      (write-region 1 (point-max) fPath)
+      (write-region (point-min) (point-max) fPath)
 
       )))
 

@@ -64,7 +64,7 @@
 
       (when (> ξcount 0)
         (copy-file fPath (concat fPath "~") t)
-        (write-region 1 (point-max) fPath)
+        (write-region (point-min) (point-max) fPath)
         (princ (format "◆ %d %s\n" ξcount fPath))
         ) )
 

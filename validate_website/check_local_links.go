@@ -22,7 +22,7 @@ import (
 
 // inDir is dir to start. must be full path. if it's a file, the parent dir is used
 
-var inDir = "c:/Users/xah/web/xahlee_org/diklo/x_xah_emacs_tutorial/"
+var inDir = "/Users/xah/web/"
 
 const fnameRegex = `\.xml$|\.html$`
 

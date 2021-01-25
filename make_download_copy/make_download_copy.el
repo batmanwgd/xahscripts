@@ -219,7 +219,7 @@ if exist, it'll be overridden.
     ;; body { margin-right:1em; }
     ;; #aside-right-89129 {display:none;}
     ;; " )
-    ;;         (write-region 1 (point-max) fpath)))
+    ;;         (write-region (point-min) (point-max) fpath)))
 
   ;     (xah-delete-xahtemp-files $destDir)
 
